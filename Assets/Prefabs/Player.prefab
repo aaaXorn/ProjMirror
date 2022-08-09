@@ -51,6 +51,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   h_spd: 1
+  cam_x_spd: 1
+  cam_y_spd: 0
 --- !u!54 &3851910163463544308
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -65,7 +67,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &3496904195842192355
 MonoBehaviour:
