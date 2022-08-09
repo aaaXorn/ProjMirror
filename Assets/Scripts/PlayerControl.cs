@@ -5,11 +5,13 @@ using Mirror;
 
 public class PlayerControl : NetworkBehaviour
 {
+    private Rigidbody rigid;
+
     //movement inputs
     private float inputX, inputZ;
     //movement speed
     [SerializeField]
-    private float h_spd;
+    private float h_spd, jump_spd;
 
     //rotation input
     private Vector3 mouse_posDiff = Vector3.zero;//difference between current and previous mouse position
@@ -21,6 +23,8 @@ public class PlayerControl : NetworkBehaviour
     //camera
     public override void OnStartLocalPlayer()
     {
+        rigid = GetComponent<Rigidbody>();
+
         mouse_lastPos = Input.mousePosition;
     }
 
@@ -50,6 +54,6 @@ public class PlayerControl : NetworkBehaviour
         if (!isLocalPlayer) return;
 
         //movement
-
+        //rigid.velocity = new Vector3(inputX, rigid.velocity.y, inputZ) * h_spd;
     }
 }
