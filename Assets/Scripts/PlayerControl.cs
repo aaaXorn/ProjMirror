@@ -13,8 +13,8 @@ public class PlayerControl : NetworkBehaviour
     [SerializeField]
     private float h_spd, jump_spd;
 
-    //camera
-    public override void OnStartLocalPlayer()
+    //
+    public override void OnStartClient()
     {
         rigid = GetComponent<Rigidbody>();
     }
