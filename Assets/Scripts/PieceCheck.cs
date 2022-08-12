@@ -62,8 +62,6 @@ public class PieceCheck : NetworkBehaviour
 
         while (!completeM || !completeR)
         {
-            print("pinto");
-
             if (Vector3.Distance(transform.position, target.position) > 0)
                 transform.position = Vector3.MoveTowards(transform.position, target.position, spd * Time.deltaTime);
             else if(!completeM) completeM = true;

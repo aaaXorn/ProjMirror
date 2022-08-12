@@ -12,9 +12,11 @@ public class PlayerControl : NetworkBehaviour
     //movement speed
     [SerializeField]
     private float h_spd, jump_spd;
-
-    //
-    public override void OnStartClient()
+	
+	//if the player can currently move
+	private bool can_move;
+	
+    private void Start()
     {
         rigid = GetComponent<Rigidbody>();
     }
@@ -34,9 +36,14 @@ public class PlayerControl : NetworkBehaviour
         //skips if object isn't owned by client
         if (!isLocalPlayer) return;
 
-        //movement and rotation
+        if(can_move) Move();
+    }
+	
+	private void Move()
+	{
+		//movement and rotation
         //transform.Rotate
         //rigid.velocity = new Vector3(inputX, rigid.velocity.y, inputZ) * h_spd;
         transform.Translate(inputX * h_spd, 0, inputZ * h_spd);
-    }
+	}
 }
