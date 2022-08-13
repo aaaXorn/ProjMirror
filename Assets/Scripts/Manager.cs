@@ -11,6 +11,10 @@ public class Manager : NetworkBehaviour
 	[SerializeField]
 	private GameObject PiecePrefab;
 
+	//number of spawned pieces
+	[SerializeField]
+	private int pieces;
+
     //material colors
     public Color[] mat;
 	
@@ -23,7 +27,7 @@ public class Manager : NetworkBehaviour
 	[Tooltip("Minimum distance from the center.")]
 	[SerializeField]
 	private float min_dist;
-
+	
     private void Awake()
     {
         //sets global reference
@@ -47,5 +51,14 @@ public class Manager : NetworkBehaviour
 									 Quaternion.identity);
 		//makes the piece spawn on all the clients
 		NetworkServer.Spawn(obj);
+	}
+	
+	//spawn a number of pieces based on the pieces var
+	private void StartSpawn()
+	{
+		for(int i = 0; i < pieces; i++)
+		{
+			SpawnPiece();
+		}
 	}
 }

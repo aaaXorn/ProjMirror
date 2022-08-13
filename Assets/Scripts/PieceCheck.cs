@@ -13,7 +13,7 @@ public class PieceCheck : NetworkBehaviour
     public int team = 0;
 
     //if the piece has already been set
-    private bool set;
+    private bool p_set;
 
     //hole location
     private Transform target;
@@ -32,12 +32,14 @@ public class PieceCheck : NetworkBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //ignore if not coming from the host
-        if (!isServer) return;
+		//or if the piece doesn't come from a team
+        if (!isServer/* || team == 0*/) return;
         
-        if(other.CompareTag("Hole") && !set)
+        if(other.CompareTag("Hole") && !p_set)
         {
-            set = true;
+            p_set = true;
 
+			//ChangeColor will go on PlayerControl on finished version
             //change the piece's color
             Rpc_ChangeColor();
             target = other.transform;
@@ -52,27 +54,53 @@ public class PieceCheck : NetworkBehaviour
     {
         material.color = Manager.Instance.mat[team];
     }
-
+	
+	private void ScoreCheck()
+	{
+		//changes the object's tags
+		switch(team)
+		{
+			case 1:
+				gameObject.tag = "Team1";
+				break;
+			case 2:
+				gameObject.tag = "Team2";
+				break;
+			default:
+				Debug.LogError("Piece has no assigned team.");
+				break;
+		}
+		
+		//checks for other objects with same tag
+	}
+	
     //moves the piece to the hole
     private IEnumerator MoveTo()
     {
         rigid.isKinematic = true;
-
+	
+		//if the movement or rotation are complete
         bool completeM = false, completeR = false;
 
         while (!completeM || !completeR)
         {
+			//movement
             if (Vector3.Distance(transform.position, target.position) > 0)
                 transform.position = Vector3.MoveTowards(transform.position, target.position, spd * Time.deltaTime);
             else if(!completeM) completeM = true;
-
+			
+			//rotation
             if (transform.rotation != target.rotation)
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, target.rotation, rot_spd * Time.deltaTime);
             else if(!completeR) completeR = true;
-
+			
+			//waits for next Update to continue
             yield return new WaitForEndOfFrame();
         }
-
+		
+		//checks if this will change the score
+		ScoreCheck();
+		
         yield break;
     }
 }
