@@ -1,13 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Mirror;
 
 public class Manager : NetworkBehaviour
 {
     //instance global reference
     public static Manager Instance { get; private set; }
-
+	
+	#region connection
+	//if the game is ready
+	[SyncVar(hook = nameof(ReadyChanged))]
+	public bool ready;
+	
+	[SerializeField]
+	private Button btn_ready;
+	#endregion
+	
+	#region piece
 	[SerializeField]
 	private GameObject PiecePrefab;
 
@@ -27,6 +38,7 @@ public class Manager : NetworkBehaviour
 	[Tooltip("Minimum distance from the center.")]
 	[SerializeField]
 	private float min_dist;
+	#endregion
 	
     private void Awake()
     {
@@ -36,6 +48,45 @@ public class Manager : NetworkBehaviour
         else Destroy(gameObject);
     }
 	
+	#region connection
+	private void ReadyChanged(bool _Old, bool _New)
+	{
+		//deactivates the ready button
+		if(ready)
+		{
+			btn_ready.gameObject.SetActive(false);
+		}
+		
+		//updates ready UI settings
+		SetupUI();
+	}
+	
+	public void ReadyButton()
+	{
+		if(isServer)
+		{
+			if(NetworkServer.connections.Count > 2)
+			{
+				ready = true;
+			}
+			else
+			{
+				print("Not enough players.");
+			}
+		}
+	}
+	
+	//ready UI settings
+	private void SetupUI()
+	{
+		//so only the host can start the game
+		if(!isServer) btn_ready.interactable = false;
+		
+		
+	}
+	#endregion
+	
+	#region piece
 	public void SpawnPiece()
 	{
 		//pos X
@@ -61,4 +112,5 @@ public class Manager : NetworkBehaviour
 			SpawnPiece();
 		}
 	}
+	#endregion
 }
