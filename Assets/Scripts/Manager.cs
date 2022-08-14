@@ -10,6 +10,9 @@ public class Manager : NetworkBehaviour
     public static Manager Instance { get; private set; }
 	
 	#region connection
+	//local player script
+	public PlayerControl local_PC;
+	
 	//if the game is ready
 	[SyncVar(hook = nameof(ReadyChanged))]
 	public bool ready;
@@ -48,6 +51,13 @@ public class Manager : NetworkBehaviour
         else Destroy(gameObject);
     }
 	
+	private void Start()
+	{
+		btn_ready.onClick.AddListener(ReadyButton);
+		
+		SetupUI();
+	}
+	
 	#region connection
 	private void ReadyChanged(bool _Old, bool _New)
 	{
@@ -55,6 +65,7 @@ public class Manager : NetworkBehaviour
 		if(ready)
 		{
 			btn_ready.gameObject.SetActive(false);
+			GameStart();
 		}
 		
 		//updates ready UI settings
@@ -77,12 +88,20 @@ public class Manager : NetworkBehaviour
 	}
 	
 	//ready UI settings
-	private void SetupUI()
+	public void SetupUI()
 	{
 		//so only the host can start the game
-		if(!isServer) btn_ready.interactable = false;
-		
-		
+		if(isServer) btn_ready.interactable = true;
+	}
+	
+	//starts the game
+	public void GameStart()
+	{
+		if(local_PC != null)
+		{
+			local_PC.can_move = true;
+		}
+		else Debug.LogError("Local PlayerControl script is null.");
 	}
 	#endregion
 	

@@ -14,12 +14,23 @@ public class PlayerControl : NetworkBehaviour
     private float h_spd, jump_spd;
 	
 	//if the player can currently move
-	private bool can_move;
+	public bool can_move = true;
 	
     private void Start()
     {
         rigid = GetComponent<Rigidbody>();
     }
+	
+	//on start if object belongs to client
+	public override void OnStartLocalPlayer()
+	{
+		if(Manager.Instance != null)
+		{	
+			Manager.Instance.local_PC = this;
+			Manager.Instance.SetupUI();
+		}
+		else Debug.LogError("Manager Instance is null.");
+	}
 
     private void Update()
     {

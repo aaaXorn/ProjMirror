@@ -8,10 +8,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1899190003466499682}
-  - component: {fileID: 1899190003466499693}
-  - component: {fileID: 1899190003466499692}
-  - component: {fileID: 1899190003466499695}
+  - component: {fileID: 8519800447602074736}
+  - component: {fileID: 2029235153596193007}
+  - component: {fileID: 3364663048830809264}
+  - component: {fileID: 2923084685006751147}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -19,8 +19,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1899190003466499682
-Transform:
+--- !u!224 &8519800447602074736
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -33,7 +33,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1899190003466499693
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2029235153596193007
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,7 +47,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1899190003466499694}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8aab4c8111b7c411b9b92cf3dbc5bd4e, type: 3}
+  m_Script: {fileID: 11500000, guid: 66e72b6bc6f647d4dbd77e89efb0e9b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 1
@@ -51,7 +56,7 @@ MonoBehaviour:
   serverTickRate: 30
   offlineScene: Assets/Scenes/MainMenu.unity
   onlineScene: Assets/Scenes/Online.unity
-  transport: {fileID: 1899190003466499692}
+  transport: {fileID: 3364663048830809264}
   networkAddress: localhost
   maxConnections: 100
   authenticator: {fileID: 0}
@@ -60,7 +65,7 @@ MonoBehaviour:
   playerSpawnMethod: 1
   spawnPrefabs:
   - {fileID: 7422195193450409663, guid: 00ca5f2bd004ee04eaf81bccbee6653c, type: 3}
---- !u!114 &1899190003466499692
+--- !u!114 &3364663048830809264
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,7 +94,7 @@ MonoBehaviour:
   debugLog: 0
   statisticsGUI: 0
   statisticsLog: 0
---- !u!114 &1899190003466499695
+--- !u!114 &2923084685006751147
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
