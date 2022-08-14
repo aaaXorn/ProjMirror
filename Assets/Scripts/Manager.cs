@@ -76,7 +76,7 @@ public class Manager : NetworkBehaviour
 	{
 		if(isServer)
 		{
-			if(NetworkServer.connections.Count > 2)
+			if(NetworkServer.connections.Count >= 1)//!!!change to 2 later
 			{
 				ready = true;
 			}

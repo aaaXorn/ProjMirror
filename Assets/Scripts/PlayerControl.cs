@@ -11,7 +11,7 @@ public class PlayerControl : NetworkBehaviour
     private float inputX, inputZ;
     //movement speed
     [SerializeField]
-    private float h_spd, jump_spd;
+    private float h_spd, jump_spd, rot_spd;
 	
 	//if the player can currently move
 	public bool can_move = true;
@@ -50,11 +50,26 @@ public class PlayerControl : NetworkBehaviour
         if(can_move) Move();
     }
 	
+	//movement and rotation
 	private void Move()
-	{
-		//movement and rotation
-        //transform.Rotate
-        //rigid.velocity = new Vector3(inputX, rigid.velocity.y, inputZ) * h_spd;
-        transform.Translate(inputX * h_spd, 0, inputZ * h_spd);
+	{	
+        //rotation
+		Vector3 dir = new Vector3(inputX, 0, inputZ).normalized;
+		if(dir.magnitude > 0.1f)
+		{
+			//final rotation
+			Quaternion newRot = Quaternion.LookRotation(dir, Vector3.up);
+			//slowly rotates towards final rotation
+			transform.rotation = Quaternion.RotateTowards
+								 (transform.rotation, newRot, rot_spd);
+		}
+		
+        //movement
+		rigid.velocity = dir * h_spd;
+		
+		/*float max_spd
+		if(rigid.velocity.magnitude < max_spd)
+			rigid.AddForce(dir * h_spd);
+		*/
 	}
 }

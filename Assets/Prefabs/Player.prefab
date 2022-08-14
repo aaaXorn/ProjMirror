@@ -52,10 +52,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  h_spd: 1
+  h_spd: 7.5
   jump_spd: 0
-  cam_x_spd: 15
-  cam_y_spd: 0
+  rot_spd: 5
+  can_move: 0
 --- !u!54 &3851910163463544308
 Rigidbody:
   m_ObjectHideFlags: 0
