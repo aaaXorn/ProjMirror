@@ -104,6 +104,10 @@ MonoBehaviour:
   team: 0
   spd: 1
   rot_spd: 100
+  piece_layer:
+    serializedVersion: 2
+    m_Bits: 64
+  ray_range: 2
 --- !u!65 &7422195193450409632
 BoxCollider:
   m_ObjectHideFlags: 0

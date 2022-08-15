@@ -20,10 +20,18 @@ public class Manager : NetworkBehaviour
 	[SerializeField]
 	private Button btn_ready;
 	#endregion
-	
+
 	#region piece
+	//score
+	[SerializeField]
+	private Text t1_txt, t2_txt;
+	private float t1_score, t2_score;
+
 	[SerializeField]
 	private GameObject PiecePrefab;
+
+	[SerializeField]
+	private Collider[] HoleArray;
 
 	//number of spawned pieces
 	[SerializeField]
@@ -102,6 +110,17 @@ public class Manager : NetworkBehaviour
 			local_PC.can_move = true;
 		}
 		else Debug.LogError("Local PlayerControl script is null.");
+
+		if(isServer)
+        {
+			StartSpawn();
+
+			//enables the hole triggers
+			foreach(Collider col in HoleArray)
+            {
+				col.enabled = true;
+            }
+        }
 	}
 	#endregion
 	

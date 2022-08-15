@@ -21,6 +21,13 @@ public class PieceCheck : NetworkBehaviour
     [SerializeField]
     private float spd, rot_spd;
 
+    [SerializeField]
+    private LayerMask piece_layer;
+
+    //raycast range
+    [SerializeField]
+    private float ray_range;
+
     //variables
     public override void OnStartClient()
     {
@@ -45,6 +52,8 @@ public class PieceCheck : NetworkBehaviour
             target = other.transform;
             //move the piece
             StartCoroutine("MoveTo");
+
+            other.enabled = false;
         }
     }
 
@@ -70,8 +79,20 @@ public class PieceCheck : NetworkBehaviour
 				Debug.LogError("Piece has no assigned team.");
 				break;
 		}
-		
-		//checks for other objects with same tag
+
+        //checks for other objects with same tag
+
+        RaycastHit[] hits;
+
+        hits = Physics.RaycastAll(transform.position, Vector3.right * ray_range, piece_layer);
+
+        int no = 0;
+        foreach(RaycastHit hit in hits)
+        {
+            if(hit.transform.gameObject.tag == gameObject.tag)
+                no++;
+        }
+        print(no);
 	}
 	
     //moves the piece to the hole
