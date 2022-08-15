@@ -7,6 +7,7 @@ public class PlayerControl : NetworkBehaviour
 {
     private Rigidbody rigid;
 
+    #region movement
     //movement inputs
     private float inputX, inputZ;
     //movement speed
@@ -15,8 +16,32 @@ public class PlayerControl : NetworkBehaviour
 	
 	//if the player can currently move
 	public bool can_move = true;
-	
-    private void Start()
+	#endregion
+
+	//this player's team
+	[SyncVar]
+	public int team;
+
+	#region grab
+	[SerializeField]
+	private float grab_range;
+
+	[SerializeField]
+	private Vector3 grab_offset;
+
+	//where the object goes on grab
+    [SerializeField]
+	private Transform GrabPoint;
+
+	[SerializeField]
+	private LayerMask piece_layer;
+
+	[SyncVar]
+	//grabbed object
+	public GameObject GrabObj;
+	#endregion
+
+	private void Start()
     {
         rigid = GetComponent<Rigidbody>();
     }
@@ -47,7 +72,15 @@ public class PlayerControl : NetworkBehaviour
         //skips if object isn't owned by client
         if (!isLocalPlayer) return;
 
-        if(can_move) Move();
+		if (can_move)
+		{
+			Move();
+#if UNITY_EDITOR
+Debug.DrawRay(transform.position + transform.InverseTransformDirection(grab_offset), transform.forward * grab_range, Color.red);
+#endif
+			if (Input.GetButton("Fire1"))
+				Grab();
+		}
     }
 	
 	//movement and rotation
@@ -72,4 +105,33 @@ public class PlayerControl : NetworkBehaviour
 			rigid.AddForce(dir * h_spd);
 		*/
 	}
+
+#region grab
+	private void Grab()
+    {
+		RaycastHit hit;
+		if(Physics.Raycast(transform.position + transform.InverseTransformPoint(grab_offset), transform.forward * grab_range,out hit, piece_layer))
+        {
+			GameObject obj = hit.transform.gameObject;
+
+			Cmd_Grab(obj);
+        }
+    }
+
+	[Command]
+	private void Cmd_Grab(GameObject obj)
+    {
+		GrabObj = obj;
+		print("Cmd " + GrabObj.name);
+
+		Rpc_Grab();
+		
+    }
+
+    [ClientRpc]
+    private void Rpc_Grab()
+    {
+		print("Rpc " + GrabObj.name);
+    }
+#endregion
 }

@@ -12,6 +12,9 @@ public class PieceCheck : NetworkBehaviour
     [SyncVar]
     public int team = 0;
 
+    //player the carrying piece
+    //public GameObject Owner;
+
     //if the piece has already been set
     private bool p_set;
 
@@ -35,18 +38,30 @@ public class PieceCheck : NetworkBehaviour
         material.color = Manager.Instance.mat[0];
         rigid = GetComponent<Rigidbody>();
     }
+    
+    #region grab
+    //changes the material's color to the scoring team's
+    [ClientRpc]
+    public void Rpc_ChangeColor()
+    {
+        material.color = Manager.Instance.mat[team];
+    }
 
+    //IEnumerator grab movement
+    #endregion
+
+    #region score
     private void OnTriggerEnter(Collider other)
     {
         //ignore if not coming from the host
-		//or if the piece doesn't come from a team
+        //or if the piece doesn't come from a team
         if (!isServer/* || team == 0*/) return;
-        
-        if(other.CompareTag("Hole") && !p_set)
+
+        if (other.CompareTag("Hole") && !p_set)
         {
             p_set = true;
 
-			//ChangeColor will go on PlayerControl on finished version
+            //ChangeColor will go on PlayerControl on finished version
             //change the piece's color
             Rpc_ChangeColor();
             target = other.transform;
@@ -57,14 +72,7 @@ public class PieceCheck : NetworkBehaviour
         }
     }
 
-    //changes the material's color to the scoring team's
-    [ClientRpc]
-    public void Rpc_ChangeColor()
-    {
-        material.color = Manager.Instance.mat[team];
-    }
-	
-	private void ScoreCheck()
+    private void ScoreCheck()
 	{
 		//changes the object's tags
 		switch(team)
@@ -124,4 +132,5 @@ public class PieceCheck : NetworkBehaviour
 		
         yield break;
     }
+    #endregion
 }
