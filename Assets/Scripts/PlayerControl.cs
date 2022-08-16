@@ -76,14 +76,27 @@ public class PlayerControl : NetworkBehaviour
 
 		if (can_move)
 		{
+			//movement and rotation
 			Move();
-#if UNITY_EDITOR
-Debug.DrawRay(transform.position + grab_offset, transform.forward * grab_range, Color.red);
-#endif
+			
+			#if UNITY_EDITOR
+			//debug so raycast is visible in editor
+			Debug.DrawRay(transform.position + grab_offset, transform.forward * grab_range, Color.red);
+			#endif
+
 			if (grab_input)
 			{
-				Grab();
-				grab_input = false;
+				//grabs an object
+				if(GrabObj == null)
+				{
+					Grab();
+					grab_input = false;
+				}
+				//releases grabbed object
+				else
+				{
+					
+				}
 			}
 		}
     }
@@ -131,13 +144,14 @@ Debug.DrawRay(transform.position + grab_offset, transform.forward * grab_range, 
 		//changes object position
 		obj.transform.position = GrabPoint.position;
 
-		//sets object Color
+		//sets object owner, color and team
 		PieceCheck piece_pc = obj.GetComponent<PieceCheck>();
 		if (piece_pc != null)
 		{
 			piece_pc.Owner = this;
 			piece_pc.Rpc_ChangeColor(team);
 		}
+		else Debug.LogError("Piece PieceCheck is null.");
 
 		Rpc_Grab(obj);
 	}
@@ -153,20 +167,13 @@ Debug.DrawRay(transform.position + grab_offset, transform.forward * grab_range, 
 			//sets object parent
 			GrabObj.transform.SetParent(GrabPoint);
 
-			//sets object owner
-			PieceCheck piece_pc = obj.GetComponent<PieceCheck>();
-			if (piece_pc != null)
-			{
-				piece_pc.Owner = this;
-			}
-			else Debug.LogError("Piece PieceCheck is null.");
-
 			//sets as kinematic
 			Rigidbody piece_rb = obj.GetComponent<Rigidbody>();
 			if (piece_rb != null)
 			{
 				piece_rb.isKinematic = true;
 			}
+			//disables collision between the player and the grabbed object
 			Physics.IgnoreCollision(obj.GetComponent<Collider>(), GetComponent<Collider>(), true);
 		}
     }

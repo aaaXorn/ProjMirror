@@ -56,7 +56,7 @@ public class PieceCheck : NetworkBehaviour
     {
         //ignore if not coming from the host
         //or if the piece doesn't come from a team
-        if (!isServer || team == 0) return;
+        if (!isServer || team == 0 || rigid.isKinematic) return;
 
         if (other.CompareTag("Hole") && !p_set)
         {
@@ -86,12 +86,11 @@ public class PieceCheck : NetworkBehaviour
 				break;
 		}
 
-        //checks for other objects with same tag
-
+        //checks for other pieces and counts them
         RaycastHit[] hits;
 
         hits = Physics.RaycastAll(transform.position, Vector3.right * ray_range, piece_layer);
-
+		
         int no = 0;
         foreach(RaycastHit hit in hits)
         {
