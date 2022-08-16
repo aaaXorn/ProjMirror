@@ -23,6 +23,8 @@ public class PlayerControl : NetworkBehaviour
 	public int team;
 
 	#region grab
+	private bool grab_input;
+
 	[SerializeField]
 	private float grab_range;
 
@@ -35,8 +37,7 @@ public class PlayerControl : NetworkBehaviour
 
 	[SerializeField]
 	private LayerMask piece_layer;
-
-	[SyncVar]
+	
 	//grabbed object
 	public GameObject GrabObj;
 	#endregion
@@ -65,6 +66,7 @@ public class PlayerControl : NetworkBehaviour
         //movement inputs
         inputX = Input.GetAxis("Horizontal");
         inputZ = Input.GetAxis("Vertical");
+		if (Input.GetButtonDown("Fire2")) grab_input = true;
     }
 
     private void FixedUpdate()
@@ -76,10 +78,13 @@ public class PlayerControl : NetworkBehaviour
 		{
 			Move();
 #if UNITY_EDITOR
-Debug.DrawRay(transform.position + transform.InverseTransformDirection(grab_offset), transform.forward * grab_range, Color.red);
+Debug.DrawRay(transform.position + grab_offset, transform.forward * grab_range, Color.red);
 #endif
-			if (Input.GetButton("Fire1"))
+			if (grab_input)
+			{
 				Grab();
+				grab_input = false;
+			}
 		}
     }
 	
@@ -109,29 +114,61 @@ Debug.DrawRay(transform.position + transform.InverseTransformDirection(grab_offs
 #region grab
 	private void Grab()
     {
+		//checks if there's an object in range
 		RaycastHit hit;
-		if(Physics.Raycast(transform.position + transform.InverseTransformPoint(grab_offset), transform.forward * grab_range,out hit, piece_layer))
+		//raycast that only hits the piece layer
+		if(Physics.Raycast(transform.position + grab_offset, transform.forward * grab_range, out hit, piece_layer))
         {
 			GameObject obj = hit.transform.gameObject;
 
 			Cmd_Grab(obj);
-        }
+		}
     }
 
 	[Command]
 	private void Cmd_Grab(GameObject obj)
     {
-		GrabObj = obj;
-		print("Cmd " + GrabObj.name);
+		//changes object position
+		obj.transform.position = GrabPoint.position;
 
-		Rpc_Grab();
-		
-    }
+		//sets object Color
+		PieceCheck piece_pc = obj.GetComponent<PieceCheck>();
+		if (piece_pc != null)
+		{
+			piece_pc.Owner = this;
+			piece_pc.Rpc_ChangeColor(team);
+		}
+
+		Rpc_Grab(obj);
+	}
 
     [ClientRpc]
-    private void Rpc_Grab()
+    private void Rpc_Grab(GameObject obj)
     {
-		print("Rpc " + GrabObj.name);
+		//sets the grabbed object
+		GrabObj = obj;
+
+		if (GrabObj != null)
+		{
+			//sets object parent
+			GrabObj.transform.SetParent(GrabPoint);
+
+			//sets object owner
+			PieceCheck piece_pc = obj.GetComponent<PieceCheck>();
+			if (piece_pc != null)
+			{
+				piece_pc.Owner = this;
+			}
+			else Debug.LogError("Piece PieceCheck is null.");
+
+			//sets as kinematic
+			Rigidbody piece_rb = obj.GetComponent<Rigidbody>();
+			if (piece_rb != null)
+			{
+				piece_rb.isKinematic = true;
+			}
+			Physics.IgnoreCollision(obj.GetComponent<Collider>(), GetComponent<Collider>(), true);
+		}
     }
-#endregion
+    #endregion
 }

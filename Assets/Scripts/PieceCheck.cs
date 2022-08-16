@@ -9,11 +9,11 @@ public class PieceCheck : NetworkBehaviour
     private Rigidbody rigid;
 
     //which team scored
-    [SyncVar]
     public int team = 0;
 
     //player the carrying piece
-    //public GameObject Owner;
+    [SyncVar]
+    public PlayerControl Owner;
 
     //if the piece has already been set
     private bool p_set;
@@ -42,8 +42,9 @@ public class PieceCheck : NetworkBehaviour
     #region grab
     //changes the material's color to the scoring team's
     [ClientRpc]
-    public void Rpc_ChangeColor()
+    public void Rpc_ChangeColor(int p_team)
     {
+        team = p_team;
         material.color = Manager.Instance.mat[team];
     }
 
@@ -55,15 +56,12 @@ public class PieceCheck : NetworkBehaviour
     {
         //ignore if not coming from the host
         //or if the piece doesn't come from a team
-        if (!isServer/* || team == 0*/) return;
+        if (!isServer || team == 0) return;
 
         if (other.CompareTag("Hole") && !p_set)
         {
             p_set = true;
-
-            //ChangeColor will go on PlayerControl on finished version
-            //change the piece's color
-            Rpc_ChangeColor();
+            
             target = other.transform;
             //move the piece
             StartCoroutine("MoveTo");
