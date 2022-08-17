@@ -84,11 +84,13 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   h_spd: 7.5
-  jump_spd: 0
+  jump_spd: 7.5
   rot_spd: 7.5
   can_move: 0
   team: 0
   grab_range: 1.5
+  throw_spd_Z: 5
+  throw_spd_Y: 5
   grab_offset: {x: 0, y: 0.8, z: 0}
   GrabPoint: {fileID: 8371959636900396489}
   piece_layer:
