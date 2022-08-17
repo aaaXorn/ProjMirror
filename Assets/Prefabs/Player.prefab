@@ -84,9 +84,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  char_col: {fileID: 0}
+  char_col: {fileID: 8470292448642953074}
   h_spd: 7.5
-  jump_spd: 7.5
   rot_spd: 7.5
   can_move: 0
   team: 0
@@ -198,7 +197,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.4
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
@@ -458,6 +457,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: e28e50cf37d03a04db1d5766ed12d320, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 9a20cb8bde973a0498ba185223fa1a87, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e28e50cf37d03a04db1d5766ed12d320, type: 3}
 --- !u!4 &7190717704627889624 stripped
