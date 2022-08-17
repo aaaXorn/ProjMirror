@@ -6,15 +6,17 @@ using Mirror;
 public class PlayerControl : NetworkBehaviour
 {
     private Rigidbody rigid;
+	[SerializeField]
+	private Collider char_col;
 
     #region movement
     //movement inputs
     private float inputX, inputZ;
-	private bool jump_input;
+	//private bool jump_input;
 
 	//movement speed
-    [SerializeField]
-    private float h_spd, jump_spd, rot_spd;
+	[SerializeField]
+	private float h_spd, rot_spd;//, jump_spd;
 	
 	//if the player can currently move
 	public bool can_move = true;
@@ -73,7 +75,7 @@ public class PlayerControl : NetworkBehaviour
         //movement inputs
         inputX = Input.GetAxis("Horizontal");
         inputZ = Input.GetAxis("Vertical");
-		if (Input.GetButtonDown("Jump")) jump_input = true;
+		//if (Input.GetButtonDown("Jump")) jump_input = true;
 		if (Input.GetButtonDown("Fire2")) grab_input = true;
 		if (Input.GetButtonDown("Fire1")) throw_input = true;
     }
@@ -88,13 +90,13 @@ public class PlayerControl : NetworkBehaviour
 			//movement and rotation
 			Move();
 
-			if(jump_input)
+			/*if(jump_input)
             {
 				if(JumpCheck())
 					Jump();
 				
 				jump_input = false;
-            }
+            }*/
 			
 			#if UNITY_EDITOR
 			//debug so raycast is visible in editor
@@ -152,7 +154,7 @@ public class PlayerControl : NetworkBehaviour
 		*/
 	}
 
-	private bool JumpCheck()
+	/*private bool JumpCheck()
     {
 		//checks if there's an object in range
 		RaycastHit hit;
@@ -167,7 +169,7 @@ public class PlayerControl : NetworkBehaviour
     {
 		//force
 		rigid.AddForce(Vector3.up * jump_spd, ForceMode.Impulse);
-    }
+    }*/
     #region grab
 
     #region hold
@@ -219,7 +221,7 @@ public class PlayerControl : NetworkBehaviour
 			obj.transform.SetParent(GrabPoint);
 			
 			//disables collision between the player and the grabbed object
-			Physics.IgnoreCollision(obj.GetComponent<Collider>(), GetComponent<Collider>(), true);
+			Physics.IgnoreCollision(obj.GetComponent<Collider>(), char_col, true);
 		}
     }
     #endregion
@@ -267,7 +269,7 @@ public class PlayerControl : NetworkBehaviour
 			obj.transform.parent = null;
 
 			//enables collision between the player and the grabbed object
-			Physics.IgnoreCollision(obj.GetComponent<Collider>(), GetComponent<Collider>(), false);
+			Physics.IgnoreCollision(obj.GetComponent<Collider>(), char_col, false);
 		}
 	}
 	#endregion
