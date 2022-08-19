@@ -6,7 +6,9 @@ using Mirror;
 public class PlayerControl : NetworkBehaviour
 {
     private Rigidbody rigid;
-	[SerializeField]
+	//SetBool, SetInteger and SetFloat can be used with regular animator
+	//SetTrigger requires NetworkAnimator as otherwise it isn't synced correctly
+	private NetworkAnimator net_anim;
 	private Animator anim;
 	[SerializeField]
 	private Collider char_col;
@@ -32,7 +34,7 @@ public class PlayerControl : NetworkBehaviour
 	private bool grab_input, throw_input;
 
 	[SerializeField]
-	private float grab_range;
+	private Vector3 grab_range;
 
 	[Tooltip("Throw force.")]
 	[SerializeField]
@@ -56,6 +58,10 @@ public class PlayerControl : NetworkBehaviour
 	private void Start()
     {
         rigid = GetComponent<Rigidbody>();
+		
+		//animator
+		net_anim = GetComponent<NetworkAnimator>();
+		anim = net_anim.animator;
     }
 	
 	//on start if object belongs to client
@@ -99,12 +105,6 @@ public class PlayerControl : NetworkBehaviour
 				
 				jump_input = false;
             }*/
-			
-			#if UNITY_EDITOR
-			//debug so raycast is visible in editor
-			Debug.DrawRay(transform.position + grab_offset, transform.forward * grab_range, Color.red);
-			Debug.DrawRay(transform.position + transform.up * 0.1f, -transform.up * 0.2f, Color.blue);
-			#endif
 
 			if (grab_input)
 			{
@@ -129,14 +129,14 @@ public class PlayerControl : NetworkBehaviour
 				if(GrabObj != null)
                 {
 					anim.SetBool("hasBox", false);
-					anim.SetTrigger("throw");
+					net_anim.SetTrigger("throw");
 					
 					Cmd_Throw();
                 }
 				//punch
 				else
 				{
-					anim.SetTrigger("atk");
+					net_anim.SetTrigger("atk");
 				}
 
 				throw_input = false;
@@ -190,6 +190,22 @@ public class PlayerControl : NetworkBehaviour
     #region hold
     private void Grab()
     {
+		//checks if there are pieces in range
+		Collider[] hits = Physics.OverlapBox(GrabPoint.position +
+						  grab_offset, grab_range, Quaternion.identity,
+						  piece_layer);
+		
+		//if there were any in the hitbox, grab the piece
+		if(hits.Length > 0)
+		{
+			anim.SetBool("hasBox", true);
+			
+			GameObject obj = hits[0].transform.gameObject;
+
+			Cmd_Grab(obj);
+		}
+		
+		/*
 		//checks if there's an object in range
 		RaycastHit hit;
 		//raycast that only hits the piece layer
@@ -200,8 +216,17 @@ public class PlayerControl : NetworkBehaviour
 			GameObject obj = hit.transform.gameObject;
 
 			Cmd_Grab(obj);
-		}
+		}*/
     }
+	
+	#if UNITY_EDITOR
+	//range do grab
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.red;
+		Gizmos.DrawCube(GrabPoint.position + grab_offset, grab_range);
+	}
+	#endif
 
 	[Command]
 	private void Cmd_Grab(GameObject obj)
