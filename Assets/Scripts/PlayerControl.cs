@@ -7,6 +7,8 @@ public class PlayerControl : NetworkBehaviour
 {
     private Rigidbody rigid;
 	[SerializeField]
+	private Animator anim;
+	[SerializeField]
 	private Collider char_col;
 
     #region movement
@@ -114,6 +116,8 @@ public class PlayerControl : NetworkBehaviour
 				//releases grabbed object
 				else
 				{
+					anim.SetBool("hasBox", false);
+					
 					Cmd_Drop();
 				}
 
@@ -121,10 +125,19 @@ public class PlayerControl : NetworkBehaviour
 			}
 			else if(throw_input)
             {
+				//throws grabbed object
 				if(GrabObj != null)
                 {
+					anim.SetBool("hasBox", false);
+					anim.SetTrigger("throw");
+					
 					Cmd_Throw();
                 }
+				//punch
+				else
+				{
+					anim.SetTrigger("atk");
+				}
 
 				throw_input = false;
             }
@@ -152,6 +165,8 @@ public class PlayerControl : NetworkBehaviour
 		if(rigid.velocity.magnitude < max_spd)
 			rigid.AddForce(dir * h_spd);
 		*/
+		
+		anim.SetFloat("velocity", rigid.velocity.magnitude);
 	}
 
 	/*private bool JumpCheck()
@@ -180,6 +195,8 @@ public class PlayerControl : NetworkBehaviour
 		//raycast that only hits the piece layer
 		if(Physics.Raycast(transform.position + grab_offset, transform.forward * grab_range, out hit, piece_layer))
         {
+			anim.SetBool("hasBox", true);
+			
 			GameObject obj = hit.transform.gameObject;
 
 			Cmd_Grab(obj);
