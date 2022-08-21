@@ -198,11 +198,25 @@ public class PlayerControl : NetworkBehaviour
 		//if there were any in the hitbox, grab the piece
 		if(hits.Length > 0)
 		{
-			anim.SetBool("hasBox", true);
+			int no = 0;
+			bool found = false;
 			
-			GameObject obj = hits[0].transform.gameObject;
+			foreach(Collider hit in hits)
+			{
+				if(!hit.GetComponent<Rigidbody>().isKinematic)
+					found = true;
+				else
+					no++;
+			}
+			
+			if(found)
+			{
+				anim.SetBool("hasBox", true);
+				
+				GameObject obj = hits[0].transform.gameObject;
 
-			Cmd_Grab(obj);
+				Cmd_Grab(obj);
+			}
 		}
 		
 		/*

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System;
 using UnityEngine;
 using Mirror;
 
@@ -26,10 +28,46 @@ public class PieceCheck : NetworkBehaviour
 
     [SerializeField]
     private LayerMask piece_layer;
-
+	
+	#region raycast
     //raycast range
     [SerializeField]
     private float ray_range;
+	
+	public class RaycastResult: IComparable<RaycastResult>
+	{
+		public float distance;
+		public Collider collider;
+		public Vector2 textureCoord;
+		public string tag;
+		public RaycastResult(RaycastHit hit)
+		{
+			distance = hit.distance;
+			collider = hit.collider;
+			textureCoord = hit.textureCoord;
+			tag =  hit.transform.gameObject.tag;
+		}
+	 
+		public int CompareTo(RaycastResult other)
+		{
+			return distance.CompareTo(other.distance);
+		}
+	}
+	private RaycastHit[] rc_hits;
+	private List<RaycastResult> hitList = new List<RaycastResult>();
+	
+	private void SortDistances(RaycastHit[] sort_hits)
+    {
+        hitList.Clear();
+        rc_hits = sort_hits;
+		
+        foreach(RaycastHit hit in rc_hits)
+        {
+            hitList.Add(new RaycastResult(hit));
+        }
+        hitList.Sort();
+    }
+	#endregion
 
     //variables
     public override void OnStartClient()
@@ -61,6 +99,8 @@ public class PieceCheck : NetworkBehaviour
         if (other.CompareTag("Hole") && !p_set)
         {
             p_set = true;
+			
+			Manager.Instance.curr_pieces++;
             
             target = other.transform;
             //move the piece
@@ -85,19 +125,94 @@ public class PieceCheck : NetworkBehaviour
 				Debug.LogError("Piece has no assigned team.");
 				break;
 		}
-
+	
+		#region raycasts
         //checks for other pieces and counts them
         RaycastHit[] hits;
-
-        hits = Physics.RaycastAll(transform.position, Vector3.right * ray_range, piece_layer);
 		
-        int no = 0;
-        foreach(RaycastHit hit in hits)
+		int no = 0;
+		int scr = 0;
+		//x
+		int no1 = 0;
+		int no2 = 0;
+		
+		#region X
+        hits = Physics.RaycastAll(transform.position, Vector3.right * 1000, piece_layer);
+		SortDistances(hits);
+		
+        foreach(RaycastResult hit in hitList)
         {
-            if(hit.transform.gameObject.tag == gameObject.tag)
-                no++;
+			if(hit.tag == gameObject.tag && hit.distance <= ray_range * (no1 + 1))
+                no1++;
         }
-        print(no);
+		
+		//-x
+		hits = Physics.RaycastAll(transform.position, -Vector3.right * 1000, piece_layer);
+		SortDistances(hits);
+		
+        foreach(RaycastResult hit in hitList)
+        {
+			if(hit.tag == gameObject.tag && hit.distance <= ray_range * (no2 + 1))
+                no2++;
+        }
+		
+		no = no1 + no2;
+		
+		if(no == 1)
+			scr += 5;
+		else if(no == 2)
+			scr += 15;
+		else if(no >= 3)
+			scr += 30;
+		
+		#endregion
+		
+		#region Z
+		no = 0;
+		
+		//z
+		no1 = 0;
+		
+        hits = Physics.RaycastAll(transform.position, Vector3.forward * 1000, piece_layer);
+		SortDistances(hits);
+		
+        foreach(RaycastResult hit in hitList)
+        {
+			if(hit.tag == gameObject.tag && hit.distance <= ray_range * (no1 + 1))
+                no1++;
+        }
+		
+		//-z
+		no2 = 0;
+		
+        hits = Physics.RaycastAll(transform.position, -Vector3.forward * ray_range, piece_layer);
+		SortDistances(hits);
+		
+        foreach(RaycastResult hit in hitList)
+        {
+			if(hit.tag == gameObject.tag && hit.distance <= ray_range * (no2 + 1))
+                no2++;
+        }
+		
+		no = no1 + no2;
+		
+		if(no == 1)
+			scr += 5;
+		else if(no == 2)
+			scr += 15;
+		else if(no >= 3)
+			scr += 30;
+        #endregion
+		
+		if(team == 1)
+			Manager.Instance.t1_score += scr;
+		else if(team == 2)
+			Manager.Instance.t2_score += scr;
+		else
+			Debug.LogError("Score error: team not defined.");
+		
+		Manager.Instance.SpawnPiece();
+		#endregion
 	}
 	
     //moves the piece to the hole

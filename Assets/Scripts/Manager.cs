@@ -17,6 +17,11 @@ public class Manager : NetworkBehaviour
 	[SyncVar(hook = nameof(ReadyChanged))]
 	public bool ready;
 	
+	//how many holes must be filled until the game resets
+	[SyncVar(hook = nameof(OnCurrPieces))]
+	public int curr_pieces;
+	private	int total_pieces;
+	
 	[SerializeField]
 	private Button btn_ready;
 	#endregion
@@ -25,7 +30,10 @@ public class Manager : NetworkBehaviour
 	//score
 	[SerializeField]
 	private Text t1_txt, t2_txt;
-	private float t1_score, t2_score;
+	[SyncVar(hook = nameof(OnTeam1Score))]
+	public float t1_score;
+	[SyncVar(hook = nameof(OnTeam2Score))]
+	public float t2_score;
 
 	[SerializeField]
 	private GameObject PiecePrefab;
@@ -51,6 +59,23 @@ public class Manager : NetworkBehaviour
 	private float min_dist;
 	#endregion
 	
+	//game end condition
+	private void OnCurrPieces(int _Old, int _New)
+	{
+		if(curr_pieces >= total_pieces)
+		{
+			
+		}
+	}
+	private void OnTeam1Score(float _Old, float _New)
+	{
+		t1_txt.text = "TEAM 1: " + _New;
+	}
+	private void OnTeam2Score(float _Old, float _New)
+	{
+		t2_txt.text = "TEAM 2: " + _New;
+	}
+	
     private void Awake()
     {
         //sets global reference
@@ -63,7 +88,12 @@ public class Manager : NetworkBehaviour
 	{
 		btn_ready.onClick.AddListener(ReadyButton);
 		
+		total_pieces = HoleArray.Length;
+		
 		SetupUI();
+		
+		t1_txt.text = "TEAM 1: " + t1_score;
+		t2_txt.text = "TEAM 2: " + t2_score;
 	}
 	
 	#region connection
