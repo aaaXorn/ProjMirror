@@ -13,6 +13,15 @@ public class PlayerControl : NetworkBehaviour
 	[SerializeField]
 	private Collider char_col;
 
+	private enum States
+    {
+		Free,
+		Attack,
+		Emote,
+		Hurt
+    }
+	private States state = States.Free;
+
     #region movement
     //movement inputs
     private float inputX, inputZ;
@@ -73,7 +82,33 @@ public class PlayerControl : NetworkBehaviour
 			Manager.Instance.SetupUI();
 		}
 		else Debug.LogError("Manager Instance is null.");
+
+		StateMachine(States.Free);
 	}
+
+	private void StateMachine(States _state)
+    {
+		state = _state;
+
+		switch(state)
+        {
+			case States.Free:
+				StartCoroutine("FreeState");
+				break;
+
+			case States.Attack:
+
+				break;
+
+			case States.Emote:
+
+				break;
+
+			case States.Hurt:
+
+				break;
+        }
+    }
 
     private void Update()
     {
@@ -88,28 +123,17 @@ public class PlayerControl : NetworkBehaviour
 		if (Input.GetButtonDown("Fire1")) throw_input = true;
     }
 
-    private void FixedUpdate()
-    {
-        //skips if object isn't owned by client
-        if (!isLocalPlayer) return;
-
+	private IEnumerator FreeState()
+	{
 		if (can_move)
 		{
 			//movement and rotation
 			Move();
 
-			/*if(jump_input)
-            {
-				if(JumpCheck())
-					Jump();
-				
-				jump_input = false;
-            }*/
-
 			if (grab_input)
 			{
 				//grabs an object
-				if(GrabObj == null)
+				if (GrabObj == null)
 				{
 					Grab();
 				}
@@ -117,22 +141,22 @@ public class PlayerControl : NetworkBehaviour
 				else
 				{
 					anim.SetBool("hasBox", false);
-					
+
 					Cmd_Drop();
 				}
 
 				grab_input = false;
 			}
-			else if(throw_input)
-            {
+			else if (throw_input)
+			{
 				//throws grabbed object
-				if(GrabObj != null)
-                {
+				if (GrabObj != null)
+				{
 					anim.SetBool("hasBox", false);
 					net_anim.SetTrigger("throw");
-					
+
 					Cmd_Throw();
-                }
+				}
 				//punch
 				else
 				{
@@ -140,10 +164,14 @@ public class PlayerControl : NetworkBehaviour
 				}
 
 				throw_input = false;
-            }
+			}
 		}
-    }
-	
+
+		yield return null;
+
+		StateMachine(States.Free);
+	}
+
 	//movement and rotation
 	private void Move()
 	{	
@@ -155,7 +183,7 @@ public class PlayerControl : NetworkBehaviour
 			Quaternion newRot = Quaternion.LookRotation(dir, Vector3.up);
 			//slowly rotates towards final rotation
 			transform.rotation = Quaternion.RotateTowards
-								 (transform.rotation, newRot, rot_spd);
+								 (transform.rotation, newRot, rot_spd * Time.deltaTime);
 		}
 		
         //movement
@@ -169,22 +197,26 @@ public class PlayerControl : NetworkBehaviour
 		anim.SetFloat("velocity", rigid.velocity.magnitude);
 	}
 
-	/*private bool JumpCheck()
+	private IEnumerator AttackState()
     {
-		//checks if there's an object in range
-		RaycastHit hit;
-		if (Physics.Raycast(transform.position + Vector3.up * 0.1f, -Vector3.up * 0.2f, out hit))
-		{
-			return true;
-		}
-		return false;
+
+
+		yield return null;
     }
 
-	private void Jump()
+	private IEnumerator EmoteState()
     {
-		//force
-		rigid.AddForce(Vector3.up * jump_spd, ForceMode.Impulse);
-    }*/
+
+		yield return null;
+    }
+
+	private IEnumerator HurtState()
+    {
+
+
+		yield return null;
+    }
+
     #region grab
 
     #region hold
@@ -218,23 +250,10 @@ public class PlayerControl : NetworkBehaviour
 				Cmd_Grab(obj);
 			}
 		}
-		
-		/*
-		//checks if there's an object in range
-		RaycastHit hit;
-		//raycast that only hits the piece layer
-		if(Physics.Raycast(transform.position + grab_offset, transform.forward * grab_range, out hit, piece_layer))
-        {
-			anim.SetBool("hasBox", true);
-			
-			GameObject obj = hit.transform.gameObject;
-
-			Cmd_Grab(obj);
-		}*/
     }
 	
 	#if UNITY_EDITOR
-	//range do grab
+	//grab range
 	private void OnDrawGizmosSelected()
 	{
 		Gizmos.color = Color.red;

@@ -107,6 +107,8 @@ public class PieceCheck : NetworkBehaviour
             StartCoroutine("MoveTo");
 
             other.enabled = false;
+
+			Rpc_IsTrigger();
         }
     }
 
@@ -215,6 +217,12 @@ public class PieceCheck : NetworkBehaviour
 		#endregion
 	}
 	
+	[ClientRpc]
+	private void Rpc_IsTrigger()
+    {
+		GetComponent<Collider>().isTrigger = true;
+    }
+
     //moves the piece to the hole
     private IEnumerator MoveTo()
     {

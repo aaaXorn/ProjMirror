@@ -40,6 +40,10 @@ public class Manager : NetworkBehaviour
 
 	[SerializeField]
 	private Collider[] HoleArray;
+	//field size
+	private int lines = 10, columns = 10;
+	//distance between holes
+	private float dist = 2f;
 
 	//number of spawned pieces
 	[SerializeField]
@@ -87,13 +91,20 @@ public class Manager : NetworkBehaviour
 	private void Start()
 	{
 		btn_ready.onClick.AddListener(ReadyButton);
-		
-		total_pieces = HoleArray.Length;
+
+		SetupHoles();
 		
 		SetupUI();
 		
 		t1_txt.text = "TEAM 1: " + t1_score;
 		t2_txt.text = "TEAM 2: " + t2_score;
+	}
+
+	private void SetupHoles()
+    {
+
+
+		total_pieces = HoleArray.Length;
 	}
 	
 	#region connection

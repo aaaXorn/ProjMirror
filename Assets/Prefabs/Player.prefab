@@ -85,10 +85,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  anim: {fileID: 3831054147433070498}
   char_col: {fileID: 8470292448642953074}
   h_spd: 7.5
-  rot_spd: 7.5
+  rot_spd: 750
   can_move: 0
   team: 0
   grab_range: {x: 0.6, y: 1.2, z: 0.6}
