@@ -17,7 +17,8 @@ public class PlayerControl : NetworkBehaviour
     {
 		Free,
 		Attack,
-		Emote,
+		Emote1,
+		Emote2,
 		Hurt
     }
 	private States state = States.Free;
@@ -30,9 +31,16 @@ public class PlayerControl : NetworkBehaviour
 	//movement speed
 	[SerializeField]
 	private float h_spd, rot_spd;//, jump_spd;
-	
+	private bool e1_input, e2_input;
+
 	//if the player can currently move
 	public bool can_move = true;
+
+	[SerializeField]
+	private float punch_range;
+	[SerializeField]
+	private Transform PunchPoint;
+	private LayerMask player_layer;
 	#endregion
 
 	//this player's team
@@ -71,6 +79,8 @@ public class PlayerControl : NetworkBehaviour
 		//animator
 		net_anim = GetComponent<NetworkAnimator>();
 		anim = net_anim.animator;
+
+		player_layer = LayerMask.GetMask("Player");
     }
 	
 	//on start if object belongs to client
@@ -97,11 +107,15 @@ public class PlayerControl : NetworkBehaviour
 				break;
 
 			case States.Attack:
-
+				StartCoroutine("AttackState");
 				break;
 
-			case States.Emote:
+			case States.Emote1:
+				StartCoroutine("EmoteState", 1);
+				break;
 
+			case States.Emote2:
+				StartCoroutine("EmoteState", 2);
 				break;
 
 			case States.Hurt:
@@ -121,7 +135,9 @@ public class PlayerControl : NetworkBehaviour
 		//if (Input.GetButtonDown("Jump")) jump_input = true;
 		if (Input.GetButtonDown("Fire2")) grab_input = true;
 		if (Input.GetButtonDown("Fire1")) throw_input = true;
-    }
+		if (Input.GetButtonDown("Emote1")) e1_input = true;
+		if (Input.GetButtonDown("Emote2")) e2_input = true;
+	}
 
 	private IEnumerator FreeState()
 	{
@@ -160,11 +176,38 @@ public class PlayerControl : NetworkBehaviour
 				//punch
 				else
 				{
-					net_anim.SetTrigger("atk");
+					StateMachine(States.Attack);
+
+					throw_input = false;
+
+					yield break;
 				}
 
 				throw_input = false;
 			}
+			//emotes
+			else if(e1_input)
+            {
+				if (GrabObj == null)
+				{
+					StateMachine(States.Emote1);
+
+					e1_input = false;
+
+					yield break;
+				}
+            }
+			else if(e2_input)
+            {
+				if (GrabObj == null)
+				{
+					StateMachine(States.Emote2);
+
+					e2_input = false;
+
+					yield break;
+				}
+            }
 		}
 
 		yield return null;
@@ -199,15 +242,77 @@ public class PlayerControl : NetworkBehaviour
 
 	private IEnumerator AttackState()
     {
+		net_anim.SetTrigger("atk");
 
+		bool attacking = true;
+		float time = 0;
+		float start = 0.12f;
+		float end = 0.45f;
 
-		yield return null;
+		while (attacking)
+		{
+			if (can_move)
+				Move();
+
+			if(time >= start)
+            {
+				//hitbox
+				Collider[] hitCol;
+
+				hitCol = Physics.OverlapSphere(PunchPoint.position, punch_range, player_layer);
+
+				foreach(var hit in hitCol)
+                {
+					if (hit.transform.root != transform)
+					{
+						//add force
+						print("hit");
+					}
+                }
+				
+				//ends attack
+				if (time >= end)
+					attacking = false;
+            }
+
+			time += Time.deltaTime;
+
+			yield return null;
+		}
+
+		StateMachine(States.Free);
     }
 
-	private IEnumerator EmoteState()
+	private IEnumerator EmoteState(int emote)
     {
+		float time = 0;
 
-		yield return null;
+		anim.SetInteger("no_emote", emote);
+		net_anim.SetTrigger("emote");
+
+		switch(emote)
+        {
+			//teabag
+			case 1:
+				rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
+				time = 1.125f;
+				break;
+
+			case 2:
+				time = 1.374f;
+				break;
+
+			default:
+				Debug.LogError("Emote error.");
+				break;
+		}
+
+		yield return new WaitForSeconds(time);
+
+		anim.SetInteger("no_emote", 0);
+		net_anim.SetTrigger("emote");
+
+		StateMachine(States.Free);
     }
 
 	private IEnumerator HurtState()
@@ -253,11 +358,14 @@ public class PlayerControl : NetworkBehaviour
     }
 	
 	#if UNITY_EDITOR
-	//grab range
 	private void OnDrawGizmosSelected()
 	{
-		Gizmos.color = Color.red;
+		//grab range
+		Gizmos.color = Color.blue;
 		Gizmos.DrawCube(GrabPoint.position + grab_offset, grab_range);
+		//punch range
+		Gizmos.color = Color.red;
+		Gizmos.DrawSphere(PunchPoint.position, punch_range);
 	}
 	#endif
 
