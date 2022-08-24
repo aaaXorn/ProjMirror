@@ -269,7 +269,7 @@ public class PlayerControl : NetworkBehaviour
 					{
 						PlayerControl other_PC = hit.GetComponent<PlayerControl>();
 						if(other_PC != null)
-							Cmd_Punch(transform.position, other_PC);
+							other_PC.Cmd_Punch(transform.position);
 					}
                 }
 				
@@ -375,9 +375,9 @@ public class PlayerControl : NetworkBehaviour
 	#endif
 	
 	[Command]
-	private void Cmd_Punch(Vector3 pos, PlayerControl PC)
+	private void Cmd_Punch(Vector3 pos)
 	{
-		PC.Rpc_Punch(pos);
+		Rpc_Punch(pos);
 	}
 	
 	[ClientRpc]

@@ -91,6 +91,7 @@ MonoBehaviour:
   can_move: 0
   punch_range: 0.4
   PunchPoint: {fileID: 8865395102614350450}
+  punch_force: 150
   team: 0
   grab_range: {x: 0.4, y: 1.2, z: 0.5}
   throw_spd_Z: 5
