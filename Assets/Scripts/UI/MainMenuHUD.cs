@@ -7,10 +7,10 @@ using Mirror;
 public class MainMenuHUD : MonoBehaviour
 {
     [SerializeField]
-    private GameObject ConnectPanel, MainPanel;//, StatusPanel;
+    private GameObject ConnectPanel, MainPanel;
 
     [SerializeField]
-    private Button btn_online, btn_host, btn_server, btn_client, btn_quit;//, btn_stop_host;
+    private Button btn_online, btn_host, btn_server, btn_client, btn_quit;
 
     [SerializeField]
     private InputField iField_address;
@@ -22,6 +22,8 @@ public class MainMenuHUD : MonoBehaviour
     {
         if(NetworkManager.singleton.networkAddress != "localhost")
             iField_address.text = NetworkManager.singleton.networkAddress;
+        else iField_address.text = "localhost";
+
 
         //invokes OnInputFieldChanged() whenever iField_address is changed
         iField_address.onValueChanged.AddListener(delegate
@@ -34,8 +36,6 @@ public class MainMenuHUD : MonoBehaviour
         btn_server.onClick.AddListener(ButtonServer);
         btn_client.onClick.AddListener(ButtonClient);
         btn_quit.onClick.AddListener(ButtonQuit);
-        //btn_stop_host.onClick.AddListener(ButtonStopHost);
-
         ConnectPanel.SetActive(false);
     }
 
@@ -52,45 +52,21 @@ public class MainMenuHUD : MonoBehaviour
     public void ButtonHost()
     {
         NetworkManager.singleton.StartHost();
-        //SetupCanvas();
     }
     public void ButtonServer()
     {
         NetworkManager.singleton.StartServer();
-        //SetupCanvas();
     }
     public void ButtonClient()
     {
         NetworkManager.singleton.StartClient();
-        //SetupCanvas();
     }
     public void ButtonQuit()
     {
         Application.Quit();
     }
 
-    /*public void ButtonStopHost()
-    {
-        //if host, stop hosting
-        if(NetworkServer.active && NetworkClient.isConnected)
-        {
-            NetworkManager.singleton.StopHost();
-        }
-        //if client-only, disconnect
-        else if(NetworkClient.isConnected)
-        {
-            NetworkManager.singleton.StopClient();
-        }
-        //if server-only, stop server
-        else if(NetworkServer.active)
-        {
-                NetworkManager.singleton.StopServer();
-        }
-
-        SetupCanvas();
-    }
-
-    public void SetupCanvas()
+    /*public void SetupCanvas()
     {
         if (!NetworkClient.isConnected && !NetworkServer.active)
         {

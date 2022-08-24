@@ -24,6 +24,8 @@ public class Manager : NetworkBehaviour
 	
 	[SerializeField]
 	private Button btn_ready;
+	[SerializeField]
+	private GameObject ReadyWindow;
 	#endregion
 
 	#region piece
@@ -113,7 +115,7 @@ public class Manager : NetworkBehaviour
 		//deactivates the ready button
 		if(ready)
 		{
-			btn_ready.gameObject.SetActive(false);
+			ReadyWindow.SetActive(false);
 			GameStart();
 		}
 		
@@ -150,7 +152,11 @@ public class Manager : NetworkBehaviour
 		{
 			local_PC.can_move = true;
 		}
-		else Debug.LogError("Local PlayerControl script is null.");
+		else
+		{
+			Debug.LogError("Local PlayerControl script is null.");
+			NetworkManager.singleton.StopClient();//temporary fix
+		}
 
 		if(isServer)
         {
