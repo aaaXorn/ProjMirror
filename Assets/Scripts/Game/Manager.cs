@@ -38,14 +38,14 @@ public class Manager : NetworkBehaviour
 	public float t2_score;
 
 	[SerializeField]
-	private GameObject PiecePrefab;
+	private GameObject PiecePrefab, HolePrefab;
 
-	[SerializeField]
-	private Collider[] HoleArray;
+	private List<Collider> HoleList = new List<Collider>();
 	//field size
 	private int lines = 10, columns = 10;
 	//distance between holes
 	private float dist = 2f;
+	private float spawn_y = 0;
 
 	//number of spawned pieces
 	[SerializeField]
@@ -92,10 +92,13 @@ public class Manager : NetworkBehaviour
 	
 	private void Start()
 	{
-		btn_ready.onClick.AddListener(ReadyButton);
+		if(isServer)
+		{
+			btn_ready.onClick.AddListener(ReadyButton);
 
-		SetupHoles();
-		
+			SetupHoles();
+		}
+
 		SetupUI();
 		
 		t1_txt.text = "TEAM 1: " + t1_score;
@@ -104,9 +107,24 @@ public class Manager : NetworkBehaviour
 
 	private void SetupHoles()
     {
+		float start_x = dist/2 + (lines/2 - 1) * dist;
+		float start_z = dist/2 + (columns/2 -1) * dist;
 
+		for(int l = 0; l < lines; l++)
+		{
+			for(int c = 0; c < columns; c++)
+			{
+				GameObject hole = Instantiate(HolePrefab, transform.position + new Vector3(start_x, spawn_y, start_z), Quaternion.identity);
+				HoleList.Add(hole.GetComponent<Collider>());
 
-		total_pieces = HoleArray.Length;
+				start_x -= dist;
+			}
+			start_z -= dist;
+			start_x = dist/2 + (lines/2 - 1) * dist;
+		}
+
+		//total_pieces = HoleArray.Length;
+		total_pieces = lines * columns;
 	}
 	
 	#region connection
@@ -163,7 +181,7 @@ public class Manager : NetworkBehaviour
 			StartSpawn();
 
 			//enables the hole triggers
-			foreach(Collider col in HoleArray)
+			foreach(Collider col in HoleList)
             {
 				col.enabled = true;
             }

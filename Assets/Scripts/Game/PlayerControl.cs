@@ -324,7 +324,7 @@ public class PlayerControl : NetworkBehaviour
 
 		yield return new WaitForSeconds(0.75f);
 		
-		StateMachine(States.Hurt);
+		StateMachine(States.Free);
     }
 
     #region grab
@@ -383,9 +383,10 @@ public class PlayerControl : NetworkBehaviour
 	[ClientRpc]
 	private void Rpc_Punch(Vector3 pos)
 	{
-		if(!isLocalPlayer) return;
+		if(!isLocalPlayer || state == States.Hurt) return;
 		
-		state = States.Hurt;
+		StopAllCoroutines();
+		StateMachine(States.Hurt);
 		
 		//add force
 		Vector3 dir = (transform.position - pos).normalized;

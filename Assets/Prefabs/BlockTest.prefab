@@ -108,7 +108,7 @@ MonoBehaviour:
   piece_layer:
     serializedVersion: 2
     m_Bits: 64
-  ray_range: 1
+  ray_range: 2
 --- !u!65 &7422195193450409632
 BoxCollider:
   m_ObjectHideFlags: 0
