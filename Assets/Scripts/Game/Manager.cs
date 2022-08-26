@@ -40,6 +40,7 @@ public class Manager : NetworkBehaviour
 	[SerializeField]
 	private GameObject PiecePrefab, HolePrefab;
 
+	private List<GameObject> PieceList = new List<GameObject>();
 	private List<Collider> HoleList = new List<Collider>();
 	//field size
 	private int lines = 10, columns = 10;
@@ -65,12 +66,15 @@ public class Manager : NetworkBehaviour
 	private float min_dist;
 	#endregion
 	
+	[SerializeField]
+	private Text end_txt;
+
 	//game end condition
 	private void OnCurrPieces(int _Old, int _New)
 	{
 		if(curr_pieces >= total_pieces)
 		{
-			
+			StartCoroutine("ResetGame");
 		}
 	}
 	private void OnTeam1Score(float _Old, float _New)
@@ -205,6 +209,9 @@ public class Manager : NetworkBehaviour
 									 Quaternion.identity);
 		//makes the piece spawn on all the clients
 		NetworkServer.Spawn(obj);
+
+		//adds to list
+		PieceList.Add(obj);
 	}
 	
 	//spawn a number of pieces based on the pieces var
@@ -216,4 +223,55 @@ public class Manager : NetworkBehaviour
 		}
 	}
 	#endregion
+
+	private IEnumerator ResetGame()
+	{
+		float t_scale = Time.timeScale;
+
+		Time.timeScale = 0f;
+
+		end_txt.gameObject.SetActive(true);
+
+		if(t1_score > t2_score)
+		{
+			end_txt.text = "TEAM 1 VICTORY";
+		}
+		else if(t2_score > t1_score)
+		{
+			end_txt.text = "TEAM 2 VICTORY";
+		}
+		else//tie
+		{
+			end_txt.text = "TIE";
+		}
+
+		yield return new WaitForSecondsRealtime(3);
+
+		Time.timeScale = t_scale;
+		end_txt.gameObject.SetActive(false);
+
+		ready = false;
+		ReadyWindow.SetActive(true);
+
+		local_PC.can_move = false;
+		local_PC.transform.position = local_PC.spawn_pos;
+		local_PC.transform.rotation = local_PC.spawn_rot;
+
+		if(isServer)
+		{
+			foreach(GameObject obj in PieceList)
+			{
+				Destroy(obj);
+			}
+			PieceList.Clear();
+
+			foreach(Collider col in HoleList)
+			{
+				col.enabled = true;
+			}
+
+			StartSpawn();
+		}
+		yield break;
+	}
 }

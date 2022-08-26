@@ -33,4 +33,15 @@ public class OnlineManager : NetworkManager
         player.name = $"{playerPrefab.name} [connId={conn.connectionId}]";
         NetworkServer.AddPlayerForConnection(conn, player);
     }
+
+    /*private void OnClientDisconnected()
+    {
+        print("disconnected");
+    }
+    public override void OnClientDisconnect()
+    {
+        base.OnClientDisconnect();
+        
+        print("disconnect");
+    }*/
 }

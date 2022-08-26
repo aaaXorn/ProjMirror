@@ -74,6 +74,9 @@ public class PlayerControl : NetworkBehaviour
 	public GameObject GrabObj;
 	#endregion
 
+	public Vector3 spawn_pos;
+	public Quaternion spawn_rot;
+
 	private void Start()
     {
         rigid = GetComponent<Rigidbody>();
@@ -96,6 +99,9 @@ public class PlayerControl : NetworkBehaviour
 		else Debug.LogError("Manager Instance is null.");
 
 		StateMachine(States.Free);
+
+		spawn_pos = transform.position;
+		spawn_rot = transform.rotation;
 	}
 
 	private void StateMachine(States _state)
