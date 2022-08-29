@@ -103,6 +103,9 @@ public class Manager : NetworkBehaviour
 			SetupHoles();
 		}
 
+		//total_pieces = HoleArray.Length;
+		total_pieces = lines * columns;
+
 		SetupUI();
 		
 		t1_txt.text = "TEAM 1: " + t1_score;
@@ -126,9 +129,6 @@ public class Manager : NetworkBehaviour
 			start_z -= dist;
 			start_x = dist/2 + (lines/2 - 1) * dist;
 		}
-
-		//total_pieces = HoleArray.Length;
-		total_pieces = lines * columns;
 	}
 	
 	#region connection

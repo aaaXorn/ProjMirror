@@ -27,6 +27,8 @@ public class PieceCheck : NetworkBehaviour
     private float spd, rot_spd, scale_spd;
 	[SerializeField]
 	private Vector3 TargetScale;
+	[SyncVar(hook = nameof(OnChangeScale))]
+	private Vector3 CurrScale;
 	
     [SerializeField]
     private LayerMask piece_layer;
@@ -88,6 +90,10 @@ public class PieceCheck : NetworkBehaviour
         material.color = Manager.Instance.mat[team];
     }
 
+	private void OnChangeScale(Vector3 _Old, Vector3 _New)
+	{
+		
+	}
     //IEnumerator grab movement
     #endregion
 
@@ -245,8 +251,8 @@ public class PieceCheck : NetworkBehaviour
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, target.rotation, rot_spd * Time.deltaTime);
             else if(!completeR) completeR = true;
 			
-			if(transform.scale != target.scale)
-				transform.scale = Vector3.MoveTowards(transform.scale, TargetScale, scale_spd * Time.deltaTime);
+			if(transform.localScale != TargetScale)
+				transform.localScale = Vector3.MoveTowards(transform.localScale, TargetScale, scale_spd * Time.deltaTime);
 			else if(!completeS) completeS = true;
 			
 			//waits for next Update to continue
