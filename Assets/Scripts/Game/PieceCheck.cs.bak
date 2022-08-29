@@ -245,8 +245,8 @@ public class PieceCheck : NetworkBehaviour
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, target.rotation, rot_spd * Time.deltaTime);
             else if(!completeR) completeR = true;
 			
-			if(transform.localScale != TargetScale)
-				transform.localScale = Vector3.MoveTowards(transform.localScale, TargetScale, scale_spd * Time.deltaTime);
+			if(transform.scale != target.scale)
+				transform.scale = Vector3.MoveTowards(transform.scale, TargetScale, scale_spd * Time.deltaTime);
 			else if(!completeS) completeS = true;
 			
 			//waits for next Update to continue

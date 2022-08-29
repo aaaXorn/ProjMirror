@@ -43,7 +43,7 @@ public class Manager : NetworkBehaviour
 	private List<GameObject> PieceList = new List<GameObject>();
 	private List<Collider> HoleList = new List<Collider>();
 	//field size
-	private int lines = 10, columns = 10;
+	private int lines = 2, columns = 2;
 	//distance between holes
 	private float dist = 2f;
 	private float spawn_y = 0;
