@@ -6,7 +6,9 @@ using Mirror;
 
 public class PlayerName : NetworkBehaviour
 {
-    [SerializeField]
+	private PlayerControl PC;
+	
+	[SerializeField]
     private TextMesh txt_nickname;
     [SerializeField]
     private GameObject FloatingInfo;
@@ -17,7 +19,9 @@ public class PlayerName : NetworkBehaviour
     //fazer baseado no time
     [SyncVar(hook = nameof(OnColorChanged))]
     public Color playerColor = Color.white;
-
+	[SerializeField]
+	private Color team1Color, team2Color;
+	
     private void OnNameChanged(string _Old, string _New)
     {
         txt_nickname.text = _New;
@@ -38,8 +42,11 @@ public class PlayerName : NetworkBehaviour
         floatingInfo.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         */
         
-        string name = "Player" + Random.Range(100, 999);
-        Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+		PC = GetComponent<PlayerControl>();
+		
+        string name = (StaticVars.username != null ? StaticVars.username : "Human Being");
+        Color color = (PC.team == 1 ? team1Color : team2Color);
+		
         CmdSetupPlayer(name, color);
     }
     
@@ -50,6 +57,10 @@ public class PlayerName : NetworkBehaviour
         playerColor = _col;
     }
 
+	private void Update()
+	{
+		FloatingInfo.transform.LookAt(Camera.main.transform);
+	}
     /*
     void Update()
     {
