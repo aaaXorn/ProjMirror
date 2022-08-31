@@ -13,6 +13,9 @@ public class PlayerControl : NetworkBehaviour
 	[SerializeField]
 	private Collider char_col;
 
+	[SerializeField]
+	private GameObject[] PlayerModel;
+
 	private enum States
     {
 		Free,
@@ -388,6 +391,12 @@ public class PlayerControl : NetworkBehaviour
 	[Command]
 	private void Cmd_Punch(Vector3 pos, PlayerControl PC)
 	{
+		if(PC.GrabObj != null)
+		{
+			PC.GrabObj.GetComponent<PieceCheck>().Rpc_ChangeColor(0);
+			PC.Cmd_Drop();
+		}
+		
 		PC.Rpc_Punch(pos);
 	}
 	
