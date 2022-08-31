@@ -9,8 +9,22 @@ using Mirror;
 
 public class OnlineManager : NetworkManager
 {
-    private int no_player;
-
+	public static OnlineManager Instance {get; private set;}
+	
+    public int no_player;
+	
+	public override void Awake()
+	{
+		base.Awake();
+		
+		if(Instance == null) Instance = this;
+		else
+		{
+			Destroy(Instance);
+			Instance = this;
+		}
+	}
+	
     /// <summary>Called on server when a client requests to add the player. Adds playerPrefab by default. Can be overwritten.</summary>
     // The default implementation for this function creates a new player object from the playerPrefab.
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)

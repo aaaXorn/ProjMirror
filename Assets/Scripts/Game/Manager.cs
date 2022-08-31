@@ -9,6 +9,10 @@ public class Manager : NetworkBehaviour
     //instance global reference
     public static Manager Instance { get; private set; }
 	
+	[SerializeField]
+	private GameObject AIPrefab;
+	private GameObject AIObject;
+	
 	#region connection
 	//local player script
 	public PlayerControl local_PC;
@@ -189,6 +193,15 @@ public class Manager : NetworkBehaviour
             {
 				col.enabled = true;
             }
+			
+			//AI
+			if((float)OnlineManager.Instance.no_player % 2 != 0)
+			{
+				AIObject = Instantiate(AIPrefab,
+									   SpawnPosition(),
+									   Quaternion.identity);
+				NetworkServer.Spawn(AIObject);
+			}
         }
 	}
 	#endregion
@@ -278,6 +291,11 @@ public class Manager : NetworkBehaviour
 			foreach(Collider col in HoleList)
 			{
 				col.enabled = true;
+			}
+			
+			if(AIObject != null)
+			{
+				Destroy(AIObject);
 			}
 		}
 		yield break;

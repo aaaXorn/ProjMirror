@@ -1469,6 +1469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  AIPrefab: {fileID: 8340273930283503787, guid: 1c1157bb93349494186c424c39ccfe73, type: 3}
   local_PC: {fileID: 0}
   ready: 0
   curr_pieces: 0

@@ -15,8 +15,7 @@ public class PlayerName : NetworkBehaviour
 
     [SyncVar(hook = nameof(OnNameChanged))]
     public string nickname;
-
-    //fazer baseado no time
+	
     [SyncVar(hook = nameof(OnColorChanged))]
     public Color playerColor = Color.white;
 	[SerializeField]

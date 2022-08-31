@@ -33,7 +33,7 @@ public class PlayerControl : NetworkBehaviour
 
 	//movement speed
 	[SerializeField]
-	private float h_spd, rot_spd;//, jump_spd;
+	private float h_spd, rot_spd;
 	private bool e1_input, e2_input;
 
 	//if the player can currently move
@@ -278,7 +278,16 @@ public class PlayerControl : NetworkBehaviour
 					{
 						PlayerControl other_PC = hit.GetComponent<PlayerControl>();
 						if(other_PC != null)
-							Cmd_Punch(transform.position, other_PC);
+						{
+							if(team != other_PC.team)
+								Cmd_Punch(transform.position, other_PC);
+						}
+						else
+						{
+							AIControl AIC = hit.GetComponent<AIControl>();
+							if(AIC != null && team != AIC.team)
+								Cmd_Punch_AI(transform.position, AIC);
+						}
 					}
                 }
 				
@@ -399,6 +408,17 @@ public class PlayerControl : NetworkBehaviour
 		
 		PC.Rpc_Punch(pos);
 	}
+		[Command]
+		private void Cmd_Punch_AI(Vector3 pos, AIControl AIC)
+		{
+			if(AIC.GrabObj != null)
+			{
+				AIC.GrabObj.GetComponent<PieceCheck>().Rpc_ChangeColor(0);
+				AIC.Cmd_Drop();
+			}
+			
+			AIC.Rpc_Punch(pos);
+		}
 	
 	[ClientRpc]
 	private void Rpc_Punch(Vector3 pos)
