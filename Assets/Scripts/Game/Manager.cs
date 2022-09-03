@@ -212,11 +212,9 @@ public class Manager : NetworkBehaviour
 		//pos X
 		float sign = (Random.Range(0, 2) == 0 ? -1 : 1);
 		float x = SpawnCenter.x + Random.Range(min_dist, max_dist) * sign;
-		print(x);
 		//pos Z
 		sign = (Random.Range(0, 2) == 0 ? -1 : 1);
 		float z = SpawnCenter.z + Random.Range(min_dist, max_dist) * sign;
-		print(z);
 		
 		Vector3 pos = new Vector3(x, SpawnCenter.y, z);
 		
