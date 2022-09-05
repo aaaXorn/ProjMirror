@@ -49,6 +49,8 @@ public class Manager : NetworkBehaviour
 	//all pieces
 	private List<GameObject> PieceList = new List<GameObject>();
 	private List<Collider> HoleList = new List<Collider>();
+	//players
+	public List<PlayerControl> PlayerList = new List<PlayerControl>();
 	//field size
 	private int lines = 10, columns = 10;
 	//distance between holes
@@ -272,10 +274,13 @@ public class Manager : NetworkBehaviour
 		ready = false;
 		ReadyWindow.SetActive(true);
 
-		local_PC.can_move = false;
-		local_PC.transform.position = local_PC.spawn_pos;
-		local_PC.transform.rotation = local_PC.spawn_rot;
-		local_PC.rigid.velocity = Vector3.zero;
+		if(local_PC != null)
+		{
+			local_PC.can_move = false;
+			local_PC.transform.position = local_PC.spawn_pos;
+			local_PC.transform.rotation = local_PC.spawn_rot;
+			local_PC.rigid.velocity = Vector3.zero;
+		}
 
 		if(isServer)
 		{
@@ -304,4 +309,35 @@ public class Manager : NetworkBehaviour
 		}
 		yield break;
 	}
+	
+	#region spaghetti
+	public void ResetPlayerList()
+	{
+		print("test");
+		Cmd_ResetPlayerList();
+	}
+	
+	[Command]
+	public void Cmd_ResetPlayerList()
+	{
+		print("test1");
+		PlayerList.Clear();
+		
+		Rpc_ResetPlayerList();
+	}
+	
+	[ClientRpc]
+	public void Rpc_ResetPlayerList()
+	{
+		print("test2");
+		Cmd_AddPlayerList(local_PC);
+	}
+	
+	[Command]
+	public void Cmd_AddPlayerList(PlayerControl player)
+	{
+		print("test3");
+		PlayerList.Add(player);
+	}
+	#endregion
 }
