@@ -420,6 +420,7 @@ public class PlayerControl : NetworkBehaviour
 			AIC.Rpc_Punch(pos);
 		}
 	
+	//when player is punched
 	[ClientRpc]
 	private void Rpc_Punch(Vector3 pos)
 	{

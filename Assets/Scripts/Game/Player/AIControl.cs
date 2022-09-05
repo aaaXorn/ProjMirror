@@ -15,12 +15,13 @@ public class AIControl : NetworkBehaviour
 
 	private enum States
     {
+		Falling,
 		Free,
 		Follow,
 		Attack,
 		Hurt
     }
-	private States state = States.Free;
+	private States state = States.Falling;
 	
 	//movement speed
 	[SerializeField]
@@ -64,7 +65,7 @@ public class AIControl : NetworkBehaviour
 	
 	private GameObject FollowTarget;
 
-	private void Start()
+	private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
 		
@@ -82,7 +83,7 @@ public class AIControl : NetworkBehaviour
 	{
 		base.OnStartServer();
 		
-		StateMachine(States.Free);
+		StateMachine(state);
 	}
 	
 	private void StateMachine(States _state)
@@ -91,6 +92,10 @@ public class AIControl : NetworkBehaviour
 
 		switch(state)
         {
+			case States.Falling:
+				StartCoroutine("FallingState");
+				break;
+			
 			case States.Free:
 				StartCoroutine("FreeState");
 				break;
@@ -109,8 +114,27 @@ public class AIControl : NetworkBehaviour
         }
     }
 	
+	private IEnumerator FallingState()
+	{
+		if(nav.enabled) nav.enabled = false;
+		if(rigid.isKinematic) rigid.isKinematic = false;
+		
+		rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
+		
+		//ends state when AI hits the floor
+		while(!Physics.Raycast(transform.position + Vector3.up * 0.1f, -Vector3.up, 0.2f, wall_layer))
+		{
+			yield return null;
+		}
+		
+		StateMachine(States.Free);
+	}
+	
 	private IEnumerator FreeState()
 	{
+		if(!nav.enabled) nav.enabled = true;
+		if(!rigid.isKinematic) rigid.isKinematic = true;
+		
 		float time = 0f;
 
 		bool searching = true;
@@ -120,7 +144,7 @@ public class AIControl : NetworkBehaviour
 
 		while(searching)
 		{
-			
+			searching = false;
 
 			yield return null;
 		}
@@ -187,14 +211,28 @@ public class AIControl : NetworkBehaviour
 	
 	private IEnumerator HurtState()
     {
-		yield return null;
+		
+		
+		yield return new WaitForSeconds(1.25f);
+		
 		StateMachine(States.Free);
     }
 	
+	//when ai is punched
 	[ClientRpc]
 	public void Rpc_Punch(Vector3 pos)
 	{
+		if(!isServer || state == States.Hurt) return;
 		
+		StopAllCoroutines();
+		StateMachine(States.Hurt);
+		
+		if(nav.enabled) nav.enabled = false;
+		if(rigid.isKinematic) rigid.isKinematic = false;
+		
+		//add force
+		Vector3 dir = (transform.position - pos).normalized;
+		rigid.AddForce(dir * punch_force, ForceMode.Force);
 	}
 	
 	[Command]

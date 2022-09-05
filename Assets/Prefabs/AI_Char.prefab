@@ -53,7 +53,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1649253812706557076, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
       propertyPath: m_Name
-      value: Player_AI
+      value: AI_Char
       objectReference: {fileID: 0}
     - target: {fileID: 3496904195842192355, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
       propertyPath: sceneId
@@ -69,6 +69,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3990139285412941006, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
+    - {fileID: 8643333220781722445, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
 --- !u!1 &8340273930283503787 stripped
 GameObject:
@@ -153,7 +154,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8340273930283503787}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
