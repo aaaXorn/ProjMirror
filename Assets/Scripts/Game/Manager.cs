@@ -78,6 +78,9 @@ public class Manager : NetworkBehaviour
 	[SerializeField]
 	private Text end_txt;
 
+	[SerializeField]
+	private GameObject SetupPrefab;
+
 	//game end condition
 	private void OnCurrPieces(int _Old, int _New)
 	{
@@ -110,6 +113,13 @@ public class Manager : NetworkBehaviour
 			btn_ready.onClick.AddListener(ReadyButton);
 
 			SetupHoles();
+			
+			//creates the piece
+			GameObject obj = Instantiate(SetupPrefab,
+										 transform.position,
+										 Quaternion.identity);
+			//makes the piece spawn on all the clients
+			NetworkServer.Spawn(obj);
 		}
 
 		//total_pieces = HoleArray.Length;
@@ -309,35 +319,4 @@ public class Manager : NetworkBehaviour
 		}
 		yield break;
 	}
-	
-	#region spaghetti
-	public void ResetPlayerList()
-	{
-		print("test");
-		Cmd_ResetPlayerList();
-	}
-	
-	[Command]
-	public void Cmd_ResetPlayerList()
-	{
-		print("test1");
-		PlayerList.Clear();
-		
-		Rpc_ResetPlayerList();
-	}
-	
-	[ClientRpc]
-	public void Rpc_ResetPlayerList()
-	{
-		print("test2");
-		Cmd_AddPlayerList(local_PC);
-	}
-	
-	[Command]
-	public void Cmd_AddPlayerList(PlayerControl player)
-	{
-		print("test3");
-		PlayerList.Add(player);
-	}
-	#endregion
 }

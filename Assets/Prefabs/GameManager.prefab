@@ -69,6 +69,7 @@ MonoBehaviour:
   max_dist: 16
   min_dist: 11
   end_txt: {fileID: 0}
+  SetupPrefab: {fileID: 9040680446257741825, guid: 8f787387a778f7e4da7fb9b5f94fe097, type: 3}
 --- !u!114 &500377438007341154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,5 +85,5 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 
+  m_AssetId: b6a3069c987ab8f4cbb1e94a31e06431
   hasSpawned: 0

@@ -56,7 +56,7 @@ public class OnlineManager : NetworkManager
 		
         base.OnServerDisconnect(conn);
         
-		Manager.Instance.ResetPlayerList();
+		PlayerListSetup.Instance.ResetPlayerList();
 		
         print("disconnect");
     }
