@@ -43,7 +43,10 @@ public class Manager : NetworkBehaviour
 
 	[SerializeField]
 	private GameObject PiecePrefab, HolePrefab;
-
+	
+	//active pieces, not placed in a hole yet
+	public List<GameObject> ActPieceList = new List<GameObject>();
+	//all pieces
 	private List<GameObject> PieceList = new List<GameObject>();
 	private List<Collider> HoleList = new List<Collider>();
 	//field size
@@ -232,6 +235,7 @@ public class Manager : NetworkBehaviour
 
 		//adds to list
 		PieceList.Add(obj);
+		ActPieceList.Add(obj);
 	}
 	
 	//spawn a number of pieces based on the pieces var
@@ -285,11 +289,13 @@ public class Manager : NetworkBehaviour
 				Destroy(obj);
 			}
 			PieceList.Clear();
+			ActPieceList.Clear();
 
 			foreach(Collider col in HoleList)
 			{
 				col.enabled = true;
 			}
+			HoleList.Clear();
 			
 			if(AIObject != null)
 			{

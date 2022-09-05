@@ -134,20 +134,25 @@ public class AIControl : NetworkBehaviour
 	{
 		if(!nav.enabled) nav.enabled = true;
 		if(!rigid.isKinematic) rigid.isKinematic = true;
+		if(FollowTarget) FollowTarget = null;
 		
 		float time = 0f;
+
+		float dist = 5f;
 
 		bool searching = true;
 		
 		//get position
 		Vector3 pos = Vector3.zero;
 
-		while(searching)
+		//foreach(GameObject obj in Manager.Instance.ActPieceList
+
+		/*while(searching)
 		{
 			searching = false;
 
 			yield return null;
-		}
+		}*/
 
 		while(time < 5f)
 		{
@@ -157,7 +162,6 @@ public class AIControl : NetworkBehaviour
 			{
 				if (can_move)
 				{
-					print(pos);
 					Move(pos);
 				}
 				

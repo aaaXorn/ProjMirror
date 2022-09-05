@@ -221,6 +221,7 @@ public class PieceCheck : NetworkBehaviour
 		else
 			Debug.LogError("Score error: team not defined.");
 		
+		Manager.Instance.ActPieceList.Remove(gameObject);
 		Manager.Instance.SpawnPiece();
 		#endregion
 	}
