@@ -105,7 +105,7 @@ public class Manager : NetworkBehaviour
         //if there's  already an instance, remove this
         else Destroy(gameObject);
     }
-	
+
 	private void Start()
 	{
 		if(isServer)
@@ -119,7 +119,7 @@ public class Manager : NetworkBehaviour
 										 transform.position,
 										 Quaternion.identity);
 			//makes the piece spawn on all the clients
-			NetworkServer.Spawn(obj);
+			NetworkServer.Spawn(obj, connectionToServer);
 		}
 
 		//total_pieces = HoleArray.Length;

@@ -17,14 +17,16 @@ public class PlayerListSetup : NetworkBehaviour
 			Instance = this;
 		}
 		
-		ResetPlayerList();
+		//ResetPlayerList();
 	}
 	
 	#region spaghetti
 	public void ResetPlayerList()
 	{
 		print("test");
-		Cmd_ResetPlayerList();
+		Manager.Instance.PlayerList.Clear();
+
+		Rpc_ResetPlayerList();
 	}
 	
 	[Command]
@@ -39,8 +41,11 @@ public class PlayerListSetup : NetworkBehaviour
 	[ClientRpc]
 	public void Rpc_ResetPlayerList()
 	{
-		print("test2");
-		Cmd_AddPlayerList(Manager.Instance.local_PC);
+		if(!isServer)
+		{
+			print("test2");
+			Cmd_AddPlayerList(Manager.Instance.local_PC);
+		}
 	}
 	
 	[Command]
