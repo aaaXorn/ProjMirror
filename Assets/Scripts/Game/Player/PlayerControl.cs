@@ -13,9 +13,6 @@ public class PlayerControl : NetworkBehaviour
 	[SerializeField]
 	private Collider char_col;
 
-	[SerializeField]
-	private GameObject[] PlayerModel;
-
 	private enum States
     {
 		Free,

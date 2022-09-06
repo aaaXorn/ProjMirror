@@ -11,6 +11,9 @@ public class OnlineManager : NetworkManager
 {
 	public static OnlineManager Instance {get; private set;}
 	
+	[SerializeField]
+	private GameObject[] Skins;
+	
     public int no_player;
 	
 	public override void Awake()
