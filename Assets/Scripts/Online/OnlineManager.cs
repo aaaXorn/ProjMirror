@@ -11,8 +11,7 @@ public class OnlineManager : NetworkManager
 {
 	public static OnlineManager Instance {get; private set;}
 	
-	[SerializeField]
-	private GameObject[] Skins;
+	private GameObject[] Skins = new GameObject[4];
 	
     public int no_player;
 	
@@ -26,6 +25,11 @@ public class OnlineManager : NetworkManager
 			Destroy(Instance);
 			Instance = this;
 		}
+        /*
+        Skins[0] = Resources.Load<GameObject>("Upward_Guy");
+        Skins[1] = Resources.Load<GameObject>("Upward_Alien");
+        Skins[2] = Resources.Load<GameObject>("Upward_Samurai");
+        Skins[3] = Resources.Load<GameObject>("Upward_Extra");*/
 	}
 	
     /// <summary>Called on server when a client requests to add the player. Adds playerPrefab by default. Can be overwritten.</summary>
@@ -36,6 +40,9 @@ public class OnlineManager : NetworkManager
         GameObject player = startPos != null
             ? Instantiate(playerPrefab, startPos.position, startPos.rotation)
             : Instantiate(playerPrefab);
+
+        //different skins as prefab variants
+        //Instantiate(Skins[2], player.transform);
 
         //sets each player's team
         PlayerControl PC = player.GetComponent<PlayerControl>();

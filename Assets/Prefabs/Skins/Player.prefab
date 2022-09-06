@@ -183,11 +183,6 @@ MonoBehaviour:
   syncInterval: 0.1
   rigid: {fileID: 0}
   char_col: {fileID: 8470292448642953074}
-  PlayerModel:
-  - {fileID: 489577663122114539, guid: 65c3e6b7587dd97459a93fe62dc52412, type: 3}
-  - {fileID: 1393383162656110677, guid: d05789a5fa2b633428a483c8730a5866, type: 3}
-  - {fileID: 3638048366135041107, guid: a91f0868311b90d469b193bc4fdadc82, type: 3}
-  - {fileID: 5976831831713724680, guid: fd57621641eaf7e4fbb6cc02808bb6b7, type: 3}
   h_spd: 7.5
   rot_spd: 750
   can_move: 0
@@ -419,7 +414,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489577663122114539, guid: 65c3e6b7587dd97459a93fe62dc52412, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 972923647032057169, guid: 65c3e6b7587dd97459a93fe62dc52412, type: 3}
       propertyPath: m_RootOrder

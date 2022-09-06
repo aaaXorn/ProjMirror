@@ -83,7 +83,7 @@ public class PlayerControl : NetworkBehaviour
 		
 		//animator
 		net_anim = GetComponent<NetworkAnimator>();
-		//anim = net_anim.animator;
+		anim = net_anim.animator;
 
 		player_layer = LayerMask.GetMask("Player");
     }
@@ -103,9 +103,9 @@ public class PlayerControl : NetworkBehaviour
 		spawn_pos = transform.position;
 		spawn_rot = transform.rotation;
 		
-		Cmd_Skin(StaticVars.avatar);
+		//Cmd_Skin(StaticVars.avatar);
 	}
-	
+	/*
 	#region skin
 	[Command]
 	private void Cmd_Skin(int i)
@@ -121,7 +121,7 @@ public class PlayerControl : NetworkBehaviour
 		net_anim.animator = an;
 	}
 	#endregion
-
+	*/
 	private void StateMachine(States _state)
     {
 		state = _state;
