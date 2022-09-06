@@ -417,6 +417,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Upward_Guy
       objectReference: {fileID: 0}
+    - target: {fileID: 489577663122114539, guid: 65c3e6b7587dd97459a93fe62dc52412, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 972923647032057169, guid: 65c3e6b7587dd97459a93fe62dc52412, type: 3}
       propertyPath: m_RootOrder
       value: 0
