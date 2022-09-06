@@ -80,13 +80,13 @@ public class PlayerControl : NetworkBehaviour
 	public Vector3 spawn_pos;
 	public Quaternion spawn_rot;
 
-	private void Start()
+	private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
 		
 		//animator
 		net_anim = GetComponent<NetworkAnimator>();
-		anim = net_anim.animator;
+		//anim = net_anim.animator;
 
 		player_layer = LayerMask.GetMask("Player");
     }
@@ -105,7 +105,25 @@ public class PlayerControl : NetworkBehaviour
 
 		spawn_pos = transform.position;
 		spawn_rot = transform.rotation;
+		
+		Cmd_Skin(StaticVars.avatar);
 	}
+	
+	#region skin
+	[Command]
+	private void Cmd_Skin(int i)
+	{
+		Rpc_Skin(i);
+	}
+	[ClientRpc]
+	private void Rpc_Skin(int i)
+	{
+		GameObject obj = Instantiate(PlayerModel[i], transform);
+		Animator an = obj.GetComponent<Animator>();
+		anim = an;
+		net_anim.animator = an;
+	}
+	#endregion
 
 	private void StateMachine(States _state)
     {
@@ -152,6 +170,8 @@ public class PlayerControl : NetworkBehaviour
 
 	private IEnumerator FreeState()
 	{
+		//while(anim == null) yield return null;
+		
 		if (can_move)
 		{
 			//movement and rotation

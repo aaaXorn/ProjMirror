@@ -109,7 +109,8 @@ namespace Mirror
                 using (NetworkWriterPooled writer = NetworkWriterPool.Get())
                 {
                     WriteParameters(writer);
-                    SendAnimationMessage(stateHash, normalizedTime, i, layerWeight[i], writer.ToArray());
+					float lweight = (layerWeight.Length > 0) ? layerWeight[i] : 0;
+                    SendAnimationMessage(stateHash, normalizedTime, i, lweight, writer.ToArray());
                 }
             }
 
@@ -150,7 +151,8 @@ namespace Mirror
             normalizedTime = 0;
 
             float lw = animator.GetLayerWeight(layerId);
-            if (Mathf.Abs(lw - layerWeight[layerId]) > 0.001f)
+			float lweight = (layerWeight.Length > 0) ? layerWeight[layerId] : 0;//bugfix
+            if (Mathf.Abs(lw - lweight) > 0.001f)//layerWeight[layerId]) > 0.001f)
             {
                 layerWeight[layerId] = lw;
                 change = true;
@@ -159,28 +161,30 @@ namespace Mirror
             if (animator.IsInTransition(layerId))
             {
                 AnimatorTransitionInfo tt = animator.GetAnimatorTransitionInfo(layerId);
-                if (tt.fullPathHash != transitionHash[layerId])
+				int thash = (transitionHash.Length > 0) ? transitionHash[layerId] : 0;
+                if (tt.fullPathHash != thash)
                 {
                     // first time in this transition
-                    transitionHash[layerId] = tt.fullPathHash;
-                    animationHash[layerId] = 0;
+                    if(transitionHash.Length > 0) transitionHash[layerId] = tt.fullPathHash;
+                    if(animationHash.Length > 0) animationHash[layerId] = 0;
                     return true;
                 }
                 return change;
             }
 
             AnimatorStateInfo st = animator.GetCurrentAnimatorStateInfo(layerId);
-            if (st.fullPathHash != animationHash[layerId])
+			int hash = (animationHash.Length > 0) ? animationHash[layerId] : 0;//bugfix
+            if (st.fullPathHash != hash)
             {
                 // first time in this animation state
-                if (animationHash[layerId] != 0)
+                if (hash != 0)
                 {
                     // came from another animation directly - from Play()
                     stateHash = st.fullPathHash;
                     normalizedTime = st.normalizedTime;
                 }
-                transitionHash[layerId] = 0;
-                animationHash[layerId] = st.fullPathHash;
+                if(transitionHash.Length > 0) transitionHash[layerId] = 0;
+                if(animationHash.Length > 0) animationHash[layerId] = st.fullPathHash;
                 return true;
             }
             return change;
