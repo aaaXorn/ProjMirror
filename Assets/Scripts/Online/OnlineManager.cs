@@ -15,9 +15,12 @@ public class OnlineManager : NetworkManager
 	private GameObject[] Skins;
 	
     public int no_player;
-	
+
 	public override void Awake()
 	{
+        //debugging
+        //NetworkClient.avatar = UnityEngine.Random.Range(0, 3);
+
 		base.Awake();
 		
 		if(Instance == null) Instance = this;
@@ -26,18 +29,13 @@ public class OnlineManager : NetworkManager
 			Destroy(Instance);
 			Instance = this;
 		}
-        
-        /*Skins[0] = Resources.Load<GameObject>("Player_Base");print(Skins[0].name);
-        Skins[1] = Resources.Load<GameObject>("Upward_Alien");
-        Skins[2] = Resources.Load<GameObject>("Upward_Samurai");
-        Skins[3] = Resources.Load<GameObject>("Upward_Extra");*/
 	}
 	
     /// <summary>Called on server when a client requests to add the player. Adds playerPrefab by default. Can be overwritten.</summary>
     // The default implementation for this function creates a new player object from the playerPrefab.
-    public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+    public override void OnServerAddPlayer(NetworkConnectionToClient conn, int skin)
     {
-        GameObject prefab = Skins[2];
+        GameObject prefab = Skins[skin];
 
         Transform startPos = GetStartPosition();
         GameObject player = startPos != null

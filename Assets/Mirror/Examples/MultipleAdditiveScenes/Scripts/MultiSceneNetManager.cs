@@ -39,7 +39,7 @@ namespace Mirror.Examples.MultipleAdditiveScenes
         /// <para>The default implementation for this function creates a new player object from the playerPrefab.</para>
         /// </summary>
         /// <param name="conn">Connection from client.</param>
-        public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+        public override void OnServerAddPlayer(NetworkConnectionToClient conn, int skin)
         {
             StartCoroutine(OnServerAddPlayerDelayed(conn));
         }
@@ -58,7 +58,7 @@ namespace Mirror.Examples.MultipleAdditiveScenes
             // Wait for end of frame before adding the player to ensure Scene Message goes first
             yield return new WaitForEndOfFrame();
 
-            base.OnServerAddPlayer(conn);
+            base.OnServerAddPlayer(conn, NetworkClient.avatar);
 
             PlayerScore playerScore = conn.identity.GetComponent<PlayerScore>();
             playerScore.playerNumber = clientIndex;

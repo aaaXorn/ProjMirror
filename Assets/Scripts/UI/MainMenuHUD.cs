@@ -51,7 +51,7 @@ public class MainMenuHUD : MonoBehaviour
 
 	public void OnAvatarChanged()
 	{
-		StaticVars.avatar = (int)sld_avatar.value;
+		NetworkClient.avatar = (int)sld_avatar.value;
 	}
 
     public void OnInputFieldChanged()

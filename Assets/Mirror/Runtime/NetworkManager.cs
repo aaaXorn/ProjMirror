@@ -1134,6 +1134,7 @@ namespace Mirror
         void OnServerAddPlayerInternal(NetworkConnectionToClient conn, AddPlayerMessage msg)
         {
             //Debug.Log("NetworkManager.OnServerAddPlayer");
+            print("Skin: " + msg.skin);
 
             if (autoCreatePlayer && playerPrefab == null)
             {
@@ -1153,7 +1154,7 @@ namespace Mirror
                 return;
             }
 
-            OnServerAddPlayer(conn);
+            OnServerAddPlayer(conn, msg.skin);
         }
 
         void OnClientConnectInternal()
@@ -1256,7 +1257,7 @@ namespace Mirror
 
         /// <summary>Called on server when a client requests to add the player. Adds playerPrefab by default. Can be overwritten.</summary>
         // The default implementation for this function creates a new player object from the playerPrefab.
-        public virtual void OnServerAddPlayer(NetworkConnectionToClient conn)
+        public virtual void OnServerAddPlayer(NetworkConnectionToClient conn, int skin)
         {
             Transform startPos = GetStartPosition();
             GameObject player = startPos != null

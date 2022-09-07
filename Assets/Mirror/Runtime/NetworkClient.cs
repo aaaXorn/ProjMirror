@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mirror.RemoteCalls;
 using UnityEngine;
+using System.Collections;
 
 namespace Mirror
 {
@@ -967,6 +968,8 @@ namespace Mirror
             else Debug.LogWarning("No ready connection found for setting player controller during InternalAddPlayer");
         }
 
+        public static int avatar;
+
         /// <summary>Sends AddPlayer message to the server, indicating that we want to join the world.</summary>
         public static bool AddPlayer()
         {
@@ -991,8 +994,10 @@ namespace Mirror
                 return false;
             }
 
+            //int avtr = avatar;
+            
             // Debug.Log($"NetworkClient.AddPlayer() called with connection {readyConnection}");
-            connection.Send(new AddPlayerMessage());
+            connection.Send(new AddPlayerMessage() { skin = avatar });
             return true;
         }
 

@@ -7,7 +7,10 @@ namespace Mirror
 
     public struct NotReadyMessage : NetworkMessage {}
 
-    public struct AddPlayerMessage : NetworkMessage {}
+    public struct AddPlayerMessage : NetworkMessage
+    {
+        public int skin;
+    }
 
     public struct SceneMessage : NetworkMessage
     {
