@@ -89,7 +89,7 @@ public class PlayerControl : NetworkBehaviour
     }
 	
 	//on start if object belongs to client
-	public override void OnStartLocalPlayer()
+	public override void OnStartAuthority()//LocalPlayer()
 	{
 		if(Manager.Instance != null)
 		{	
