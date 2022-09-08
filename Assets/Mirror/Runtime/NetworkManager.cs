@@ -1134,7 +1134,7 @@ namespace Mirror
         void OnServerAddPlayerInternal(NetworkConnectionToClient conn, AddPlayerMessage msg)
         {
             //Debug.Log("NetworkManager.OnServerAddPlayer");
-            print("Skin: " + msg.skin);
+            //print("Skin: " + msg.skin);
 
             if (autoCreatePlayer && playerPrefab == null)
             {

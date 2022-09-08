@@ -15,7 +15,7 @@ public class PieceCheck : NetworkBehaviour
 
     //player the carrying piece
     [SyncVar]
-    public PlayerControl Owner;
+    public GameObject Owner;
 
     //if the piece has already been set
     private bool p_set;
@@ -27,8 +27,8 @@ public class PieceCheck : NetworkBehaviour
     private float spd, rot_spd, scale_spd;
 	[SerializeField]
 	private Vector3 TargetScale;
-	[SyncVar(hook = nameof(OnChangeScale))]
-	private Vector3 CurrScale;
+	/*[SyncVar(hook = nameof(OnChangeScale))]
+	private Vector3 CurrScale;*/
 	
     [SerializeField]
     private LayerMask piece_layer;
@@ -89,11 +89,11 @@ public class PieceCheck : NetworkBehaviour
         team = p_team;
         material.color = Manager.Instance.mat[team];
     }
-
+	/*
 	private void OnChangeScale(Vector3 _Old, Vector3 _New)
 	{
 		transform.localScale = _New;
-	}
+	}*/
     //IEnumerator grab movement
     #endregion
 
@@ -221,7 +221,6 @@ public class PieceCheck : NetworkBehaviour
 		else
 			Debug.LogError("Score error: team not defined.");
 		
-		Manager.Instance.ActPieceList.Remove(gameObject);
 		Manager.Instance.SpawnPiece();
 		#endregion
 	}
@@ -235,6 +234,9 @@ public class PieceCheck : NetworkBehaviour
     //moves the piece to the hole
     private IEnumerator MoveTo()
     {
+		Manager.Instance.PieceList.Add(gameObject);
+		Manager.Instance.ActPieceList.Remove(gameObject);
+
         rigid.isKinematic = true;
 	
 		//if the movement or rotation are complete
@@ -253,7 +255,7 @@ public class PieceCheck : NetworkBehaviour
             else if(!completeR) completeR = true;
 			
 			if(transform.localScale != TargetScale)
-				CurrScale = Vector3.MoveTowards(transform.localScale, TargetScale, scale_spd * Time.deltaTime);
+				transform.localScale = Vector3.MoveTowards(transform.localScale, TargetScale, scale_spd * Time.deltaTime);
 			else if(!completeS) completeS = true;
 			
 			//waits for next Update to continue

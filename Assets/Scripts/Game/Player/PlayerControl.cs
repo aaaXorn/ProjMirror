@@ -5,6 +5,7 @@ using Mirror;
 
 public class PlayerControl : NetworkBehaviour
 {
+	[HideInInspector]
     public Rigidbody rigid;
 	//SetBool, SetInteger and SetFloat can be used with regular animator
 	//SetTrigger requires NetworkAnimator as otherwise it isn't synced correctly
@@ -34,7 +35,8 @@ public class PlayerControl : NetworkBehaviour
 	private bool e1_input, e2_input;
 
 	//if the player can currently move
-	public bool can_move = true;
+	[HideInInspector]
+	public bool can_move = false;
 
 	[SerializeField]
 	private float punch_range;
@@ -45,6 +47,7 @@ public class PlayerControl : NetworkBehaviour
 	private float punch_force;
 	#endregion
 
+	[HideInInspector]
 	//this player's team
 	[SyncVar]
 	public int team;
@@ -69,13 +72,20 @@ public class PlayerControl : NetworkBehaviour
 	[SerializeField]
 	private LayerMask piece_layer;
 	
+	[HideInInspector]
 	[SyncVar]
 	//grabbed object
 	public GameObject GrabObj;
 	#endregion
 
+	[HideInInspector]
 	public Vector3 spawn_pos;
+	[HideInInspector]
 	public Quaternion spawn_rot;
+
+	private AudioSource audioS;
+	[SerializeField]
+	private AudioClip aClip_punch_hit;
 
 	private void Awake()
     {
@@ -84,6 +94,8 @@ public class PlayerControl : NetworkBehaviour
 		//animator
 		net_anim = GetComponent<NetworkAnimator>();
 		anim = net_anim.animator;
+
+		audioS = GetComponent<AudioSource>();
 
 		player_layer = LayerMask.GetMask("Player");
     }
@@ -414,6 +426,7 @@ public class PlayerControl : NetworkBehaviour
 	}
 	#endif
 	
+	#region punch
 	[Command]
 	private void Cmd_Punch(Vector3 pos, PlayerControl PC)
 	{
@@ -434,12 +447,12 @@ public class PlayerControl : NetworkBehaviour
 				AIC.Cmd_Drop();
 			}
 			
-			AIC.Rpc_Punch(pos);
+			AIC.Cmd_Punched(pos);
 		}
 	
 	//when player is punched
 	[ClientRpc]
-	private void Rpc_Punch(Vector3 pos)
+	public void Rpc_Punch(Vector3 pos)
 	{
 		if(!isLocalPlayer || state == States.Hurt) return;
 		
@@ -450,6 +463,7 @@ public class PlayerControl : NetworkBehaviour
 		Vector3 dir = (transform.position - pos).normalized;
 		rigid.AddForce(dir * punch_force, ForceMode.Force);
 	}
+	#endregion
 	
 	[Command]
 	private void Cmd_Grab(GameObject obj)
@@ -463,7 +477,7 @@ public class PlayerControl : NetworkBehaviour
 		{
 			GrabObj = obj;
 
-			piece_pc.Owner = this;
+			piece_pc.Owner = gameObject;
 			piece_pc.Rpc_ChangeColor(team);
 		}
 		//sets as kinematic
@@ -493,7 +507,7 @@ public class PlayerControl : NetworkBehaviour
 
     #region release
     [Command]
-	private void Cmd_Drop()
+	public void Cmd_Drop()
     {
 		//sets as non-kinematic
 		Rigidbody piece_rb = GrabObj.GetComponent<Rigidbody>();
