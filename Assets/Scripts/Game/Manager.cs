@@ -51,6 +51,8 @@ public class Manager : NetworkBehaviour
 	private List<Collider> HoleList = new List<Collider>();
 	//players
 	public List<PlayerControl> PlayerList = new List<PlayerControl>();
+	public Dictionary<NetworkConnectionToClient, PlayerControl> PlayerDict =
+		   new Dictionary<NetworkConnectionToClient, PlayerControl>();
 	//field size
 	private int lines = 10, columns = 10;
 	//distance between holes

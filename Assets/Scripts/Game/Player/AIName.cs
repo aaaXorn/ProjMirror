@@ -36,7 +36,7 @@ public class AIName : NetworkBehaviour
 		
 		AIC = GetComponent<AIControl>();
 		
-		nickname = "dn";
+		nickname = "CPU";
         playerColor = (AIC.team == 1 ? team1Color : team2Color);
 	}
 	

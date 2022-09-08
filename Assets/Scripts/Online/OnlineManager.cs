@@ -81,7 +81,8 @@ public class OnlineManager : NetworkManager
             no_player++;
             PC.team = (no_player % 2 == 0) ? 2 : 1;
 			
-			Manager.Instance.PlayerList.Add(PC);
+			//Manager.Instance.PlayerList.Add(PC);
+			Manager.Instance.PlayerDict.Add(conn, PC);
         }
 
         // instantiating a "Player" prefab gives it the name "Player(clone)"
@@ -96,7 +97,8 @@ public class OnlineManager : NetworkManager
 		
         base.OnServerDisconnect(conn);
         
-		PlayerListSetup.Instance.ResetPlayerList();
+		Manager.Instance.PlayerDict.Remove(conn);
+		//PlayerListSetup.Instance.ResetPlayerList();
 		
         print("disconnect");
     }
