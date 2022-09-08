@@ -152,6 +152,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1649253812706557075, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
   m_PrefabInstance: {fileID: 7304215626378832959}
   m_PrefabAsset: {fileID: 0}
+--- !u!136 &1211837131893474125 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 8470292448642953074, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
+  m_PrefabInstance: {fileID: 7304215626378832959}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1257319615222108662 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8371959636900396489, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
@@ -201,6 +206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  char_col: {fileID: 1211837131893474125}
   rigid: {fileID: 0}
   h_spd: 7.5
   rot_spd: 750
@@ -218,6 +224,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   GrabObj: {fileID: 0}
+  followDist_piece: 10
+  followDist_player: 5
 --- !u!195 &3263528104982675687
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -228,10 +236,10 @@ NavMeshAgent:
   m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 7.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 750
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

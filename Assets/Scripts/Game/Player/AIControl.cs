@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using Mirror;
 
 public class AIControl : NetworkBehaviour
 {
+	[SerializeField]
+	private Collider char_col;
+
+	[HideInInspector]
     public Rigidbody rigid;
 	//SetBool, SetInteger and SetFloat can be used with regular animator
 	//SetTrigger requires NetworkAnimator as otherwise it isn't synced correctly
@@ -19,6 +24,7 @@ public class AIControl : NetworkBehaviour
 		Free,
 		Follow,
 		Attack,
+		Grab,
 		Hurt
     }
 	private States state = States.Falling;
@@ -38,6 +44,7 @@ public class AIControl : NetworkBehaviour
 	[SerializeField]
 	private float punch_force;
 	
+	[HideInInspector]
 	//this player's team
 	[SyncVar]
 	public int team;
@@ -64,6 +71,12 @@ public class AIControl : NetworkBehaviour
 	public GameObject GrabObj;
 	
 	private GameObject FollowTarget;
+
+	[SerializeField]
+	private float followDist_piece, followDist_player;
+
+	private bool searchPlayer_isRunning, searchPiece_isRunning;
+	private bool targetIsPlayer;
 
 	private void Awake()
     {
@@ -108,6 +121,10 @@ public class AIControl : NetworkBehaviour
 				StartCoroutine("AttackState");
 				break;
 
+			case States.Grab:
+				StartCoroutine("GrabState");
+				break;
+
 			case States.Hurt:
 				StartCoroutine("HurtState");
 				break;
@@ -130,6 +147,66 @@ public class AIControl : NetworkBehaviour
 		StateMachine(States.Free);
 	}
 	
+	#region search
+	private IEnumerator SearchPlayer()
+	{
+		searchPlayer_isRunning = true;
+		if(searchPiece_isRunning)
+		{
+			StopCoroutine("SearchPiece");
+			searchPiece_isRunning = false;
+		}
+
+		float dist = followDist_player;
+		
+		foreach(KeyValuePair<NetworkConnectionToClient, PlayerControl> key in Manager.Instance.PlayerDict)
+		{
+			print("dict");
+			if(GrabObj != null) break;
+			
+			float target_dist = Vector3.Distance(transform.position, key.Value.transform.position);
+			if(target_dist < dist)
+			{
+				FollowTarget = key.Value.gameObject;
+				dist = target_dist;
+
+				if(!targetIsPlayer) targetIsPlayer = true;
+			}
+		}
+		yield return null;
+
+		searchPlayer_isRunning = false;
+	}
+	private IEnumerator SearchPiece()
+	{
+		searchPiece_isRunning = true;
+		if(searchPlayer_isRunning)
+		{
+			StopCoroutine("SearchPlayer");
+			searchPlayer_isRunning = false;
+		}
+
+		float dist = followDist_piece;
+
+		foreach(GameObject obj in Manager.Instance.ActPieceList)
+		{
+			if(GrabObj != null) break;
+
+			float target_dist = Vector3.Distance(transform.position, obj.transform.position);
+			if(target_dist < dist)
+			{
+				FollowTarget = obj;
+				dist = target_dist;
+
+				if(targetIsPlayer) targetIsPlayer = false;
+			}
+		}
+		yield return null;
+
+		searchPiece_isRunning = false;
+	}
+	#endregion
+
 	private IEnumerator FreeState()
 	{
 		if(!nav.enabled) nav.enabled = true;
@@ -162,7 +239,8 @@ public class AIControl : NetworkBehaviour
 			{
 				if (can_move)
 				{
-					Move(pos);
+					nav.SetDestination(pos);
+					anim.SetFloat("velocity", nav.velocity.magnitude);
 				}
 				
 				
@@ -201,36 +279,136 @@ public class AIControl : NetworkBehaviour
 
 	private IEnumerator FollowState()
 	{
-		Move(FollowTarget.transform.position);
+		bool follow = true;
 
-		yield return null;
+		while(follow)
+		{
+			nav.SetDestination(FollowTarget.transform.position);
+			anim.SetFloat("velocity", nav.velocity.magnitude);
+			//Move(FollowTarget.transform.position);
+
+			if(Vector3.Distance(transform.position, FollowTarget.transform.position) < 1f)
+			{
+				if(targetIsPlayer)
+				{
+					StateMachine(States.Attack);
+				}
+				else
+				{
+					StateMachine(States.Grab);
+				}
+				yield break;
+			}
+
+			if(FollowTarget == null) follow = false;
+
+			yield return null;
+		}
+
 		StateMachine(States.Free);
 	}
 
 	private IEnumerator AttackState()
     {
-		yield return null;
+		anim.SetTrigger("atk");//??? only works with this for some reason
+		net_anim.SetTrigger("atk");
+
+		bool attacking = true;
+		float time = 0;
+		float start = 0.12f;
+		float end = 0.45f;
+
+		while (attacking)
+		{
+			if (can_move)
+				Move(FollowTarget.transform.position);
+
+			if(time >= start)
+            {
+				//hitbox
+				Collider[] hitCol;
+
+				hitCol = Physics.OverlapSphere(PunchPoint.position, punch_range, player_layer);
+
+				foreach(var hit in hitCol)
+                {
+					if (hit.transform.root != transform)
+					{
+						PlayerControl other_PC = hit.GetComponent<PlayerControl>();
+						if(other_PC != null)
+						{
+							if(team != other_PC.team)
+								Cmd_Punch(transform.position, other_PC);
+						}
+						/*else//not needed as there's only one AI
+						{
+							AIControl AIC = hit.GetComponent<AIControl>();
+							if(AIC != null && team != AIC.team)
+								Cmd_Punch_AI(transform.position, AIC);
+						}*/
+					}
+                }
+				
+				//ends attack
+				if (time >= end)
+					attacking = false;
+            }
+
+			time += Time.deltaTime;
+
+			yield return null;
+		}
+
+		FollowTarget = null;
+
 		StateMachine(States.Free);
     }
 	
+	private IEnumerator GrabState()
+	{
+		yield return null;
+
+		StateMachine(States.Free);
+	}
+
 	private IEnumerator HurtState()
     {
 		
 		
 		yield return new WaitForSeconds(1.25f);
 		
-		StateMachine(States.Free);
+		nav.enabled = true;
+		rigid.isKinematic = true;
+
+		if(FollowTarget == null)
+			StateMachine(States.Free);
+		else
+			StateMachine(States.Follow);
     }
 	
+	[Command]
+	private void Cmd_Punch(Vector3 pos, PlayerControl PC)
+	{
+		if(PC.GrabObj != null)
+		{
+			PC.GrabObj.GetComponent<PieceCheck>().Rpc_ChangeColor(0);
+			PC.Cmd_Drop();
+		}
+		
+		PC.Rpc_Punch(pos);
+	}
+
 	//when ai is punched
-	[ClientRpc]
-	public void Rpc_Punch(Vector3 pos)
+	[Command(requiresAuthority = false)]
+	public void Cmd_Punched(Vector3 pos)
 	{
 		if(!isServer || state == States.Hurt) return;
 		
 		StopAllCoroutines();
 		StateMachine(States.Hurt);
 		
+		StartCoroutine("SearchPlayer");
+
 		if(nav.enabled) nav.enabled = false;
 		if(rigid.isKinematic) rigid.isKinematic = false;
 		
@@ -242,6 +420,28 @@ public class AIControl : NetworkBehaviour
 	[Command]
 	public void Cmd_Drop()
     {
-		
+		//sets as non-kinematic
+		Rigidbody piece_rb = GrabObj.GetComponent<Rigidbody>();
+		if (piece_rb != null)
+		{
+			piece_rb.isKinematic = false;
+		}
+
+		Rpc_ReleaseGrab(GrabObj);
+
+		GrabObj = null;
+	}
+
+	[ClientRpc]
+	private void Rpc_ReleaseGrab(GameObject obj)
+    {
+		if (obj != null)
+		{
+			//de-parents object
+			obj.transform.parent = null;
+
+			//enables collision between the player and the grabbed object
+			Physics.IgnoreCollision(obj.GetComponent<Collider>(), char_col, false);
+		}
 	}
 }

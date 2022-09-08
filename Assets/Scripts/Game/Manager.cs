@@ -47,7 +47,7 @@ public class Manager : NetworkBehaviour
 	//active pieces, not placed in a hole yet
 	public List<GameObject> ActPieceList = new List<GameObject>();
 	//all pieces
-	private List<GameObject> PieceList = new List<GameObject>();
+	public List<GameObject> PieceList = new List<GameObject>();
 	private List<Collider> HoleList = new List<Collider>();
 	//players
 	public List<PlayerControl> PlayerList = new List<PlayerControl>();
@@ -248,7 +248,7 @@ public class Manager : NetworkBehaviour
 		NetworkServer.Spawn(obj);
 
 		//adds to list
-		PieceList.Add(obj);
+		//PieceList.Add(obj);
 		ActPieceList.Add(obj);
 	}
 	
