@@ -426,6 +426,7 @@ public class PlayerControl : NetworkBehaviour
 	}
 	#endif
 	
+	#region punch
 	[Command]
 	private void Cmd_Punch(Vector3 pos, PlayerControl PC)
 	{
@@ -462,6 +463,7 @@ public class PlayerControl : NetworkBehaviour
 		Vector3 dir = (transform.position - pos).normalized;
 		rigid.AddForce(dir * punch_force, ForceMode.Force);
 	}
+	#endregion
 	
 	[Command]
 	private void Cmd_Grab(GameObject obj)
@@ -475,7 +477,7 @@ public class PlayerControl : NetworkBehaviour
 		{
 			GrabObj = obj;
 
-			piece_pc.Owner = this;
+			piece_pc.Owner = gameObject;
 			piece_pc.Rpc_ChangeColor(team);
 		}
 		//sets as kinematic

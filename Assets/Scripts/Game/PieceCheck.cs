@@ -15,7 +15,7 @@ public class PieceCheck : NetworkBehaviour
 
     //player the carrying piece
     [SyncVar]
-    public PlayerControl Owner;
+    public GameObject Owner;
 
     //if the piece has already been set
     private bool p_set;
@@ -221,8 +221,6 @@ public class PieceCheck : NetworkBehaviour
 		else
 			Debug.LogError("Score error: team not defined.");
 		
-		Manager.Instance.PieceList.Add(gameObject);
-		Manager.Instance.ActPieceList.Remove(gameObject);
 		Manager.Instance.SpawnPiece();
 		#endregion
 	}
@@ -236,6 +234,9 @@ public class PieceCheck : NetworkBehaviour
     //moves the piece to the hole
     private IEnumerator MoveTo()
     {
+		Manager.Instance.PieceList.Add(gameObject);
+		Manager.Instance.ActPieceList.Remove(gameObject);
+
         rigid.isKinematic = true;
 	
 		//if the movement or rotation are complete

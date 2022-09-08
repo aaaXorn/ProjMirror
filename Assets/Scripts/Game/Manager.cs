@@ -212,11 +212,12 @@ public class Manager : NetworkBehaviour
             }
 			
 			//AI
-			if((float)OnlineManager.Instance.no_player % 2 != 0)
+			if((float)OnlineManager.Instance.no_player % 2 != 0 || isServer)
 			{
 				AIObject = Instantiate(AIPrefab,
 									   SpawnPosition(),
 									   Quaternion.identity);
+				AIObject.GetComponent<AIControl>().team = 2;
 				NetworkServer.Spawn(AIObject);
 			}
         }
