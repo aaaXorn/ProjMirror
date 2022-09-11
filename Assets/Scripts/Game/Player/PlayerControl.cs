@@ -454,6 +454,9 @@ public class PlayerControl : NetworkBehaviour
 	[ClientRpc]
 	public void Rpc_Punch(Vector3 pos)
 	{
+		audioS.clip = aClip_punch_hit;
+		audioS.Play();
+
 		if(!isLocalPlayer || state == States.Hurt) return;
 		
 		StopAllCoroutines();

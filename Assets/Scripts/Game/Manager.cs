@@ -212,7 +212,7 @@ public class Manager : NetworkBehaviour
             }
 			
 			//AI
-			if((float)OnlineManager.Instance.no_player % 2 != 0 || isServer)
+			if((float)OnlineManager.Instance.no_player % 2 != 0)
 			{
 				AIObject = Instantiate(AIPrefab,
 									   SpawnPosition(),

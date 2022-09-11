@@ -7,15 +7,17 @@ using Mirror;
 public class MainMenuHUD : MonoBehaviour
 {
     [SerializeField]
-    private GameObject ConnectPanel, MainPanel;
+    private GameObject[] ConnectObjs, MainObjs;
 
     [SerializeField]
     private Button btn_online, btn_host, btn_server, btn_client, btn_quit,
-				   btn_back_online;
-	[SerializeField]
-	private Slider sld_avatar;
+				   btn_back_online, btn_avatar_left, btn_avatar_right;
+	/*[SerializeField]
+	private Slider sld_avatar;*/
     [SerializeField]
     private InputField iField_address, iField_username;
+
+    private int curr_avatar, total_avatar = 4;
 
     private void Start()
     {
@@ -35,10 +37,10 @@ public class MainMenuHUD : MonoBehaviour
 			OnUsernameChanged();
 		});
 		
-		sld_avatar.onValueChanged.AddListener(delegate
+		/*sld_avatar.onValueChanged.AddListener(delegate
 		{
-			OnAvatarChanged();
-		});
+			OnAvatarChanged(1);
+		});*/
 
         btn_online.onClick.AddListener(ButtonOnline);
 			btn_back_online.onClick.AddListener(ButtonOnline);
@@ -46,13 +48,39 @@ public class MainMenuHUD : MonoBehaviour
         btn_server.onClick.AddListener(ButtonServer);
         btn_client.onClick.AddListener(ButtonClient);
         btn_quit.onClick.AddListener(ButtonQuit);
-        ConnectPanel.SetActive(false);
-    }
+        btn_avatar_left.onClick.AddListener(delegate
+        {
+            OnAvatarChanged(-1);
+        });
+        btn_avatar_right.onClick.AddListener(delegate
+        {
+            OnAvatarChanged(1);
+        });
 
+        
+        foreach(GameObject objC in ConnectObjs)
+            objC.SetActive(false);
+        //ConnectPanel.SetActive(false);
+    }
+    /*
 	public void OnAvatarChanged()
 	{
 		NetworkClient.avatar = (int)sld_avatar.value;
 	}
+    */
+    public void OnAvatarChanged(int dir)
+    {
+        if(dir < 0 && curr_avatar == 0)
+            curr_avatar = total_avatar;
+        else if(dir > 0 && curr_avatar >= total_avatar)
+            curr_avatar = 0;
+        else
+            curr_avatar += dir;
+        
+        NetworkClient.avatar = curr_avatar;
+    }
+    
+
 
     public void OnInputFieldChanged()
     {
@@ -66,8 +94,12 @@ public class MainMenuHUD : MonoBehaviour
 
     public void ButtonOnline()
     {
-        ConnectPanel.SetActive(!ConnectPanel.activeSelf);
-        MainPanel.SetActive(!MainPanel.activeSelf);
+        foreach(GameObject objC in ConnectObjs)
+            objC.SetActive(!objC.activeSelf);
+        foreach(GameObject objM in MainObjs)
+            objM.SetActive(!objM.activeSelf);
+        //ConnectPanel.SetActive(!ConnectPanel.activeSelf);
+        //MainPanel.SetActive(!MainPanel.activeSelf);
     }
     public void ButtonHost()
     {

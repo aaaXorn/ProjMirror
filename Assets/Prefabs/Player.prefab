@@ -201,7 +201,7 @@ MonoBehaviour:
   GrabObj: {fileID: 0}
   spawn_pos: {x: 0, y: 0, z: 0}
   spawn_rot: {x: 0, y: 0, z: 0, w: 0}
-  punch_sound: {fileID: 0}
+  aClip_punch_hit: {fileID: 8300000, guid: d638e0005de10fd4e90f17687af549d1, type: 3}
 --- !u!114 &3990139285412941006
 MonoBehaviour:
   m_ObjectHideFlags: 0
