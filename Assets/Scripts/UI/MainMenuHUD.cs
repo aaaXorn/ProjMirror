@@ -7,7 +7,7 @@ using Mirror;
 public class MainMenuHUD : MonoBehaviour
 {
     [SerializeField]
-    private GameObject[] ConnectObjs, MainObjs;
+    private GameObject[] ConnectObjs, MainObjs, ModelObjs;
 
     [SerializeField]
     private Button btn_online, btn_host, btn_server, btn_client, btn_quit,
@@ -41,6 +41,10 @@ public class MainMenuHUD : MonoBehaviour
 		{
 			OnAvatarChanged(1);
 		});*/
+
+        curr_avatar = 0;
+        total_avatar--;
+        ChangeModel(curr_avatar);
 
         btn_online.onClick.AddListener(ButtonOnline);
 			btn_back_online.onClick.AddListener(ButtonOnline);
@@ -78,8 +82,16 @@ public class MainMenuHUD : MonoBehaviour
             curr_avatar += dir;
         
         NetworkClient.avatar = curr_avatar;
+
+        ChangeModel(curr_avatar);
     }
-    
+    private void ChangeModel(int avtr)
+    {
+        for(int i = 0; i < ModelObjs.Length; i++)
+        {
+            ModelObjs[i].SetActive(i == avtr);
+        }
+    }
 
 
     public void OnInputFieldChanged()
