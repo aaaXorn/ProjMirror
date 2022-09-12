@@ -6,6 +6,7 @@ using Mirror;
 
 public class Manager : NetworkBehaviour
 {
+	[HideInInspector]
     //instance global reference
     public static Manager Instance { get; private set; }
 	
@@ -15,13 +16,16 @@ public class Manager : NetworkBehaviour
 	
 	#region connection
 	//local player script
+	[HideInInspector]
 	public PlayerControl local_PC;
 	
 	//if the game is ready
+	[HideInInspector]
 	[SyncVar(hook = nameof(ReadyChanged))]
 	public bool ready;
 	
 	//how many holes must be filled until the game resets
+	[HideInInspector]
 	[SyncVar(hook = nameof(OnCurrPieces))]
 	public int curr_pieces;
 	private	int total_pieces;
@@ -29,27 +33,34 @@ public class Manager : NetworkBehaviour
 	[SerializeField]
 	private Button btn_ready;
 	[SerializeField]
-	private GameObject ReadyWindow;
+	private GameObject[] ReadyObjs;
 	#endregion
 
 	#region piece
 	//score
 	[SerializeField]
 	private Text t1_txt, t2_txt;
+	[HideInInspector]
 	[SyncVar(hook = nameof(OnTeam1Score))]
 	public float t1_score;
+	[HideInInspector]
 	[SyncVar(hook = nameof(OnTeam2Score))]
 	public float t2_score;
+	[SerializeField]
+	private Image img_scr1, img_scr2;
 
 	[SerializeField]
 	private GameObject PiecePrefab, HolePrefab;
 	
 	//active pieces, not placed in a hole yet
+	[HideInInspector]
 	public List<GameObject> ActPieceList = new List<GameObject>();
 	//all pieces
+	[HideInInspector]
 	public List<GameObject> PieceList = new List<GameObject>();
 	private List<Collider> HoleList = new List<Collider>();
 	//players
+	[HideInInspector]
 	public List<PlayerControl> PlayerList = new List<PlayerControl>();
 	public Dictionary<NetworkConnectionToClient, PlayerControl> PlayerDict =
 		   new Dictionary<NetworkConnectionToClient, PlayerControl>();
@@ -82,7 +93,19 @@ public class Manager : NetworkBehaviour
 
 	[SerializeField]
 	private GameObject SetupPrefab;
+	
+	private bool reset, timer;
+	[SerializeField]
+	private float win_score;
 
+	[SerializeField]
+	private AudioSource audioS_WL, audioS_1min;
+	[SerializeField]
+	private AudioClip aClip_win, aClip_lose;
+	
+	[SerializeField]
+	private float match_time;
+	
 	//game end condition
 	private void OnCurrPieces(int _Old, int _New)
 	{
@@ -94,10 +117,12 @@ public class Manager : NetworkBehaviour
 	private void OnTeam1Score(float _Old, float _New)
 	{
 		t1_txt.text = "TEAM 1: " + _New;
+		img_scr1.fillAmount = _New / win_score;
 	}
 	private void OnTeam2Score(float _Old, float _New)
 	{
 		t2_txt.text = "TEAM 2: " + _New;
+		img_scr2.fillAmount = _New / win_score;
 	}
 	
     private void Awake()
@@ -158,8 +183,14 @@ public class Manager : NetworkBehaviour
 		//deactivates the ready button
 		if(ready)
 		{
-			ReadyWindow.SetActive(false);
+			foreach(GameObject obj in ReadyObjs)
+				obj.SetActive(false);
 			GameStart();
+		}
+		else
+		{
+			foreach(GameObject obj in ReadyObjs)
+				obj.SetActive(true);
 		}
 		
 		//updates ready UI settings
@@ -265,19 +296,29 @@ public class Manager : NetworkBehaviour
 
 	private IEnumerator ResetGame()
 	{
+		if(reset) yield break;
+		reset = true;
+		timer = false;
+		
 		end_txt.gameObject.SetActive(true);
 
 		if(t1_score > t2_score)
 		{
-			end_txt.text = "TEAM 1 VICTORY";
+			end_txt.text = local_PC.team == 1 ? "VICTORY" : "DEFEAT";
+			audioS_WL.clip = local_PC.team == 1 ? aClip_win : aClip_lose;
+			audioS_WL.Play();
 		}
 		else if(t2_score > t1_score)
 		{
-			end_txt.text = "TEAM 2 VICTORY";
+			end_txt.text = local_PC.team == 2 ? "VICTORY" : "DEFEAT";
+			audioS_WL.clip = local_PC.team == 2 ? aClip_win : aClip_lose;
+			audioS_WL.Play();
 		}
 		else//tie
 		{
 			end_txt.text = "TIE";
+			audioS_WL.clip = aClip_lose;
+			audioS_WL.Play();
 		}
 
 		yield return new WaitForSecondsRealtime(3);
@@ -285,7 +326,6 @@ public class Manager : NetworkBehaviour
 		end_txt.gameObject.SetActive(false);
 
 		ready = false;
-		ReadyWindow.SetActive(true);
 
 		if(local_PC != null)
 		{
@@ -320,6 +360,28 @@ public class Manager : NetworkBehaviour
 				Destroy(AIObject);
 			}
 		}
+		reset = false;
+		yield break;
+	}
+	
+	private IEnumerator MatchTimer()
+	{
+		timer = true;
+		float time = 0;
+		
+		while(timer)
+		{
+			yield return new WaitForSeconds(60);
+			time += 60;
+			
+			if(time >= match_time)
+			{
+				StartCoroutine("ResetGame");
+			}
+			else if(time >= match_time - 60)
+				audioS_1min.Play();
+		}
+		
 		yield break;
 	}
 }

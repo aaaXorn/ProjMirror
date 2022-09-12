@@ -228,8 +228,6 @@ public class AIControl : NetworkBehaviour
 		float time = 0f;
 
 		float dist = 5f;
-
-		bool searching = true;
 		
 		//get position
 		Vector3 pos = Vector3.zero;

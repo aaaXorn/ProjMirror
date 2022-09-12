@@ -85,7 +85,7 @@ public class PlayerControl : NetworkBehaviour
 
 	private AudioSource audioS;
 	[SerializeField]
-	private AudioClip aClip_punch_hit;
+	private AudioClip aClip_punch_hit, aClip_punch_start, aClip_grab, aClip_throw;
 
 	private void Awake()
     {
@@ -296,6 +296,9 @@ public class PlayerControl : NetworkBehaviour
 
 			if(time >= start)
             {
+				audioS.clip = aClip_punch_start;
+				audioS.Play();
+				
 				//hitbox
 				Collider[] hitCol;
 
@@ -405,6 +408,9 @@ public class PlayerControl : NetworkBehaviour
 			
 			if(found)
 			{
+				audioS.clip = aClip_grab;
+				audioS.Play();
+				
 				anim.SetBool("hasBox", true);
 				
 				GameObject obj = hits[hit_no].transform.gameObject;

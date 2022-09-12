@@ -202,6 +202,9 @@ MonoBehaviour:
   spawn_pos: {x: 0, y: 0, z: 0}
   spawn_rot: {x: 0, y: 0, z: 0, w: 0}
   aClip_punch_hit: {fileID: 8300000, guid: d638e0005de10fd4e90f17687af549d1, type: 3}
+  aClip_punch_start: {fileID: 8300000, guid: 97f893736739b4049b3306f9b234478b, type: 3}
+  aClip_grab: {fileID: 8300000, guid: b4af822fbda049a4aacc1bc811923eac, type: 3}
+  aClip_throw: {fileID: 8300000, guid: 20045fbe7580fcc4cb2750d0c4f60064, type: 3}
 --- !u!114 &3990139285412941006
 MonoBehaviour:
   m_ObjectHideFlags: 0

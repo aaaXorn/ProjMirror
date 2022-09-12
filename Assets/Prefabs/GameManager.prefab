@@ -51,14 +51,19 @@ MonoBehaviour:
   ready: 0
   curr_pieces: 0
   btn_ready: {fileID: 0}
-  ReadyWindow: {fileID: 0}
+  ReadyObjs:
+  - {fileID: 0}
+  - {fileID: 0}
   t1_txt: {fileID: 0}
   t2_txt: {fileID: 0}
   t1_score: 0
   t2_score: 0
+  img_scr1: {fileID: 0}
+  img_scr2: {fileID: 0}
   PiecePrefab: {fileID: 7422195193450409663, guid: 00ca5f2bd004ee04eaf81bccbee6653c, type: 3}
   HolePrefab: {fileID: 3760317608554665412, guid: 14f2a73843617c647b53c4da93053c4c, type: 3}
   ActPieceList: []
+  PieceList: []
   PlayerList: []
   pieces: 2
   mat:
@@ -70,6 +75,11 @@ MonoBehaviour:
   min_dist: 11
   end_txt: {fileID: 0}
   SetupPrefab: {fileID: 9040680446257741825, guid: 8f787387a778f7e4da7fb9b5f94fe097, type: 3}
+  win_score: 500
+  audioS: {fileID: 0}
+  aClip_win: {fileID: 8300000, guid: 37a911ef93cc76d4181cf6606d94127b, type: 3}
+  aClip_lose: {fileID: 8300000, guid: cf452025bde100c40bd5a48ad7b3c74d, type: 3}
+  match_time: 300
 --- !u!114 &500377438007341154
 MonoBehaviour:
   m_ObjectHideFlags: 0

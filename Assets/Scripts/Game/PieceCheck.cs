@@ -38,6 +38,8 @@ public class PieceCheck : NetworkBehaviour
     [SerializeField]
     private float ray_range;
 	
+	private AudioSource audioS;
+	
 	public class RaycastResult: IComparable<RaycastResult>
 	{
 		public float distance;
@@ -73,6 +75,10 @@ public class PieceCheck : NetworkBehaviour
     }
 	#endregion
 
+	private void Start()
+	{
+		audioS = GetComponent<AudioSource>();
+	}
     //variables
     public override void OnStartClient()
     {
@@ -122,6 +128,8 @@ public class PieceCheck : NetworkBehaviour
 
     private void ScoreCheck()
 	{
+		audioS.Play();
+		
 		//changes the object's tags
 		switch(team)
 		{
@@ -173,7 +181,10 @@ public class PieceCheck : NetworkBehaviour
 		else if(no == 2)
 			scr += 15;
 		else if(no >= 3)
+		{
 			scr += 30;
+			ConnectJonas.Instance.audioS.Play();
+		}
 		
 		#endregion
 		
