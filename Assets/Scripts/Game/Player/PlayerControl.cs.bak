@@ -470,7 +470,7 @@ public class PlayerControl : NetworkBehaviour
 		
 		//add force
 		Vector3 dir = (transform.position - pos).normalized;
-		
+		print(punch_force);
 		rigid.AddForce(dir * punch_force, ForceMode.Force);
 	}
 	#endregion
