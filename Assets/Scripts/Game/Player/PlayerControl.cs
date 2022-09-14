@@ -122,26 +122,8 @@ public class PlayerControl : NetworkBehaviour
 
 		spawn_pos = transform.position;
 		spawn_rot = transform.rotation;
-		
-		//Cmd_Skin(StaticVars.avatar);
 	}
-	/*
-	#region skin
-	[Command]
-	private void Cmd_Skin(int i)
-	{
-		Rpc_Skin(i);
-	}
-	[ClientRpc]
-	private void Rpc_Skin(int i)
-	{
-		GameObject obj = Instantiate(PlayerModel[i], transform);
-		Animator an = obj.GetComponent<Animator>();
-		anim = an;
-		net_anim.animator = an;
-	}
-	#endregion
-	*/
+	
 	private void StateMachine(States _state)
     {
 		state = _state;
@@ -295,7 +277,7 @@ public class PlayerControl : NetworkBehaviour
 		bool attacking = true;
 		float time = 0;
 		float start = 0.12f;
-		float end = 0.45f;
+		float end = 0.5f;
 
 		while (attacking)
 		{
@@ -428,18 +410,6 @@ public class PlayerControl : NetworkBehaviour
 		}
     }
 	
-	#if UNITY_EDITOR
-	private void OnDrawGizmosSelected()
-	{
-		//grab range
-		Gizmos.color = Color.blue;
-		Gizmos.DrawCube(GrabPoint.position + grab_offset, grab_range);
-		//punch range
-		Gizmos.color = Color.red;
-		Gizmos.DrawSphere(PunchPoint.position, punch_range);
-	}
-	#endif
-	
 	#region punch
 	[Command]
 	private void Cmd_Punch(Vector3 pos, PlayerControl PC)
@@ -450,7 +420,7 @@ public class PlayerControl : NetworkBehaviour
 			PC.Cmd_Drop();
 		}
 		
-		PC.Rpc_Punch(pos);
+		PC.Rpc_Punch(pos, punch_force);
 	}
 		[Command]
 		private void Cmd_Punch_AI(Vector3 pos, AIControl AIC)
@@ -461,12 +431,12 @@ public class PlayerControl : NetworkBehaviour
 				AIC.Cmd_Drop();
 			}
 			
-			AIC.Cmd_Punched(pos);
+			AIC.Cmd_Punched(pos, punch_force);
 		}
 	
 	//when player is punched
 	[ClientRpc]
-	public void Rpc_Punch(Vector3 pos)
+	public void Rpc_Punch(Vector3 pos, float force)
 	{
 		audioS.clip = aClip_punch_hit;
 		audioS.Play();
@@ -476,10 +446,11 @@ public class PlayerControl : NetworkBehaviour
 		StopAllCoroutines();
 		StateMachine(States.Hurt);
 		
+		Vector3 force_pos = new Vector3(pos.x, transform.position.y, pos.z);
 		//add force
-		Vector3 dir = (transform.position - pos).normalized;
+		Vector3 dir = (transform.position - force_pos).normalized;
 		
-		rigid.AddForce(dir * punch_force, ForceMode.Force);
+		rigid.AddForce(dir * force, ForceMode.Force);
 	}
 	#endregion
 	
@@ -572,4 +543,16 @@ public class PlayerControl : NetworkBehaviour
 	#endregion
 
 	#endregion
+	
+	#if UNITY_EDITOR
+	private void OnDrawGizmosSelected()
+	{
+		//grab range
+		Gizmos.color = Color.blue;
+		Gizmos.DrawCube(GrabPoint.position + grab_offset, grab_range);
+		//punch range
+		Gizmos.color = Color.red;
+		Gizmos.DrawSphere(PunchPoint.position, punch_range);
+	}
+	#endif
 }

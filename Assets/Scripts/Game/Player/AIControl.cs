@@ -325,7 +325,7 @@ public class AIControl : NetworkBehaviour
 		bool attacking = true;
 		float time = 0;
 		float start = 0.12f;
-		float end = 0.45f;
+		float end = 0.4f;
 
 		while (attacking)
 		{
@@ -423,12 +423,12 @@ public class AIControl : NetworkBehaviour
 			PC.Cmd_Drop();
 		}
 		
-		PC.Rpc_Punch(pos);
+		PC.Rpc_Punch(pos, punch_force);
 	}
 
 	//when ai is punched
 	[Command(requiresAuthority = false)]
-	public void Cmd_Punched(Vector3 pos)
+	public void Cmd_Punched(Vector3 pos, float force)
 	{
 		if(!isServer || state == States.Hurt) return;
 		
@@ -440,9 +440,10 @@ public class AIControl : NetworkBehaviour
 		if(nav.enabled) nav.enabled = false;
 		if(rigid.isKinematic) rigid.isKinematic = false;
 		
+		Vector3 force_pos = new Vector3(pos.x, transform.position.y, pos.z);
 		//add force
-		Vector3 dir = (transform.position - pos).normalized;
-		rigid.AddForce(dir * punch_force, ForceMode.Force);
+		Vector3 dir = (transform.position - force_pos).normalized;
+		rigid.AddForce(dir * force, ForceMode.Force);
 	}
 	#endregion
 	
@@ -538,9 +539,11 @@ public class AIControl : NetworkBehaviour
 		GrabObj = null;
     }
 
-	[Command]
+	[Command(requiresAuthority = false)]
 	public void Cmd_Drop()
     {
+		anim.SetBool("hasBox", false);
+		
 		//sets as non-kinematic
 		Rigidbody piece_rb = GrabObj.GetComponent<Rigidbody>();
 		if (piece_rb != null)
@@ -566,4 +569,16 @@ public class AIControl : NetworkBehaviour
 		}
 	}
 	#endregion
+	
+	#if UNITY_EDITOR
+	private void OnDrawGizmosSelected()
+	{
+		//grab range
+		Gizmos.color = Color.blue;
+		Gizmos.DrawCube(GrabPoint.position + grab_offset, grab_range);
+		//punch range
+		Gizmos.color = Color.red;
+		Gizmos.DrawSphere(PunchPoint.position, punch_range);
+	}
+	#endif
 }
