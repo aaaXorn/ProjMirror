@@ -87,6 +87,8 @@ public class PlayerControl : NetworkBehaviour
 	[SerializeField]
 	private AudioClip aClip_punch_hit, aClip_punch_start, aClip_grab, aClip_throw;
 
+	private PlayerName PN;
+
 	private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -99,6 +101,12 @@ public class PlayerControl : NetworkBehaviour
 
 		player_layer = LayerMask.GetMask("Player");
     }
+	
+	private void Start()
+	{
+		PN = GetComponent<PlayerName>();
+		Chat.Instance.PN = PN;
+	}
 	
 	//on start if object belongs to client
 	public override void OnStartAuthority()//LocalPlayer()
