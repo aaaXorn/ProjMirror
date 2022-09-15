@@ -951,7 +951,7 @@ namespace Mirror
         {
             // debug message is very important. if we ever break anything then
             // it's very obvious to notice.
-            //Debug.Log("Finished loading scene in host mode.");
+            Debug.Log("Finished loading scene in host mode.");
 
             if (clientReadyConnection != null)
             {
