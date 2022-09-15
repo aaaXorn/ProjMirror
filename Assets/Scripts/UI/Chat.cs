@@ -31,11 +31,10 @@ public class Chat : NetworkBehaviour
 		ChatBox.SetActive(true);
 	}
 	
-	private void HandleNewMessage(string msg)
+	private void HandleNewMessage(string msg, string name)
 	{
-		string s = PN != null ? PN.nickname : "meucu";
+		string s = name != null ? name : "meucu";
 		txt.text += "\n" + s + ": "+ msg;
-		print("msg");
 	}
 	
 	[Client]
@@ -44,29 +43,25 @@ public class Chat : NetworkBehaviour
 		if(!Input.GetKeyDown(KeyCode.Return)) return;
 		if(string.IsNullOrWhiteSpace(msg)) msg = iField.text;
 		
-		if(!isServer) Cmd_SendMessage(iField.text); else SrvSendMessage(iField.text);
+		if(!isServer) Cmd_SendMessage(iField.text, PN.nickname); else SrvSendMessage(iField.text);
 		
 		iField.text = string.Empty;
-		print("fdp");
 	}
 	
-	[Command]
-	private void Cmd_SendMessage(string msg)
+	[Command(requiresAuthority = false)]
+	private void Cmd_SendMessage(string msg, string name)
 	{
-		Rpc_HandleMessage(msg);
-		print("vsf");
+		Rpc_HandleMessage(msg, name);
 	}
 
 	private void SrvSendMessage(string msg)
 	{
-		Rpc_HandleMessage(msg);
-		print("vsf");
+		Rpc_HandleMessage(msg, PN.nickname);
 	}
 	
 	[ClientRpc]
-	private void Rpc_HandleMessage(string msg)
+	private void Rpc_HandleMessage(string msg, string name)
 	{
-		HandleNewMessage(msg);
-		print("rpc");
+		HandleNewMessage(msg, name);
 	}
 }

@@ -41,7 +41,7 @@ public class OnlineManager : NetworkManager
         {
             GameObject obj = Instantiate(ChatCanvas);
             NetworkServer.Spawn(obj);
-            print(obj.name);
+            
             plzwork = true;
         }
 
