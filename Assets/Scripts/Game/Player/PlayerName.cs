@@ -43,7 +43,7 @@ public class PlayerName : NetworkBehaviour
         
 		PC = GetComponent<PlayerControl>();
 		
-        string name = (StaticVars.username != null ? StaticVars.username : "Human Being");
+        string name = (StaticVars.username != null ? StaticVars.username : "Human Being " + Random.Range(0, 999));
         Color color = (PC.team == 1 ? team1Color : team2Color);
 		
         CmdSetupPlayer(name, color);

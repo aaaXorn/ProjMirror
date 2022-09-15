@@ -100,14 +100,10 @@ public class PlayerControl : NetworkBehaviour
 		audioS = GetComponent<AudioSource>();
 
 		player_layer = LayerMask.GetMask("Player");
-    }
-	
-	private void Start()
-	{
+
 		PN = GetComponent<PlayerName>();
-		Chat.Instance.PN = PN;
-	}
-	
+    }
+
 	//on start if object belongs to client
 	public override void OnStartAuthority()//LocalPlayer()
 	{
@@ -122,6 +118,8 @@ public class PlayerControl : NetworkBehaviour
 
 		spawn_pos = transform.position;
 		spawn_rot = transform.rotation;
+
+		Chat.Instance.PN = PN;
 	}
 	
 	private void StateMachine(States _state)

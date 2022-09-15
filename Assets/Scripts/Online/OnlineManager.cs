@@ -13,7 +13,8 @@ public class OnlineManager : NetworkManager
 	
     [SerializeField]
 	private GameObject[] Skins;
-	
+	[SerializeField] private GameObject ChatCanvas;
+
     public int no_player;
 
 	public override void Awake()
@@ -31,10 +32,19 @@ public class OnlineManager : NetworkManager
 		}
 	}
 	
+    bool plzwork = false;
     /// <summary>Called on server when a client requests to add the player. Adds playerPrefab by default. Can be overwritten.</summary>
     // The default implementation for this function creates a new player object from the playerPrefab.
     public override void OnServerAddPlayer(NetworkConnectionToClient conn, int skin)
     {
+        if(!plzwork)
+        {
+            GameObject obj = Instantiate(ChatCanvas);
+            NetworkServer.Spawn(obj);
+            
+            plzwork = true;
+        }
+
         GameObject prefab = Skins[skin];
 
         Transform startPos = GetStartPosition();
