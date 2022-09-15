@@ -222,6 +222,9 @@ public class Manager : NetworkBehaviour
 	//starts the game
 	public void GameStart()
 	{
+		if(Chat.Instance != null && Chat.Instance.canvas.enabled)
+			Chat.Instance.canvas.enabled = false;
+
 		if(local_PC != null)
 		{
 			local_PC.can_move = true;
@@ -326,6 +329,9 @@ public class Manager : NetworkBehaviour
 		end_txt.gameObject.SetActive(false);
 
 		ready = false;
+
+		if(Chat.Instance != null && !Chat.Instance.canvas.enabled)
+			Chat.Instance.canvas.enabled = true;
 
 		if(local_PC != null)
 		{

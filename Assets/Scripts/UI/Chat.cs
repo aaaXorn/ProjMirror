@@ -16,6 +16,8 @@ public class Chat : NetworkBehaviour
     [SerializeField] private Text txt;
 	[SerializeField] private InputField iField;
 	
+	[HideInInspector] public Canvas canvas;
+
 	private void Awake()
 	{
         if(Instance == null) Instance = this;
@@ -26,10 +28,16 @@ public class Chat : NetworkBehaviour
 		}
 	}
 	
-	public override void OnStartAuthority()
+	private void Start()
 	{
-		ChatBox.SetActive(true);
+		canvas = GetComponent<Canvas>();
 	}
+
+	/*public override void OnStartAuthority()
+	{
+		canvas = GetComponent<Canvas>();
+		ChatBox.SetActive(true);
+	}*/
 	
 	private void HandleNewMessage(string msg, string name)
 	{
@@ -37,6 +45,16 @@ public class Chat : NetworkBehaviour
 		txt.text += "\n" + s + ": "+ msg;
 	}
 	
+	void Update()
+	{
+		if(Input.GetButtonDown("Cancel")) ChangeCanvasEnabled();
+	}
+
+	public void ChangeCanvasEnabled()
+	{
+		canvas.enabled = !canvas.enabled;
+	}
+
 	[Client]
 	public void Send(string msg)
 	{
