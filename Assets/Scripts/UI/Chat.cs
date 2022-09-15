@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
+using TMPro;
 
 public class Chat : NetworkBehaviour
 {
@@ -13,7 +14,7 @@ public class Chat : NetworkBehaviour
 	public PlayerName PN;
 	
 	[SerializeField] private GameObject ChatBox;
-    [SerializeField] private Text txt;
+    [SerializeField] private TMP_Text txt;
 	[SerializeField] private InputField iField;
 	
 	[HideInInspector] public Canvas canvas;
@@ -41,6 +42,8 @@ public class Chat : NetworkBehaviour
 	
 	private void HandleNewMessage(string msg, string name)
 	{
+		if(txt.isTextOverflowing) txt.text = "";
+
 		string s = name != null ? name : "meucu";
 		txt.text += "\n" + s + ": "+ msg;
 	}
