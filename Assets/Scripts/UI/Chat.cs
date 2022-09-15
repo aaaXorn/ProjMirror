@@ -47,23 +47,26 @@ public class Chat : NetworkBehaviour
 	{
 		string s = PN != null ? PN.nickname : "meucu";
 		txt.text += s + ": "+ msg;
+		print("msg");
 	}
 	
 	[Client]
 	public void Send(string msg)
 	{
 		if(!Input.GetKeyDown(KeyCode.Return)) return;
-		if(string.IsNullOrWhiteSpace(msg)) return;
+		if(string.IsNullOrWhiteSpace(msg)) msg = iField.text;
 		
 		Cmd_SendMessage(iField.text);
 		
 		iField.text = string.Empty;
+		print("fdp");
 	}
 	
 	[Command]
 	private void Cmd_SendMessage(string msg)
 	{
 		Rpc_HandleMessage($"[{connectionToClient.connectionId}]: {msg}");
+		print("vsf");
 	}
 	
 	[ClientRpc]
