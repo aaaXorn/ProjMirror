@@ -1,0 +1,8 @@
+soco 0.6
+soco acertou 0.7
+pegar peça no chão 0.25
+peça colocada no tabuleiro 1
+arremeçar com ç 0.8
+vitoria 0.4
+CONNECT JONAS 0.58
+alerta e derrota baixos demais pra ouvir
