@@ -47,6 +47,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   AIPrefab: {fileID: 8340273930283503787, guid: 1c1157bb93349494186c424c39ccfe73, type: 3}
+  AI_spawn: {fileID: 0}
   local_PC: {fileID: 0}
   ready: 0
   curr_pieces: 0
@@ -65,18 +66,19 @@ MonoBehaviour:
   ActPieceList: []
   PieceList: []
   PlayerList: []
-  pieces: 2
+  pieces: 6
   mat:
   - {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 0}
   - {r: 0.49056602, g: 0, b: 0, a: 0}
   - {r: 0, g: 0.16208561, b: 0.5188679, a: 0}
-  SpawnCenter: {x: 0, y: 10, z: 0}
-  max_dist: 16
-  min_dist: 11
+  SpawnCenter: {x: 0, y: 17, z: -55}
+  max_dist: 13
+  min_dist: 0
   end_txt: {fileID: 0}
   SetupPrefab: {fileID: 9040680446257741825, guid: 8f787387a778f7e4da7fb9b5f94fe097, type: 3}
   win_score: 500
-  audioS: {fileID: 0}
+  audioS_WL: {fileID: 0}
+  audioS_1min: {fileID: 0}
   aClip_win: {fileID: 8300000, guid: 37a911ef93cc76d4181cf6606d94127b, type: 3}
   aClip_lose: {fileID: 8300000, guid: cf452025bde100c40bd5a48ad7b3c74d, type: 3}
   match_time: 300

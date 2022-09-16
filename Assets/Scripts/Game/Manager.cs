@@ -13,6 +13,7 @@ public class Manager : NetworkBehaviour
 	[SerializeField]
 	private GameObject AIPrefab;
 	private GameObject AIObject;
+	[SerializeField] private Transform AI_spawn;
 	
 	#region connection
 	//local player script
@@ -68,7 +69,7 @@ public class Manager : NetworkBehaviour
 	private int lines = 10, columns = 10;
 	//distance between holes
 	private float dist = 2f;
-	private float spawn_y = 0;
+	private float spawn_y = 6.68f;
 
 	//number of spawned pieces
 	[SerializeField]
@@ -167,7 +168,7 @@ public class Manager : NetworkBehaviour
 		{
 			for(int c = 0; c < columns; c++)
 			{
-				GameObject hole = Instantiate(HolePrefab, transform.position + new Vector3(start_x, spawn_y, start_z), Quaternion.identity);
+				GameObject hole = Instantiate(HolePrefab, transform.position + new Vector3(start_x, spawn_y, start_z - 0.84f), Quaternion.identity);
 				HoleList.Add(hole.GetComponent<Collider>());
 
 				start_x -= dist;
@@ -249,7 +250,7 @@ public class Manager : NetworkBehaviour
 			if((float)OnlineManager.Instance.no_player % 2 != 0)
 			{
 				AIObject = Instantiate(AIPrefab,
-									   SpawnPosition(),
+									   AI_spawn.position,
 									   Quaternion.identity);
 				AIObject.GetComponent<AIControl>().team = 2;
 				NetworkServer.Spawn(AIObject);
@@ -308,18 +309,21 @@ public class Manager : NetworkBehaviour
 		if(t1_score > t2_score)
 		{
 			end_txt.text = local_PC.team == 1 ? "VICTORY" : "DEFEAT";
+			audioS_WL.volume = local_PC.team == 1 ? 0.4f : 1f;
 			audioS_WL.clip = local_PC.team == 1 ? aClip_win : aClip_lose;
 			audioS_WL.Play();
 		}
 		else if(t2_score > t1_score)
 		{
 			end_txt.text = local_PC.team == 2 ? "VICTORY" : "DEFEAT";
+			audioS_WL.volume = local_PC.team == 2 ? 0.4f : 1f;
 			audioS_WL.clip = local_PC.team == 2 ? aClip_win : aClip_lose;
 			audioS_WL.Play();
 		}
 		else//tie
 		{
 			end_txt.text = "TIE";
+			audioS_WL.volume = 1f;
 			audioS_WL.clip = aClip_lose;
 			audioS_WL.Play();
 		}

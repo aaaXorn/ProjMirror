@@ -284,6 +284,7 @@ public class PlayerControl : NetworkBehaviour
 
 			if(time >= start)
             {
+				audioS.volume = 0.6f;
 				audioS.clip = aClip_punch_start;
 				audioS.Play();
 				
@@ -396,6 +397,7 @@ public class PlayerControl : NetworkBehaviour
 			
 			if(found)
 			{
+				audioS.volume = 0.25f;
 				audioS.clip = aClip_grab;
 				audioS.Play();
 				
@@ -436,6 +438,7 @@ public class PlayerControl : NetworkBehaviour
 	[ClientRpc]
 	public void Rpc_Punch(Vector3 pos, float force)
 	{
+		audioS.volume = 0.7f;
 		audioS.clip = aClip_punch_hit;
 		audioS.Play();
 
