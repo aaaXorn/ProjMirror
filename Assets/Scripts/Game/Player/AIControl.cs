@@ -78,6 +78,12 @@ public class AIControl : NetworkBehaviour
 
 	private bool searchPlayer_isRunning, searchPiece_isRunning;
 	private bool targetIsPlayer;
+
+	[SerializeField] float _changeBoard_dist;
+	[SerializeField] private Vector3 BoardPos, PieceSpawnPos;
+	private bool movingToPieces;
+	//if movinToPieces GoTo == PieceSpawnPos else GoTo == BoardPos
+	private Vector3 GoTo => movingToPieces ? PieceSpawnPos : BoardPos;
 	#endregion
 
 	private void Awake()
@@ -224,15 +230,8 @@ public class AIControl : NetworkBehaviour
 		if(!nav.enabled) nav.enabled = true;
 		if(!rigid.isKinematic) rigid.isKinematic = true;
 		if(FollowTarget) FollowTarget = null;
-		
-		float time = 0f;
 
-		float dist = 5f;
-		
-		//get position
-		Vector3 pos = Vector3.zero;
-
-		while(time < 2f)
+		/*while(time < 2f)
 		{
 			if (Vector3.Distance(transform.position, pos) < 0.2f)
 				time = 2f;
@@ -249,11 +248,31 @@ public class AIControl : NetworkBehaviour
 			}
 
 			yield return null;
+		}*/
+
+		while(Vector3.Distance(transform.position, GoTo) < _changeBoard_dist)
+		{
+			if(can_move)
+			{
+				nav.SetDestination(GoTo);
+				anim.SetFloat("velocity", nav.velocity.magnitude);
+			}
+			
+			yield return null;
 		}
-		yield return null;
-		
-		//check for follow target
-		StartCoroutine("SearchPiece");
+
+		if(movingToPieces)
+		{
+			//check for follow target
+			StartCoroutine("SearchPiece");
+			movingToPieces = false;
+		}
+		else
+		{
+			//check for a player
+			StartCoroutine("SearchPlayer");
+			movingToPieces = true;
+		}
 
 		if(FollowTarget == null)
 			StateMachine(States.Free);
@@ -371,7 +390,10 @@ public class AIControl : NetworkBehaviour
 
 		FollowTarget = null;
 
-		StateMachine(States.Free);
+		StartCoroutine("SearchPiece");
+
+		if(!targetIsPlayer) StateMachine(States.Follow);
+		else StateMachine(States.Free);
     }
 	
 	private IEnumerator GrabState()
