@@ -231,7 +231,7 @@ public class AIControl : NetworkBehaviour
 		if(!rigid.isKinematic) rigid.isKinematic = true;
 		if(FollowTarget) FollowTarget = null;
 
-		/*float time = 0;
+		float time = 0;
 
 		while(time < 2f)
 		{
@@ -250,7 +250,7 @@ public class AIControl : NetworkBehaviour
 			}
 
 			yield return null;
-		}*/
+		}
 
 		while(Vector3.Distance(transform.position, GoTo) > _changeBoard_dist)
 		{

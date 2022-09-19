@@ -404,6 +404,9 @@ MonoBehaviour:
   followDist_piece: 99
   followDist_player: 5
   throw_centerDist: 12
+  _changeBoard_dist: 0.2
+  BoardPos: {x: 0, y: 6.7, z: -11.3}
+  PieceSpawnPos: {x: 0, y: -1, z: -52}
 --- !u!195 &3263528104982675687
 NavMeshAgent:
   m_ObjectHideFlags: 0
