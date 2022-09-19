@@ -10,6 +10,8 @@ public class Manager : NetworkBehaviour
     //instance global reference
     public static Manager Instance { get; private set; }
 	
+	[SerializeField] Transform _transf_listener;
+
 	[SerializeField]
 	private GameObject AIPrefab;
 	private GameObject AIObject;
@@ -393,5 +395,11 @@ public class Manager : NetworkBehaviour
 		}
 		
 		yield break;
+	}
+
+	public void SetListenerParent(Transform transf)
+	{
+		_transf_listener.SetParent(transf);
+		_transf_listener.position = transf.position;
 	}
 }
