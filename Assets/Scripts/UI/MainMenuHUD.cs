@@ -8,10 +8,11 @@ public class MainMenuHUD : MonoBehaviour
 {
     [SerializeField]
     private GameObject[] ConnectObjs, MainObjs, ModelObjs;
+	[SerializeField] GameObject _obj_H2P;
 
     [SerializeField]
     private Button btn_online, btn_host, btn_server, btn_client, btn_quit,
-				   btn_back_online, btn_avatar_left, btn_avatar_right;
+				   btn_back_online, btn_avatar_left, btn_avatar_right, btn_h2p;
 	/*[SerializeField]
 	private Slider sld_avatar;*/
     [SerializeField]
@@ -60,11 +61,11 @@ public class MainMenuHUD : MonoBehaviour
         {
             OnAvatarChanged(1);
         });
-
+		//btn_h2p.onClick.AddListener(ButtonH2P);
         
         foreach(GameObject objC in ConnectObjs)
             objC.SetActive(false);
-        //ConnectPanel.SetActive(false);
+        _obj_H2P.SetActive(false);
     }
     /*
 	public void OnAvatarChanged()
@@ -110,6 +111,7 @@ public class MainMenuHUD : MonoBehaviour
             objC.SetActive(!objC.activeSelf);
         foreach(GameObject objM in MainObjs)
             objM.SetActive(!objM.activeSelf);
+		if(_obj_H2P.activeSelf) _obj_H2P.SetActive(false);
         //ConnectPanel.SetActive(!ConnectPanel.activeSelf);
         //MainPanel.SetActive(!MainPanel.activeSelf);
     }
@@ -129,6 +131,16 @@ public class MainMenuHUD : MonoBehaviour
     {
         Application.Quit();
     }
+	public void ButtonH2P()
+	{
+		print("cu");
+		_obj_H2P.SetActive(!_obj_H2P.activeSelf);
+		
+		foreach(GameObject objM in MainObjs)
+		{
+			objM.SetActive(!objM.activeSelf);
+		}
+	}
 
     /*public void SetupCanvas()
     {

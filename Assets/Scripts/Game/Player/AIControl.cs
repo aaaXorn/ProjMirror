@@ -231,27 +231,6 @@ public class AIControl : NetworkBehaviour
 		if(!rigid.isKinematic) rigid.isKinematic = true;
 		if(FollowTarget) FollowTarget = null;
 
-		/*float time = 0;
-
-		while(time < 2f)
-		{
-			if (Vector3.Distance(transform.position, GoTo) < 0.2f)
-				time = 2f;
-			else
-			{
-				if (can_move)
-				{
-					nav.SetDestination(GoTo);
-					anim.SetFloat("velocity", nav.velocity.magnitude);
-				}
-				
-				
-				time += Time.deltaTime;
-			}
-
-			yield return null;
-		}*/
-
 		while(Vector3.Distance(transform.position, GoTo) > _changeBoard_dist)
 		{
 			if(can_move)
