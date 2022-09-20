@@ -500,13 +500,17 @@ public class PlayerControl : NetworkBehaviour
     [Command]
 	public void Cmd_Drop()
     {
+		anim.SetBool("hasBox", false);
+		
 		//sets as non-kinematic
 		Rigidbody piece_rb = GrabObj.GetComponent<Rigidbody>();
 		if (piece_rb != null)
 		{
 			piece_rb.isKinematic = false;
 		}
-
+		
+		PieceCheck pCheck = GrabObj.GetComponent<PieceCheck>();
+		if(pCheck != null) pCheck.Owner = null;
 		Rpc_ReleaseGrab(GrabObj);
 
 		GrabObj = null;
@@ -525,6 +529,8 @@ public class PlayerControl : NetworkBehaviour
 			piece_rb.AddForce(transform.forward * throw_spd_Z + transform.up * throw_spd_Y, ForceMode.Impulse);
 		}
 
+		PieceCheck pCheck = GrabObj.GetComponent<PieceCheck>();
+		if(pCheck != null) pCheck.Owner = null;
 		Rpc_ReleaseGrab(GrabObj);
 
 		GrabObj = null;

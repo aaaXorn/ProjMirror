@@ -15,7 +15,7 @@ public class AIControl : NetworkBehaviour
 	//SetBool, SetInteger and SetFloat can be used with regular animator
 	//SetTrigger requires NetworkAnimator as otherwise it isn't synced correctly
 	private NetworkAnimator net_anim;
-	private Animator anim;
+	[HideInInspector] public Animator anim;
 	private NavMeshAgent nav;
 
 	private enum States
@@ -290,8 +290,24 @@ public class AIControl : NetworkBehaviour
 		{
 			nav.SetDestination(FollowTarget.transform.position);
 			anim.SetFloat("velocity", nav.velocity.magnitude);
-			//Move(FollowTarget.transform.position);
-
+			
+			if(!targetIsPlayer)
+			{
+				PieceCheck pc = FollowTarget.GetComponent<PieceCheck>();
+				if(pc == null || pc.Owner != null)
+				{
+					print("cu");
+					StartCoroutine("SearchPlayer");
+					
+					if(targetIsPlayer)
+						StateMachine(States.Follow);
+					else
+						StateMachine(States.Free);
+					
+					yield break;
+				}
+			}
+			
 			if(Vector3.Distance(transform.position, FollowTarget.transform.position) < 1f)
 			{
 				if(targetIsPlayer)
@@ -386,7 +402,7 @@ public class AIControl : NetworkBehaviour
 		while(Vector3.Distance(transform.position, target) > throw_centerDist)
 		{
 			nav.SetDestination(target);
-
+			
 			if(GrabObj == null)
 			{
 				StateMachine(States.Free);
@@ -540,6 +556,8 @@ public class AIControl : NetworkBehaviour
 			piece_rb.AddForce(transform.forward * throw_spd_Z + transform.up * throw_spd_Y, ForceMode.Impulse);
 		}
 
+		PieceCheck pCheck = GrabObj.GetComponent<PieceCheck>();
+		if(pCheck != null) pCheck.Owner = null;
 		Rpc_ReleaseGrab(GrabObj);
 
 		GrabObj = null;
@@ -557,6 +575,8 @@ public class AIControl : NetworkBehaviour
 			piece_rb.isKinematic = false;
 		}
 
+		PieceCheck pCheck = GrabObj.GetComponent<PieceCheck>();
+		if(pCheck != null) pCheck.Owner = null;
 		Rpc_ReleaseGrab(GrabObj);
 
 		GrabObj = null;
