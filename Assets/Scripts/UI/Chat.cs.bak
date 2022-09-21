@@ -49,7 +49,8 @@ public class Chat : NetworkBehaviour
 		string s = name != null ? name : "meucu";
 		txt.text += "\n" + s + ": "+ msg;
 		Canvas.ForceUpdateCanvases();
-		sRect.verticalNormalizedPosition = 0f;
+		sRect.verticalNormalizedPosition = 0.5f;
+		Canvas.ForceUpdateCanvases();
 	}
 	
 	void Update()
