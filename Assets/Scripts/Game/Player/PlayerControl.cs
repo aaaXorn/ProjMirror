@@ -115,6 +115,12 @@ public class PlayerControl : NetworkBehaviour
 		}
 		else Debug.LogError("Manager Instance is null.");
 
+		if(CameraOnline.Instance != null)
+		{
+			CameraOnline.Instance.ChangeTarget(transform);
+		}
+		else Debug.LogError("CameraOnline Instance is null.");
+
 		StateMachine(States.Free);
 
 		spawn_pos = transform.position;
