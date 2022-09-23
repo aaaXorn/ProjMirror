@@ -12,7 +12,12 @@ public class CameraOnline : MonoBehaviour
 	
 	//alvo da câmera
 	private Transform Target;
-	
+
+	[SerializeField] Vector3 Offset;
+
+	float smoothTime = 0.3f;
+	Vector3 velocity = Vector3.zero;
+
 	//muda o alvo da câmera
 	//chamado no OnStartAuthority() do script do player
 	//já está definindo o alvo como o jogador local
@@ -37,5 +42,8 @@ public class CameraOnline : MonoBehaviour
 		}
     }
 	
-	
+	void FixedUpdate()
+	{
+		if(Target != null) transform.position = Vector3.SmoothDamp(transform.position, Target.position + Offset, ref velocity, smoothTime);
+	}
 }

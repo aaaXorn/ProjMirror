@@ -79,6 +79,7 @@ public class PlayerControl : NetworkBehaviour
 	#endregion
 
 	[HideInInspector]
+	[SyncVar]
 	public Vector3 spawn_pos;
 	[HideInInspector]
 	public Quaternion spawn_rot;
@@ -89,6 +90,8 @@ public class PlayerControl : NetworkBehaviour
 	private AudioClip aClip_punch_hit, aClip_punch_start, aClip_grab, aClip_throw;
 
 	private PlayerName PN;
+
+	[SerializeField] GameObject VFX_Punch;
 
 	private void Awake()
     {
@@ -452,6 +455,9 @@ public class PlayerControl : NetworkBehaviour
 			PC.Cmd_Drop();
 		}
 		
+		GameObject VFX = Instantiate(VFX_Punch, pos + Vector3.up, transform.rotation);
+		NetworkServer.Spawn(VFX);
+
 		PC.Rpc_Punch(pos, punch_force);
 	}
 		[Command]

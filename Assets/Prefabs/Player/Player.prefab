@@ -206,6 +206,7 @@ MonoBehaviour:
   aClip_punch_start: {fileID: 8300000, guid: 97f893736739b4049b3306f9b234478b, type: 3}
   aClip_grab: {fileID: 8300000, guid: b4af822fbda049a4aacc1bc811923eac, type: 3}
   aClip_throw: {fileID: 8300000, guid: 0c50d53c951b2f446aabe26fb94a7217, type: 3}
+  VFX_Punch: {fileID: 3032269772339203281, guid: 6042f268e243c8948952f40dda161c01, type: 3}
 --- !u!114 &3990139285412941006
 MonoBehaviour:
   m_ObjectHideFlags: 0

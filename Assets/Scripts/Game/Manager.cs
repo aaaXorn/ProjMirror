@@ -109,6 +109,12 @@ public class Manager : NetworkBehaviour
 	[SerializeField]
 	private float match_time;
 	
+	string game_time;
+
+	[SerializeField] Text txt_MatchTime;
+
+	[SerializeField] Color[] clr_MatchTime;
+
 	//game end condition
 	private void OnCurrPieces(int _Old, int _New)
 	{
@@ -159,6 +165,8 @@ public class Manager : NetworkBehaviour
 		
 		t1_txt.text = "TEAM 1: " + t1_score;
 		t2_txt.text = "TEAM 2: " + t2_score;
+
+		txt_MatchTime.text = match_time.ToString();
 	}
 
 	private void SetupHoles()
@@ -204,7 +212,7 @@ public class Manager : NetworkBehaviour
 	{
 		if(isServer)
 		{
-			if(NetworkServer.connections.Count >= 1)//!!!change to 2 later
+			if(NetworkServer.connections.Count >= 1)
 			{
 				ready = true;
 			}
@@ -257,6 +265,10 @@ public class Manager : NetworkBehaviour
 				AIObject.GetComponent<AIControl>().team = 2;
 				NetworkServer.Spawn(AIObject);
 			}
+
+			//timer
+			StopCoroutine("MatchTimer");
+			StartCoroutine("MatchTimer");
         }
 	}
 	#endregion
@@ -383,18 +395,32 @@ public class Manager : NetworkBehaviour
 		
 		while(timer)
 		{
-			yield return new WaitForSeconds(60);
-			time += 60;
+			yield return new WaitForSeconds(1f);
+			time += 1;
 			
 			if(time >= match_time)
 			{
 				StartCoroutine("ResetGame");
 			}
-			else if(time >= match_time - 60)
+			else if(time == match_time - 60)
 				audioS_1min.Play();
+			
+			Rpc_TimerUpdate(match_time - time);
 		}
 		
 		yield break;
+	}
+	[ClientRpc]
+	void Rpc_TimerUpdate(float time)
+	{
+		txt_MatchTime.text = game_time + time.ToString();
+
+		if(t1_score > t2_score)
+			txt_MatchTime.color = clr_MatchTime[1];
+		else if(t2_score > t1_score)
+			txt_MatchTime.color = clr_MatchTime[2];
+		else
+			txt_MatchTime.color = clr_MatchTime[0];
 	}
 
 	public void SetListenerParent(Transform transf)
