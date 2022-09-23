@@ -84,6 +84,7 @@ public class PlayerControl : NetworkBehaviour
 	public Quaternion spawn_rot;
 
 	private AudioSource audioS;
+	[SerializeField] AudioSource audioS_Walk;
 	[SerializeField]
 	private AudioClip aClip_punch_hit, aClip_punch_start, aClip_grab, aClip_throw;
 
@@ -250,6 +251,25 @@ public class PlayerControl : NetworkBehaviour
 		StateMachine(States.Free);
 	}
 
+	[Command]
+	private void Cmd_Footsteps(bool play)
+	{
+		Rpc_Footsteps(play);
+	}
+	[ClientRpc]
+	private void Rpc_Footsteps(bool play)
+	{
+		if(play)
+		{
+			if(!audioS_Walk.isPlaying) audioS_Walk.Play();
+		}
+		else
+		{
+			if(audioS_Walk.isPlaying) audioS_Walk.Stop();
+		}
+
+	}
+
 	//movement and rotation
 	private void Move()
 	{	
@@ -257,12 +277,15 @@ public class PlayerControl : NetworkBehaviour
 		Vector3 dir = new Vector3(inputX, 0, inputZ).normalized;
 		if(dir.magnitude > 0.1f)
 		{
+			if(!audioS_Walk.isPlaying) Cmd_Footsteps(true);
+			
 			//final rotation
 			Quaternion newRot = Quaternion.LookRotation(dir, Vector3.up);
 			//slowly rotates towards final rotation
 			transform.rotation = Quaternion.RotateTowards
 								 (transform.rotation, newRot, rot_spd * Time.deltaTime);
 		}
+		else if(audioS_Walk.isPlaying) Cmd_Footsteps(false);
 		
         //movement
 		rigid.velocity = new Vector3(dir.x * h_spd, rigid.velocity.y, dir.z * h_spd);
@@ -334,6 +357,8 @@ public class PlayerControl : NetworkBehaviour
 
 	private IEnumerator EmoteState(int emote)
     {
+		if(audioS_Walk.isPlaying) Cmd_Footsteps(false);
+		
 		float time = 0;
 
 		anim.SetInteger("no_emote", emote);
@@ -367,7 +392,7 @@ public class PlayerControl : NetworkBehaviour
 
 	private IEnumerator HurtState()
     {
-		
+		if(audioS_Walk.isPlaying) audioS_Walk.Stop();
 
 		yield return new WaitForSeconds(0.75f);
 		
@@ -541,6 +566,14 @@ public class PlayerControl : NetworkBehaviour
 
 		GrabObj = null;
     }
+
+	[ClientRpc]
+	private void Rpc_ThrowSound()
+	{
+		audioS.volume = 1.0f;
+		audioS.clip = aClip_throw;
+		audioS.Play();
+	}
 
 	[ClientRpc]
 	private void Rpc_ReleaseGrab(GameObject obj)
