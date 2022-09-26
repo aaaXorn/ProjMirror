@@ -8,7 +8,7 @@ public class MainMenuHUD : MonoBehaviour
 {
     [SerializeField]
     private GameObject[] ConnectObjs, MainObjs, ModelObjs;
-	[SerializeField] GameObject _obj_H2P;
+	[SerializeField] GameObject _obj_H2P, _obj_opt;
 
     [SerializeField]
     private Button btn_online, btn_host, btn_server, btn_client, btn_quit,
@@ -66,6 +66,7 @@ public class MainMenuHUD : MonoBehaviour
         foreach(GameObject objC in ConnectObjs)
             objC.SetActive(false);
         _obj_H2P.SetActive(false);
+        _obj_opt.SetActive(false);
     }
     /*
 	public void OnAvatarChanged()
@@ -133,8 +134,16 @@ public class MainMenuHUD : MonoBehaviour
     }
 	public void ButtonH2P()
 	{
-		print("cu");
 		_obj_H2P.SetActive(!_obj_H2P.activeSelf);
+		
+		foreach(GameObject objM in MainObjs)
+		{
+			objM.SetActive(!objM.activeSelf);
+		}
+	}
+    public void ButtonOptions()
+	{
+		_obj_opt.SetActive(!_obj_opt.activeSelf);
 		
 		foreach(GameObject objM in MainObjs)
 		{

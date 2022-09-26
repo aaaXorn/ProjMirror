@@ -323,6 +323,7 @@ public class Manager : NetworkBehaviour
 		if(t1_score > t2_score)
 		{
 			end_txt.text = local_PC.team == 1 ? "VICTORY" : "DEFEAT";
+			end_txt.color = local_PC.team == 1 ? clr_MatchTime[1] : clr_MatchTime[2];
 			audioS_WL.volume = local_PC.team == 1 ? 0.4f : 1f;
 			audioS_WL.clip = local_PC.team == 1 ? aClip_win : aClip_lose;
 			audioS_WL.Play();
@@ -330,6 +331,7 @@ public class Manager : NetworkBehaviour
 		else if(t2_score > t1_score)
 		{
 			end_txt.text = local_PC.team == 2 ? "VICTORY" : "DEFEAT";
+			end_txt.color = local_PC.team == 1 ? clr_MatchTime[1] : clr_MatchTime[2];
 			audioS_WL.volume = local_PC.team == 2 ? 0.4f : 1f;
 			audioS_WL.clip = local_PC.team == 2 ? aClip_win : aClip_lose;
 			audioS_WL.Play();
@@ -337,6 +339,7 @@ public class Manager : NetworkBehaviour
 		else//tie
 		{
 			end_txt.text = "TIE";
+			end_txt.color = clr_MatchTime[0];
 			audioS_WL.volume = 1f;
 			audioS_WL.clip = aClip_lose;
 			audioS_WL.Play();
