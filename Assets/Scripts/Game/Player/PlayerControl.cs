@@ -131,6 +131,7 @@ public class PlayerControl : NetworkBehaviour
 		spawn_rot = transform.rotation;
 
 		Chat.Instance.PN = PN;
+		Chat.Instance.PC = this;
 	}
 	
 	private void StateMachine(States _state)

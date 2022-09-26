@@ -14,12 +14,16 @@ public class Chat : NetworkBehaviour
 	
 	[HideInInspector]
 	public PlayerName PN;
+	[HideInInspector]
+	public PlayerControl PC;
 	
 	[SerializeField] private GameObject ChatBox;
     [SerializeField] private TMP_Text txt;
 	[SerializeField] private InputField iField;
 	
 	[HideInInspector] public Canvas canvas;
+
+	[SerializeField] Color[] name_color;
 
 	private void Awake()
 	{
@@ -42,12 +46,13 @@ public class Chat : NetworkBehaviour
 		ChatBox.SetActive(true);
 	}*/
 	
-	private void HandleNewMessage(string msg, string name)
+	private void HandleNewMessage(string msg, string name, int team)
 	{
 		//if(txt.isTextOverflowing) txt.text = "";
 
-		string s = name != null ? name : "meucu";
-		txt.text += "\n" + s + ": "+ msg;
+		string s = name != null ? name : "debugmeucu";
+		string clr = "#" + ColorUtility.ToHtmlStringRGBA(name_color[PC.team-1]);
+		txt.text += "\n" + "<color=" + clr + ">" + s + "</color>" + ": "+ msg;
 		Canvas.ForceUpdateCanvases();
 		sRect.verticalNormalizedPosition = 0f;
 	}
@@ -68,25 +73,25 @@ public class Chat : NetworkBehaviour
 		if(!Input.GetKeyDown(KeyCode.Return)) return;
 		if(string.IsNullOrWhiteSpace(msg)) msg = iField.text;
 		
-		if(!isServer) Cmd_SendMessage(iField.text, PN.nickname); else SrvSendMessage(iField.text);
+		if(!isServer) Cmd_SendMessage(iField.text, PN.nickname, PC.team); else SrvSendMessage(iField.text, PN.nickname, PC.team);
 		
 		iField.text = string.Empty;
 	}
 	
 	[Command(requiresAuthority = false)]
-	private void Cmd_SendMessage(string msg, string name)
+	private void Cmd_SendMessage(string msg, string name, int team)
 	{
-		Rpc_HandleMessage(msg, name);
+		Rpc_HandleMessage(msg, name, team);
 	}
 
-	private void SrvSendMessage(string msg)
+	private void SrvSendMessage(string msg, string name, int team)
 	{
-		Rpc_HandleMessage(msg, PN.nickname);
+		Rpc_HandleMessage(msg, name, team);
 	}
 	
 	[ClientRpc]
-	private void Rpc_HandleMessage(string msg, string name)
+	private void Rpc_HandleMessage(string msg, string name, int team)
 	{
-		HandleNewMessage(msg, name);
+		HandleNewMessage(msg, name, team);
 	}
 }

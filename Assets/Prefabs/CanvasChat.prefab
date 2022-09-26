@@ -141,10 +141,10 @@ RectTransform:
   m_Father: {fileID: 4100225180489449896}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 337.7586, y: -21}
-  m_SizeDelta: {x: 613.6, y: 675.6723}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -358, y: -392}
+  m_SizeDelta: {x: 613.6001, y: 675.67236}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &558306784442895588
 CanvasRenderer:
@@ -781,10 +781,14 @@ MonoBehaviour:
   syncInterval: 0.1
   sRect: {fileID: 7009132837529127390}
   PN: {fileID: 0}
+  PC: {fileID: 0}
   ChatBox: {fileID: 2214889959301294848}
   txt: {fileID: 7621916984884729798}
   iField: {fileID: 4100225179692864590}
   canvas: {fileID: 0}
+  name_color:
+  - {r: 0.5294118, g: 0, b: 0, a: 1}
+  - {r: 0, g: 0.09019608, b: 0.5019608, a: 1}
 --- !u!1 &4475153816340303266
 GameObject:
   m_ObjectHideFlags: 0
