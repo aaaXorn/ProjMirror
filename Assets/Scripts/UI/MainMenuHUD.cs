@@ -26,8 +26,6 @@ public class MainMenuHUD : MonoBehaviour
             iField_address.text = NetworkManager.singleton.networkAddress;
         else iField_address.text = "localhost";
 
-		if(iField_username.text == null) iField_username.text = "username";
-
         //invokes OnInputFieldChanged() whenever iField_address is changed
         iField_address.onValueChanged.AddListener(delegate
         {
@@ -103,7 +101,6 @@ public class MainMenuHUD : MonoBehaviour
 	public void OnUsernameChanged()
 	{
 		StaticVars.username = iField_username.text;
-		print(StaticVars.username);
 	}
 
     public void ButtonOnline()
@@ -151,35 +148,5 @@ public class MainMenuHUD : MonoBehaviour
 		}
 	}
 
-    /*public void SetupCanvas()
-    {
-        if (!NetworkClient.isConnected && !NetworkServer.active)
-        {
-            if (NetworkClient.active)
-            {
-                ConnectPanel.SetActive(false);
-                StatusPanel.SetActive(true);
-                txt_client.text = "Connecting to " + NetworkManager.singleton.networkAddress + "..";
-            }
-            else
-            {
-                ConnectPanel.SetActive(true);
-                StatusPanel.SetActive(false);
-            }
-        }
-        else
-        {
-            ConnectPanel.SetActive(false);
-            StatusPanel.SetActive(true);
-
-            if (NetworkServer.active)
-            {
-                txt_server.text = "Server: active. Transport: " + Transport.activeTransport;
-            }
-            if (NetworkClient.isConnected)
-            {
-                txt_client.text = "Client: address=" + NetworkManager.singleton.networkAddress;
-            }
-        }
-    }*/
+    
 }
