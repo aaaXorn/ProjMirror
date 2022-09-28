@@ -89,6 +89,7 @@ public class PlayerControl : NetworkBehaviour
 	[SerializeField]
 	private AudioClip aClip_punch_hit, aClip_punch_start, aClip_grab, aClip_throw;
 
+	[SerializeField]
 	private PlayerName PN;
 
 	[SerializeField] GameObject VFX_Punch;
@@ -104,8 +105,6 @@ public class PlayerControl : NetworkBehaviour
 		audioS = GetComponent<AudioSource>();
 
 		player_layer = LayerMask.GetMask("Player");
-
-		PN = GetComponent<PlayerName>();
     }
 
 	//on start if object belongs to client

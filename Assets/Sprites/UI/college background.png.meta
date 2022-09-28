@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-guid: fe0b549a925e33a46a6c2d5122cda288
+guid: 2900211abcfc2a94ea074c478c730eb2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8352510414515388797
-    second: LINES AND ARROWS_0
-  - first:
-      213: 8786509311170916196
-    second: LINES AND ARROWS_1
-  - first:
-      213: 3385302796580297164
-    second: LINES AND ARROWS_2
-  - first:
-      213: -4222623969002976242
-    second: LINES AND ARROWS_3
+      213: 2503444843371973381
+    second: college background_0
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -127,13 +118,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LINES AND ARROWS_0
+      name: college background_0
       rect:
         serializedVersion: 2
-        x: 76
-        y: 2156
-        width: 3231
-        height: 37
+        x: 391
+        y: 63
+        width: 2607
+        height: 2349
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,71 +132,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d71c0ffe7f31ae370800000000000000
-      internalID: 8352510414515388797
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: LINES AND ARROWS_1
-      rect:
-        serializedVersion: 2
-        x: 68
-        y: 1926
-        width: 2485
-        height: 31
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 46f21046aa3ffe970800000000000000
-      internalID: 8786509311170916196
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: LINES AND ARROWS_2
-      rect:
-        serializedVersion: 2
-        x: 331
-        y: 177
-        width: 730
-        height: 1437
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cc91e4715f20bfe20800000000000000
-      internalID: 3385302796580297164
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: LINES AND ARROWS_3
-      rect:
-        serializedVersion: 2
-        x: 1349
-        y: 165
-        width: 729
-        height: 1437
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e0c07836fd93665c0800000000000000
-      internalID: -4222623969002976242
+      spriteID: 50b48fb32d50eb220800000000000000
+      internalID: 2503444843371973381
       vertices: []
       indices: 
       edges: []
