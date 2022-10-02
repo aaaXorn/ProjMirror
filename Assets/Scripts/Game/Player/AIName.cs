@@ -40,8 +40,10 @@ public class AIName : NetworkBehaviour
         playerColor = (AIC.team == 1 ? team1Color : team2Color);
 	}
 	
+	Vector3 _rot = new Vector3(-40, 180, 0);
 	private void Update()
 	{
-		FloatingInfo.transform.LookAt(Camera.main.transform);
+		//FloatingInfo.transform.LookAt(Camera.main.transform);
+        FloatingInfo.transform.eulerAngles = _rot;
 	}
 }

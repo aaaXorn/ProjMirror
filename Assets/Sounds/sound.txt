@@ -8,3 +8,4 @@ CONNECT JONAS 0.58
 alerta e derrota baixos demais pra ouvir
 passo 0.35
 arremesso 1/2 1.0
+música dentro do jogo 7.0

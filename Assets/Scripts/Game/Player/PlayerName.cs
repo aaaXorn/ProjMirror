@@ -56,9 +56,11 @@ public class PlayerName : NetworkBehaviour
         playerColor = _col;
     }
 
+    Vector3 _rot = new Vector3(-40, 180, 0);
 	private void Update()
 	{
-		FloatingInfo.transform.LookAt(Camera.main.transform);
+		//FloatingInfo.transform.LookAt(Camera.main.transform);
+        FloatingInfo.transform.eulerAngles = _rot;
 	}
     /*
     void Update()
