@@ -20,8 +20,13 @@ public class MainMenuHUD : MonoBehaviour
 
     private int curr_avatar, total_avatar = 4;
 
+    MenuOptions menu_opt;
+
     private void Start()
     {
+        menu_opt = GetComponent<MenuOptions>();
+        menu_opt.StartOptions();
+
         if(NetworkManager.singleton.networkAddress != "localhost")
             iField_address.text = NetworkManager.singleton.networkAddress;
         else iField_address.text = "localhost";
@@ -147,6 +152,4 @@ public class MainMenuHUD : MonoBehaviour
 			objM.SetActive(!objM.activeSelf);
 		}
 	}
-
-    
 }

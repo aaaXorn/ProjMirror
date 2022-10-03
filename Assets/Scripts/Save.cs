@@ -23,13 +23,13 @@ public class Save
 		return PlayerPrefs.GetString("Username", "Jonas");
 	}
 	
-	public static void SetVMain()
+	public static void SetVMaster()
 	{
-		PlayerPrefs.SetFloat("VMain", StaticVars.volume_main);
+		PlayerPrefs.SetFloat("VMaster", StaticVars.volume_master);
 	}
 	public static float GetVMain()
 	{
-		return PlayerPrefs.GetFloat("VMain", 1f);
+		return PlayerPrefs.GetFloat("VMaster", 1f);
 	}
 	public static void SetVSfx()
 	{
@@ -46,5 +46,13 @@ public class Save
 	public static float GetVMusic()
 	{
 		return PlayerPrefs.GetFloat("VMusic", 1f);
+	}
+	public static void SetGraphics()
+	{
+		PlayerPrefs.SetFloat("Graphics", StaticVars.graphics);
+	}
+	public static float GetGraphics()
+	{
+		return PlayerPrefs.GetFloat("Graphics", 6);
 	}
 }
