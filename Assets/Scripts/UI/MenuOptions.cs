@@ -10,15 +10,32 @@ public class MenuOptions : MonoBehaviour
 
     [SerializeField] Slider sld_graphics, sld_master, sld_music, sld_sfx;
     
+    void Start()
+    {
+        StartOptions();
+    }
+
     public void StartOptions()
     {
         //player prefs get
+        int g = (int)Save.GetGraphics();
+        sld_graphics.value = g;
+        Graphics(g);
+        float v = Save.GetVMain();
+        sld_master.value = v;
+        Master(v);
+        v = Save.GetVMusic();
+        sld_music.value = v;
+        Music(v);
+        v = Save.GetVSfx();
+        sld_sfx.value = v;
+        Sfx(v);
     }
 
-    public void Graphics(int vl)
+    public void Graphics(float vl)
     {
-        QualitySettings.SetQualityLevel(vl);
-        StaticVars.graphics = vl;
+        QualitySettings.SetQualityLevel((int)vl);
+        StaticVars.graphics = (int)vl;
         Save.SetGraphics();
     }
 

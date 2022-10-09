@@ -191,9 +191,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1966449533}
-        m_TargetAssemblyTypeName: MainMenuHUD, Assembly-CSharp
-        m_MethodName: VolumeMaster
+      - m_Target: {fileID: 1966449534}
+        m_TargetAssemblyTypeName: MenuOptions, Assembly-CSharp
+        m_MethodName: Sfx
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -315,9 +315,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1966449533}
-        m_TargetAssemblyTypeName: MainMenuHUD, Assembly-CSharp
-        m_MethodName: VolumeMaster
+      - m_Target: {fileID: 1966449534}
+        m_TargetAssemblyTypeName: MenuOptions, Assembly-CSharp
+        m_MethodName: Master
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1665,9 +1665,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1966449533}
-        m_TargetAssemblyTypeName: MainMenuHUD, Assembly-CSharp
-        m_MethodName: VolumeMaster
+      - m_Target: {fileID: 1966449534}
+        m_TargetAssemblyTypeName: MenuOptions, Assembly-CSharp
+        m_MethodName: Music
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1767,9 +1767,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1966449533}
-        m_TargetAssemblyTypeName: MainMenuHUD, Assembly-CSharp
-        m_MethodName: VolumeMaster
+      - m_Target: {fileID: 1966449534}
+        m_TargetAssemblyTypeName: MenuOptions, Assembly-CSharp
+        m_MethodName: Graphics
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
