@@ -1226,6 +1226,7 @@ GameObject:
   - component: {fileID: 476932695}
   - component: {fileID: 476932694}
   - component: {fileID: 476932696}
+  - component: {fileID: 476932697}
   m_Layer: 0
   m_Name: Pit
   m_TagString: Untagged
@@ -1242,7 +1243,7 @@ BoxCollider:
   m_GameObject: {fileID: 476932693}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 240, y: 1, z: 240}
   m_Center: {x: 0, y: 0, z: 0}
@@ -1272,6 +1273,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32acea7d933105645bdf5819b7f975c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+--- !u!114 &476932697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476932693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 3587625350
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &590142045
 GameObject:
   m_ObjectHideFlags: 0
@@ -3539,6 +3559,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 500377438007341152, guid: b6a3069c987ab8f4cbb1e94a31e06431, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 500377438007341152, guid: b6a3069c987ab8f4cbb1e94a31e06431, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -3587,6 +3611,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1931886407}
     - target: {fileID: 500377438007341155, guid: b6a3069c987ab8f4cbb1e94a31e06431, type: 3}
+      propertyPath: max_dist
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 500377438007341155, guid: b6a3069c987ab8f4cbb1e94a31e06431, type: 3}
+      propertyPath: min_dist
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 500377438007341155, guid: b6a3069c987ab8f4cbb1e94a31e06431, type: 3}
       propertyPath: audioS_WL
       value: 
       objectReference: {fileID: 176910506}
@@ -3598,6 +3630,14 @@ PrefabInstance:
       propertyPath: audioS_1min
       value: 
       objectReference: {fileID: 1028772928}
+    - target: {fileID: 500377438007341155, guid: b6a3069c987ab8f4cbb1e94a31e06431, type: 3}
+      propertyPath: SpawnCenter.y
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 500377438007341155, guid: b6a3069c987ab8f4cbb1e94a31e06431, type: 3}
+      propertyPath: SpawnCenter.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 500377438007341155, guid: b6a3069c987ab8f4cbb1e94a31e06431, type: 3}
       propertyPath: txt_MatchTime
       value: 

@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class Offscreen : MonoBehaviour
+public class Offscreen : NetworkBehaviour
 {
 	private LayerMask player_layer, piece_layer;
 	
-	private void OnStartServer()
+	private void Start()
 	{
 		GetComponent<BoxCollider>().enabled = true;
 
@@ -16,6 +17,8 @@ public class Offscreen : MonoBehaviour
 	
     private void OnTriggerEnter(Collider other)
 	{
+		if(!isServer) return;
+
 		if(other.gameObject.layer == player_layer)
 		{
 			PlayerControl PC = other.GetComponent<PlayerControl>();

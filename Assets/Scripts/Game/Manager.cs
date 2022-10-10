@@ -67,6 +67,8 @@ public class Manager : NetworkBehaviour
 	public List<PlayerControl> PlayerList = new List<PlayerControl>();
 	public Dictionary<NetworkConnectionToClient, PlayerControl> PlayerDict =
 		   new Dictionary<NetworkConnectionToClient, PlayerControl>();
+	[Tooltip("numero de linhas e colunas do tabuleiro")]
+	[SerializeField]
 	//field size
 	private int lines = 10, columns = 10;
 	//distance between holes
@@ -386,6 +388,8 @@ public class Manager : NetworkBehaviour
 			{
 				Destroy(AIObject);
 			}
+
+			Rpc_TimerUpdate(match_time);
 		}
 		reset = false;
 		yield break;
