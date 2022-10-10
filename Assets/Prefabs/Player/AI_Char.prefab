@@ -344,6 +344,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4516658789799351312, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
   m_PrefabInstance: {fileID: 7304215626378832959}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &7110460236632589906 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 572138023398697581, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
+  m_PrefabInstance: {fileID: 7304215626378832959}
+  m_PrefabAsset: {fileID: 0}
 --- !u!102 &7981374872168380164 stripped
 TextMesh:
   m_CorrespondingSourceObject: {fileID: 837180527591676731, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
@@ -385,6 +390,7 @@ MonoBehaviour:
   syncInterval: 0.1
   char_col: {fileID: 1211837131893474125}
   rigid: {fileID: 0}
+  anim: {fileID: 0}
   h_spd: 7.5
   rot_spd: 1500
   can_move: 1
@@ -407,6 +413,7 @@ MonoBehaviour:
   _changeBoard_dist: 0.2
   BoardPos: {x: 0, y: 6.7, z: -11.3}
   PieceSpawnPos: {x: 0, y: -1, z: -52}
+  audioS_Walk: {fileID: 7110460236632589906}
 --- !u!195 &3263528104982675687
 NavMeshAgent:
   m_ObjectHideFlags: 0

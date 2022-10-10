@@ -395,7 +395,7 @@ public class PlayerControl : NetworkBehaviour
 
 	private IEnumerator HurtState()
     {
-		if(audioS_Walk.isPlaying) audioS_Walk.Stop();
+		if(audioS_Walk.isPlaying) Cmd_Footsteps(false);
 
 		yield return new WaitForSeconds(0.75f);
 		

@@ -86,6 +86,9 @@ public class AIControl : NetworkBehaviour
 	private Vector3 GoTo => movingToPieces ? PieceSpawnPos : BoardPos;
 	#endregion
 
+	[SerializeField]
+	AudioSource audioS_Walk;
+
 	private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -233,6 +236,16 @@ public class AIControl : NetworkBehaviour
 
 		while(Vector3.Distance(transform.position, GoTo) > _changeBoard_dist)
 		{
+			if(!audioS_Walk.isPlaying)
+			{
+				if(nav.velocity.magnitude >= 0.1f) Cmd_Footsteps(true);
+			}
+			else
+			{
+				if(nav.velocity.magnitude < 0.1f) Cmd_Footsteps(false);
+			}
+				
+
 			if(can_move)
 			{
 				nav.SetDestination(GoTo);
@@ -296,7 +309,6 @@ public class AIControl : NetworkBehaviour
 				PieceCheck pc = FollowTarget.GetComponent<PieceCheck>();
 				if(pc == null || pc.Owner != null)
 				{
-					print("cu");
 					StartCoroutine("SearchPlayer");
 					
 					if(targetIsPlayer)
@@ -318,7 +330,6 @@ public class AIControl : NetworkBehaviour
 				else
 				{
 					GameObject obj = Grab();
-					print(obj);
 					if(obj != null)
 					{
 						Use_Grab(obj);
@@ -348,8 +359,19 @@ public class AIControl : NetworkBehaviour
 		while (attacking)
 		{
 			if (can_move)
+			{
 				nav.SetDestination(FollowTarget.transform.position);
 				//Move(FollowTarget.transform.position);
+
+				if(!audioS_Walk.isPlaying)
+				{
+					if(nav.velocity.magnitude >= 0.1f) Cmd_Footsteps(true);
+				}
+				else
+				{
+					if(nav.velocity.magnitude < 0.1f) Cmd_Footsteps(false);
+				}
+			}
 
 			if(time >= start)
             {
@@ -422,7 +444,7 @@ public class AIControl : NetworkBehaviour
 
 	private IEnumerator HurtState()
     {
-		
+		if(audioS_Walk.isPlaying) Cmd_Footsteps(false);
 		
 		yield return new WaitForSeconds(1.25f);
 		
@@ -593,6 +615,25 @@ public class AIControl : NetworkBehaviour
 			//enables collision between the player and the grabbed object
 			Physics.IgnoreCollision(obj.GetComponent<Collider>(), char_col, false);
 		}
+	}
+
+	[Command]
+	private void Cmd_Footsteps(bool play)
+	{
+		Rpc_Footsteps(play);
+	}
+	[ClientRpc]
+	private void Rpc_Footsteps(bool play)
+	{
+		if(play)
+		{
+			if(!audioS_Walk.isPlaying) audioS_Walk.Play();
+		}
+		else
+		{
+			if(audioS_Walk.isPlaying) audioS_Walk.Stop();
+		}
+
 	}
 	#endregion
 	
