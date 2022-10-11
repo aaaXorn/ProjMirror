@@ -83,7 +83,7 @@ public class AIControl : NetworkBehaviour
 	[SerializeField] private Vector3 BoardPos, PieceSpawnPos;
 	private bool movingToPieces;
 	//if movinToPieces GoTo == PieceSpawnPos else GoTo == BoardPos
-	private Vector3 GoTo => movingToPieces ? PieceSpawnPos : BoardPos;
+	private Vector3 GoTo => BoardPos;//movingToPieces ? PieceSpawnPos : BoardPos;
 	#endregion
 
 	[SerializeField]
