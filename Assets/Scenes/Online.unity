@@ -2935,6 +2935,10 @@ PrefabInstance:
       value: 2796837704
       objectReference: {fileID: 0}
     - target: {fileID: 500377438007341155, guid: b6a3069c987ab8f4cbb1e94a31e06431, type: 3}
+      propertyPath: lines
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 500377438007341155, guid: b6a3069c987ab8f4cbb1e94a31e06431, type: 3}
       propertyPath: audioS
       value: 
       objectReference: {fileID: 176910506}
@@ -2946,6 +2950,10 @@ PrefabInstance:
       propertyPath: t2_txt
       value: 
       objectReference: {fileID: 1339871100}
+    - target: {fileID: 500377438007341155, guid: b6a3069c987ab8f4cbb1e94a31e06431, type: 3}
+      propertyPath: columns
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 500377438007341155, guid: b6a3069c987ab8f4cbb1e94a31e06431, type: 3}
       propertyPath: end_txt
       value: 

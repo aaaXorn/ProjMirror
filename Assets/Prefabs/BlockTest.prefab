@@ -104,9 +104,9 @@ MonoBehaviour:
   syncInterval: 0.1
   team: 0
   Owner: {fileID: 0}
-  spd: 1
-  rot_spd: 100
-  scale_spd: 1.5
+  spd: 1.5
+  rot_spd: 150
+  scale_spd: 2.25
   TargetScale: {x: 1.8, y: 0.6, z: 1.8}
   piece_layer:
     serializedVersion: 2
