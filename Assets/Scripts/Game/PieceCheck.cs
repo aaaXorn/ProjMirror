@@ -7,6 +7,8 @@ using Mirror;
 
 public class PieceCheck : NetworkBehaviour
 {
+	[SerializeField]
+	private SkinnedMeshRenderer skin_mesh;
     private Material material;
     private Rigidbody rigid;
 
@@ -82,7 +84,7 @@ public class PieceCheck : NetworkBehaviour
     //variables
     public override void OnStartClient()
     {
-        material = GetComponent<Renderer>().material;
+        material = skin_mesh.material;
         material.color = Manager.Instance.mat[0];
         rigid = GetComponent<Rigidbody>();
     }
