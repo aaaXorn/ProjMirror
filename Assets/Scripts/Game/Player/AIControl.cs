@@ -617,7 +617,7 @@ public class AIControl : NetworkBehaviour
 		}
 	}
 
-	[Command]
+	[Command(requiresAuthority = false)]
 	private void Cmd_Footsteps(bool play)
 	{
 		Rpc_Footsteps(play);
