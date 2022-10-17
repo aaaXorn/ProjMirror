@@ -25,7 +25,9 @@ public class AIControl : NetworkBehaviour
 		Follow,
 		Attack,
 		Grab,
-		Hurt
+		Hurt,
+		Win,
+		Lose
     }
 	private States state = States.Falling;
 	
@@ -140,8 +142,23 @@ public class AIControl : NetworkBehaviour
 			case States.Hurt:
 				StartCoroutine("HurtState");
 				break;
+			
+			case States.Win:
+				StartCoroutine("EmoteState", 3);
+				break;
+			
+			case States.Lose:
+				StartCoroutine("EmoteState", 4);
+				break;
         }
     }
+	public void EndEmote(bool win)
+	{
+		StopAllCoroutines();
+
+		States st = (win ? States.Win : States.Lose);
+		StateMachine(st);
+	}
 	
 	private IEnumerator FallingState()
 	{
@@ -457,6 +474,27 @@ public class AIControl : NetworkBehaviour
 			StateMachine(States.Follow);
     }
 	
+	private IEnumerator EmoteState(int emote)
+    {
+		if(audioS_Walk.isPlaying) Cmd_Footsteps(false);
+		
+		float time = 0;
+
+		anim.SetInteger("no_emote", emote);
+		net_anim.SetTrigger("emote");
+		
+		if(nav.enabled) nav.SetDestination(transform.position);
+		if(!rigid.isKinematic) rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
+		time = 2f;
+
+		yield return new WaitForSeconds(time);
+
+		anim.SetInteger("no_emote", 0);
+		net_anim.SetTrigger("emote");
+
+		StateMachine(States.Free);
+    }
+
 	#region punch
 	//[Command]
 	private void Punch(Vector3 pos, PlayerControl PC)

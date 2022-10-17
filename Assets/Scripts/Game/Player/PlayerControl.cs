@@ -20,7 +20,9 @@ public class PlayerControl : NetworkBehaviour
 		Attack,
 		Emote1,
 		Emote2,
-		Hurt
+		Hurt,
+		Win,
+		Lose
     }
 	private States state = States.Free;
 
@@ -153,6 +155,14 @@ public class PlayerControl : NetworkBehaviour
 
 			case States.Emote2:
 				StartCoroutine("EmoteState", 2);
+				break;
+			
+			case States.Win:
+				StartCoroutine("EmoteState", 3);
+				break;
+			
+			case States.Lose:
+				StartCoroutine("EmoteState", 4);
 				break;
 
 			case States.Hurt:
@@ -380,11 +390,23 @@ public class PlayerControl : NetworkBehaviour
 				time = 1.374f;
 				break;
 
+			case 3:
+				print("win");
+				rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
+				time = 2f;
+				break;
+			
+			case 4:
+				print("lose");
+				rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
+				time = 2f;
+				break;
+
 			default:
 				Debug.LogError("Emote error.");
 				break;
 		}
-
+		print(time);
 		yield return new WaitForSeconds(time);
 
 		anim.SetInteger("no_emote", 0);
@@ -392,6 +414,22 @@ public class PlayerControl : NetworkBehaviour
 
 		StateMachine(States.Free);
     }
+	[Command(requiresAuthority = false)]
+	public void Cmd_EndEmote(int team)
+	{
+		Rpc_EndEmote(team);
+	}
+	public void Rpc_EndEmote(int team)
+	{
+		if(!hasAuthority) return;
+
+		bool win = (team == this.team) ? true : false;
+
+		StopAllCoroutines();
+
+		States st = win ? States.Win : States.Lose;
+		StateMachine(st);
+	}
 
 	private IEnumerator HurtState()
     {

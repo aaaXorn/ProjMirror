@@ -316,6 +316,8 @@ public class Manager : NetworkBehaviour
 
 	private IEnumerator ResetGame()
 	{
+		yield return new WaitForSecondsRealtime(1.25f);
+
 		if(reset) yield break;
 		reset = true;
 		timer = false;
@@ -329,6 +331,10 @@ public class Manager : NetworkBehaviour
 			audioS_WL.volume = local_PC.team == 1 ? 0.4f : 1f;
 			audioS_WL.clip = local_PC.team == 1 ? aClip_win : aClip_lose;
 			audioS_WL.Play();
+
+			if(isServer) AIObject.GetComponent<AIControl>().EndEmote(false);
+			
+			if(local_PC != null) local_PC.Cmd_EndEmote(1);
 		}
 		else if(t2_score > t1_score)
 		{
@@ -337,6 +343,10 @@ public class Manager : NetworkBehaviour
 			audioS_WL.volume = local_PC.team == 2 ? 0.4f : 1f;
 			audioS_WL.clip = local_PC.team == 2 ? aClip_win : aClip_lose;
 			audioS_WL.Play();
+
+			if(isServer) AIObject.GetComponent<AIControl>().EndEmote(true);
+
+			if(local_PC != null) local_PC.Cmd_EndEmote(2);
 		}
 		else//tie
 		{
@@ -345,6 +355,10 @@ public class Manager : NetworkBehaviour
 			audioS_WL.volume = 1f;
 			audioS_WL.clip = aClip_lose;
 			audioS_WL.Play();
+
+			if(isServer) AIObject.GetComponent<AIControl>().EndEmote(false);
+			
+			if(local_PC != null) local_PC.Cmd_EndEmote(3);
 		}
 
 		yield return new WaitForSecondsRealtime(3);
@@ -386,6 +400,7 @@ public class Manager : NetworkBehaviour
 			
 			if(AIObject != null)
 			{
+				AIObject.GetComponent<AIControl>().StopAllCoroutines();
 				Destroy(AIObject);
 			}
 
