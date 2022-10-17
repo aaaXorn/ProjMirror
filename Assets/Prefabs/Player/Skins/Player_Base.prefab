@@ -67,6 +67,14 @@ PrefabInstance:
       propertyPath: animator
       value: 
       objectReference: {fileID: 8056050399380316715}
+    - target: {fileID: 7823219648314916639, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7823219648314916639, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8643333220781722445, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
       propertyPath: PunchPoint
       value: 
@@ -116,6 +124,18 @@ PrefabInstance:
     - target: {fileID: 972923647032057169, guid: 65c3e6b7587dd97459a93fe62dc52412, type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 972923647032057169, guid: 65c3e6b7587dd97459a93fe62dc52412, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 972923647032057169, guid: 65c3e6b7587dd97459a93fe62dc52412, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 972923647032057169, guid: 65c3e6b7587dd97459a93fe62dc52412, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 972923647032057169, guid: 65c3e6b7587dd97459a93fe62dc52412, type: 3}
       propertyPath: m_LocalPosition.x

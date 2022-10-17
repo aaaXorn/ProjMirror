@@ -70,6 +70,18 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 972923647032057169, guid: 65c3e6b7587dd97459a93fe62dc52412, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 972923647032057169, guid: 65c3e6b7587dd97459a93fe62dc52412, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 972923647032057169, guid: 65c3e6b7587dd97459a93fe62dc52412, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 972923647032057169, guid: 65c3e6b7587dd97459a93fe62dc52412, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -394,11 +406,11 @@ MonoBehaviour:
   h_spd: 7.5
   rot_spd: 1500
   can_move: 1
-  punch_range: 0.5
+  punch_range: 0.7
   PunchPoint: {fileID: 7156167385542896556}
   punch_force: 500
   team: 0
-  grab_range: {x: 0.4, y: 1.2, z: 0.5}
+  grab_range: {x: 0.5, y: 2, z: 0.6}
   throw_spd_Z: 5
   throw_spd_Y: 5
   grab_offset: {x: 0, y: -0.2, z: 0}

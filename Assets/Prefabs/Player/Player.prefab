@@ -119,7 +119,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1647783563816740878}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.073, z: 0.8}
+  m_LocalPosition: {x: 0, y: 1.583, z: 1.158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1649253812706557075}
@@ -187,11 +187,11 @@ MonoBehaviour:
   h_spd: 7.5
   rot_spd: 750
   can_move: 0
-  punch_range: 0.4
+  punch_range: 0.6
   PunchPoint: {fileID: 8371959636900396489}
   punch_force: 500
   team: 0
-  grab_range: {x: 0.4, y: 1.2, z: 0.5}
+  grab_range: {x: 0.5, y: 2, z: 0.6}
   throw_spd_Z: 5
   throw_spd_Y: 5
   grab_offset: {x: 0, y: -0.2, z: 0}
@@ -328,10 +328,10 @@ CapsuleCollider:
   m_Material: {fileID: 13400000, guid: 69ef023461e8209499531dc32fa54312, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.4
-  m_Height: 1.9124742
+  m_Radius: 0.6
+  m_Height: 2.868711
   m_Direction: 1
-  m_Center: {x: 0, y: 1.0437629, z: 0}
+  m_Center: {x: 0, y: 1.5656445, z: 0}
 --- !u!114 &7382682017509253006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,8 +455,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.25
-  m_Center: {x: 0, y: 0.25, z: 0}
+  m_Radius: 0.375
+  m_Center: {x: 0, y: 0.375, z: 0}
 --- !u!1 &4516658789799351312
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,7 +482,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4516658789799351312}
   m_LocalRotation: {x: -0.24184473, y: 0.66446304, z: 0.24184473, w: 0.66446304}
-  m_LocalPosition: {x: 0, y: 1.86, z: 0}
+  m_LocalPosition: {x: 0, y: 3.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8980399864239387561}

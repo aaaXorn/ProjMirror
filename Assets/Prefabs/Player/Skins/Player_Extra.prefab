@@ -59,6 +59,10 @@ PrefabInstance:
       propertyPath: sceneId
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3496904195842192355, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
+      propertyPath: m_AssetId
+      value: 3b159675966587748a2f5d1f4e1b5125
+      objectReference: {fileID: 0}
     - target: {fileID: 7382682017509253006, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
       propertyPath: animator
       value: 
@@ -88,6 +92,18 @@ PrefabInstance:
     - target: {fileID: 6465524534697747378, guid: fd57621641eaf7e4fbb6cc02808bb6b7, type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465524534697747378, guid: fd57621641eaf7e4fbb6cc02808bb6b7, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.405
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465524534697747378, guid: fd57621641eaf7e4fbb6cc02808bb6b7, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.405
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465524534697747378, guid: fd57621641eaf7e4fbb6cc02808bb6b7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.405
       objectReference: {fileID: 0}
     - target: {fileID: 6465524534697747378, guid: fd57621641eaf7e4fbb6cc02808bb6b7, type: 3}
       propertyPath: m_LocalPosition.x
