@@ -51,7 +51,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 910550069af539548bd64cad028b67e7, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,7 +91,7 @@ TextMesh:
   m_FontSize: 50
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 0}
+  m_Font: {fileID: 12800000, guid: 910550069af539548bd64cad028b67e7, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
@@ -227,8 +227,8 @@ MonoBehaviour:
   FloatingInfo: {fileID: 4516658789799351312}
   nickname: 
   playerColor: {r: 1, g: 1, b: 1, a: 1}
-  team1Color: {r: 0.5283019, g: 0, b: 0, a: 1}
-  team2Color: {r: 0, g: 0.09060335, b: 0.5, a: 1}
+  team1Color: {r: 1, g: 0.2784314, b: 0.32941177, a: 1}
+  team2Color: {r: 0.27058825, g: 0.54901963, b: 1, a: 1}
 --- !u!54 &3851910163463544308
 Rigidbody:
   m_ObjectHideFlags: 0

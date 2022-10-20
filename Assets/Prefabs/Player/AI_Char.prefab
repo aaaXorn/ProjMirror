@@ -384,8 +384,8 @@ MonoBehaviour:
   FloatingInfo: {fileID: 6625828956195534895}
   nickname: 
   playerColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
-  team1Color: {r: 0.5294118, g: 0.24364452, b: 0, a: 1}
-  team2Color: {r: 0, g: 0.4460976, b: 0.5019608, a: 1}
+  team1Color: {r: 0.8867924, g: 0.40852234, b: 0, a: 1}
+  team2Color: {r: 0, g: 0.7645932, b: 0.8584906, a: 1}
 --- !u!114 &3128039329081643599
 MonoBehaviour:
   m_ObjectHideFlags: 0
