@@ -104,6 +104,6 @@ MonoBehaviour:
   MaximizeSendReceiveBuffersToOSLimit: 1
   ReliableMaxMessageSize: 298449
   UnreliableMaxMessageSize: 1199
-  debugLog: 0
+  debugLog: 1
   statisticsGUI: 0
   statisticsLog: 0
