@@ -1282,7 +1282,6 @@ namespace Mirror
         /// <summary>Called on the client when connected to a server. By default it sets client as ready and adds a player.</summary>
         public virtual void OnClientConnect()
         {
-            print("OnClientConnect");
             // OnClientConnect by default calls AddPlayer but it should not do
             // that when we have online/offline scenes. so we need the
             // clientLoadedScene flag to prevent it.

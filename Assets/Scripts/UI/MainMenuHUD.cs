@@ -27,8 +27,8 @@ public class MainMenuHUD : MonoBehaviour
         menu_opt = GetComponent<MenuOptions>();
         menu_opt.StartOptions();
 
-        if(OnlineManager.Instance.networkAddress != "localhost")
-            iField_address.text = OnlineManager.Instance.networkAddress;
+        if(NetworkManager.singleton.networkAddress != "localhost")
+            iField_address.text = NetworkManager.singleton.networkAddress;
         else iField_address.text = "localhost";
 
         //invokes OnInputFieldChanged() whenever iField_address is changed
@@ -101,7 +101,7 @@ public class MainMenuHUD : MonoBehaviour
 
     public void OnInputFieldChanged()
     {
-        OnlineManager.Instance.networkAddress = iField_address.text;
+        NetworkManager.singleton.networkAddress = iField_address.text;
     }
 	public void OnUsernameChanged()
 	{
@@ -120,16 +120,15 @@ public class MainMenuHUD : MonoBehaviour
     }
     public void ButtonHost()
     {
-        OnlineManager.Instance.StartHost();
+        NetworkManager.singleton.StartHost();
     }
     public void ButtonServer()
     {
-        OnlineManager.Instance.StartServer();
+        NetworkManager.singleton.StartServer();
     }
     public void ButtonClient()
     {
-        print("hud client");
-        OnlineManager.Instance.StartClient();
+        NetworkManager.singleton.StartClient();
     }
     public void ButtonQuit()
     {

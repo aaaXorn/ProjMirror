@@ -2880,7 +2880,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1015951235}
+  m_TargetGraphic: {fileID: 1133615467}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -3465,7 +3465,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1124954972}
+  m_TargetGraphic: {fileID: 1133615467}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -3659,6 +3659,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1133615467 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6703812276812456360, guid: d53fdd5a9dd2ef841ae531b24ebae2e1, type: 3}
+  m_PrefabInstance: {fileID: 1133615463}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133615465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1155339138
@@ -3871,7 +3882,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1198469661}
+  m_TargetGraphic: {fileID: 1133615467}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -6028,7 +6039,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 2090221481}
+  m_TargetGraphic: {fileID: 1133615467}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []

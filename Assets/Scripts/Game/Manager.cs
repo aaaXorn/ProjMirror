@@ -245,7 +245,7 @@ public class Manager : NetworkBehaviour
 		else
 		{
 			Debug.LogError("Local PlayerControl script is null.");
-			OnlineManager.Instance.StopClient();//temporary fix
+			NetworkManager.singleton.StopClient();//temporary fix
 		}
 
 		if(isServer)
