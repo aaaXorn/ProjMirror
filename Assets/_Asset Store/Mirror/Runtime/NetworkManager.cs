@@ -235,7 +235,7 @@ namespace Mirror
         // full server setup code, without spawning objects yet
         void SetupServer()
         {
-            // Debug.Log("NetworkManager SetupServer");
+            Debug.Log("NetworkManager SetupServer");
             InitializeSingleton();
 
             if (runInBackground)
@@ -269,6 +269,7 @@ namespace Mirror
         /// <summary>Starts the server, listening for incoming connections.</summary>
         public void StartServer()
         {
+            print("StartServer");
             if (NetworkServer.active)
             {
                 Debug.LogWarning("Server already started.");
@@ -310,6 +311,7 @@ namespace Mirror
         /// <summary>Starts the client, connects it to the server with networkAddress.</summary>
         public void StartClient()
         {
+            print("StartClient");
             if (NetworkClient.active)
             {
                 Debug.LogWarning("Client already started.");

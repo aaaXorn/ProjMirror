@@ -102,6 +102,7 @@ public class MainMenuHUD : MonoBehaviour
     public void OnInputFieldChanged()
     {
         OnlineManager.Instance.networkAddress = iField_address.text;
+        print(OnlineManager.Instance.networkAddress);
     }
 	public void OnUsernameChanged()
 	{
