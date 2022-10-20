@@ -17,22 +17,30 @@ public class Offscreen : NetworkBehaviour
 	
     private void OnTriggerEnter(Collider other)
 	{
-		if(!isServer) return;
+		print("trigger");
 
 		if(other.gameObject.layer == player_layer)
 		{
 			PlayerControl PC = other.GetComponent<PlayerControl>();
 			if(PC != null)
 			{
-				if(PC.team == 1)
-					Manager.Instance.t2_score += 5;
-				else if(PC.team == 2)
-					Manager.Instance.t1_score += 5;
+				if(!PC.isLocalPlayer) return;
+
+				if(isServer)
+				{
+					if(PC.team == 1)
+						Manager.Instance.t2_score += 5;
+					else if(PC.team == 2)
+						Manager.Instance.t1_score += 5;
+				}
+				else Cmd_ChangeScore(PC.team);
 
 				other.transform.position = PC.spawn_pos + Vector3.up * 10f;
 			}
 			else
 			{
+				if(!isServer) return;
+
 				AIControl AIC = other.GetComponent<AIControl>();
 				if(AIC != null)
 				{
@@ -52,5 +60,14 @@ public class Offscreen : NetworkBehaviour
 			
 			other.transform.position = pos;
 		}
+	}
+
+	[Command(requiresAuthority = false)]
+	public void Cmd_ChangeScore(int team)
+	{
+		if(team == 1)
+			Manager.Instance.t2_score += 5;
+		else if(team == 2)
+			Manager.Instance.t1_score += 5;
 	}
 }

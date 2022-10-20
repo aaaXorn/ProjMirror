@@ -52,7 +52,8 @@ public class Chat : NetworkBehaviour
 
 		string s = name != null ? name : "debugmeucu";
 		string clr = "#" + ColorUtility.ToHtmlStringRGBA(name_color[PC.team-1]);
-		txt.text += "\n" + "<color=" + clr + ">" + s + "</color>" + ": "+ msg;
+		string clr_base = "#" + ColorUtility.ToHtmlStringRGBA(name_color[2]);
+		txt.text += "\n" + "<color=" + clr + ">" + s + ": "+ "</color>" + "<color=" + clr_base + ">" + msg + "</color>";
 		Canvas.ForceUpdateCanvases();
 		sRect.verticalNormalizedPosition = 0f;
 	}
