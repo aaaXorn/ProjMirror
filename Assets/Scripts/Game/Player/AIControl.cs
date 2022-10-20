@@ -273,7 +273,7 @@ public class AIControl : NetworkBehaviour
 		}
 
 		print(movingToPieces);
-
+		
 		if(movingToPieces)
 		{
 			//check for follow target

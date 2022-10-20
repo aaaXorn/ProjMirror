@@ -422,7 +422,7 @@ MonoBehaviour:
   followDist_piece: 99
   followDist_player: 5
   throw_centerDist: 12
-  _changeBoard_dist: 0.2
+  _changeBoard_dist: 0.5
   BoardPos: {x: 0, y: 6.7, z: -11.3}
   PieceSpawnPos: {x: 0, y: -1, z: -52}
   audioS_Walk: {fileID: 7110460236632589906}
