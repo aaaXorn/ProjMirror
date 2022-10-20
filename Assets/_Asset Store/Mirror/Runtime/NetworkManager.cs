@@ -235,7 +235,7 @@ namespace Mirror
         // full server setup code, without spawning objects yet
         void SetupServer()
         {
-            // Debug.Log("NetworkManager SetupServer");
+            Debug.Log("NetworkManager SetupServer");
             InitializeSingleton();
 
             if (runInBackground)
@@ -269,6 +269,7 @@ namespace Mirror
         /// <summary>Starts the server, listening for incoming connections.</summary>
         public void StartServer()
         {
+            print("StartServer");
             if (NetworkServer.active)
             {
                 Debug.LogWarning("Server already started.");
@@ -310,6 +311,7 @@ namespace Mirror
         /// <summary>Starts the client, connects it to the server with networkAddress.</summary>
         public void StartClient()
         {
+            print("StartClient");
             if (NetworkClient.active)
             {
                 Debug.LogWarning("Client already started.");
@@ -341,6 +343,7 @@ namespace Mirror
             }
             // Debug.Log($"NetworkManager StartClient address:{networkAddress}");
 
+            print(networkAddress);
             NetworkClient.Connect(networkAddress);
 
             OnStartClient();
@@ -372,7 +375,7 @@ namespace Mirror
 
             // Debug.Log($"NetworkManager StartClient address:{uri}");
             networkAddress = uri.Host;
-
+            print(networkAddress);
             NetworkClient.Connect(uri);
 
             OnStartClient();
@@ -1159,7 +1162,7 @@ namespace Mirror
 
         void OnClientConnectInternal()
         {
-            //Debug.Log("NetworkManager.OnClientConnectInternal");
+            Debug.Log("NetworkManager.OnClientConnectInternal");
 
             if (authenticator != null)
             {
@@ -1176,7 +1179,7 @@ namespace Mirror
         // called after successful authentication
         void OnClientAuthenticated()
         {
-            //Debug.Log("NetworkManager.OnClientAuthenticated");
+            Debug.Log("NetworkManager.OnClientAuthenticated");
 
             // set connection to authenticated
             NetworkClient.connection.isAuthenticated = true;
@@ -1282,6 +1285,7 @@ namespace Mirror
         /// <summary>Called on the client when connected to a server. By default it sets client as ready and adds a player.</summary>
         public virtual void OnClientConnect()
         {
+            print("OnClientConnect");
             // OnClientConnect by default calls AddPlayer but it should not do
             // that when we have online/offline scenes. so we need the
             // clientLoadedScene flag to prevent it.
