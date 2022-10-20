@@ -341,7 +341,6 @@ namespace Mirror
             }
             // Debug.Log($"NetworkManager StartClient address:{networkAddress}");
 
-            print(networkAddress);
             NetworkClient.Connect(networkAddress);
 
             OnStartClient();
@@ -373,7 +372,7 @@ namespace Mirror
 
             // Debug.Log($"NetworkManager StartClient address:{uri}");
             networkAddress = uri.Host;
-            print(networkAddress);
+
             NetworkClient.Connect(uri);
 
             OnStartClient();
@@ -1160,7 +1159,7 @@ namespace Mirror
 
         void OnClientConnectInternal()
         {
-            Debug.Log("NetworkManager.OnClientConnectInternal");
+            //Debug.Log("NetworkManager.OnClientConnectInternal");
 
             if (authenticator != null)
             {
@@ -1177,7 +1176,7 @@ namespace Mirror
         // called after successful authentication
         void OnClientAuthenticated()
         {
-            Debug.Log("NetworkManager.OnClientAuthenticated");
+            //Debug.Log("NetworkManager.OnClientAuthenticated");
 
             // set connection to authenticated
             NetworkClient.connection.isAuthenticated = true;

@@ -27,7 +27,8 @@ public class OnlineManager : NetworkManager
 		if(Instance == null) Instance = this;
 		else
 		{
-			Debug.LogError("Two OnlineManager in scene.");
+			Destroy(Instance);
+			Instance = this;
 		}
 	}
 	
