@@ -525,7 +525,7 @@ public class AIControl : NetworkBehaviour
 		Vector3 force_pos = new Vector3(pos.x, transform.position.y, pos.z);
 		//add force
 		Vector3 dir = (transform.position - force_pos).normalized;
-		rigid.AddForce(dir * force, ForceMode.Force);
+		rigid.AddForce((dir * force * 0.75f) + (Vector3.up * force * 0.3f), ForceMode.Force);
 	}
 	#endregion
 	

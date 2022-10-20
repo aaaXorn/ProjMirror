@@ -404,11 +404,11 @@ MonoBehaviour:
   rigid: {fileID: 0}
   anim: {fileID: 0}
   h_spd: 7.5
-  rot_spd: 1500
+  rot_spd: 2000
   can_move: 1
   punch_range: 0.7
   PunchPoint: {fileID: 7156167385542896556}
-  punch_force: 500
+  punch_force: 575
   team: 0
   grab_range: {x: 0.5, y: 2, z: 0.6}
   throw_spd_Z: 5

@@ -527,7 +527,7 @@ public class PlayerControl : NetworkBehaviour
 		//add force
 		Vector3 dir = (transform.position - force_pos).normalized;
 		
-		rigid.AddForce(dir * force, ForceMode.Force);
+		rigid.AddForce((dir * force) + (Vector3.up * force * 0.5f), ForceMode.Force);
 	}
 	#endregion
 	
