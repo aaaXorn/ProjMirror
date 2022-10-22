@@ -423,6 +423,7 @@ public class Manager : NetworkBehaviour
 			if(time >= match_time)
 			{
 				StartCoroutine("ResetGame");
+				timer = false;
 			}
 			else if(time == match_time - 60)
 				audioS_1min.Play();
