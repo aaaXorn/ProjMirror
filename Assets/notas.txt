@@ -1,0 +1,47 @@
+Variações de escolha do personagem jogável, opção de retornar para menu foi uma boa adição. 
+
+A arte segue com as cores do menu, porém não achei necessário o quadrado cinza do lado esquerdo, dá a impressão que não está coeso com o cenário que tem um corte mal feito.
+
+Os botões de connect/host ficaram muito próximos da borda podendo ser cortado nos monitores, seria interessante inserir uma margem para não ter esse perigo.
+
+Jogabilidade
+
+Bug IA fica andando no mesmo lugar algumas vezes, demora para executar ação de pegar os blocos, passa maior tempo perseguindo o player, porém tem uma IA funcional e com a proposta de multiplayer é o suficiente.
+
+O cenário é simples, boas animações, um skybox. 
+
+Durante o gameplay os demais jogadores tiveram dificuldade em entender a maneira da pontuação, já na jogabilidade é intuitivo e funcional, sendo divertido.
+
+Gameplay: Divertida e engraçada em questão de PVP, entretanto meio incerta nos arremessos, creio que uma UI que indica o lugar onde elas serão arremessas ajudaria.
+
+Arte: Estilo de arte condizente, entretanto creio que requer um pouco mais de atenção na paleta de cores que está sendo usada.
+
+Ao chegar nos 500 pontos (final da barra de pontos), o jogo não acaba tendo que esperar o timer terminar para anunciar o vencedor,
+
+Quando o timer acaba o jogador não retorna ao menu e pode continuar jogando.
+
+Não tem menu de pause para retornar ao começo.
+
+O mapa é muito grande para apenas 2 jogadores.
+
+300 segundos é muito tempo e acaba tornando a partida monótona.
+
+Dificuldade em jogar com 4 players.
+
+O personagem azul confunde com o chão de mesma cor e confunde os times caso ele seja do time Vermelho.
+
+Jogo singleplayer precisa de uma IA mais agressiva pra incentivar combate
+
+Objetivo pouco intuitivo 
+
+Vale mais a pena fazer uma grande linha do que fazer uma nova linha de 4 
+
+Movementos muito “flutuante” (Pouca fricção) 
+
+Muito dificil de acertar as caixas no lugar certo 
+
+Menu não possui musica, então fica dificil de ajustar o volume por ele 
+
+O jogador conectado não recebe uma tela de derrota 
+
+Não da para abrir quitar durante o jogo, somente com alt+f4 
