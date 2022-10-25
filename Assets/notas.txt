@@ -1,7 +1,5 @@
 Programação:
 
-Bug IA fica andando no mesmo lugar algumas vezes, demora para executar ação de pegar os blocos, passa maior tempo perseguindo o player.
-
 Durante o gameplay os demais jogadores tiveram dificuldade em entender a maneira da pontuação.
 Objetivo pouco intuitivo.
 -> How to play.
@@ -13,8 +11,6 @@ Ao chegar nos 500 pontos (final da barra de pontos), o jogo não acaba tendo que
 
 O mapa é muito grande para apenas 2 jogadores. (checar se funciona com 4 jogadores)
 Dificuldade em jogar com 4 players.
-
-300 segundos é muito tempo e acaba tornando a partida monótona. (modificado pra 180 sec)
 
 Movementos muito “flutuante” (Pouca fricção).
 
@@ -35,3 +31,11 @@ Durante o gameplay os demais jogadores tiveram dificuldade em entender a maneira
 Objetivo pouco intuitivo.
 -> VFX de pontuação.
 -> How to play.
+
+
+Completo:
+
+300 segundos é muito tempo e acaba tornando a partida monótona.
+	(modificado pra 180 sec)
+
+Bug IA fica andando no mesmo lugar algumas vezes, demora para executar ação de pegar os blocos, passa maior tempo perseguindo o player.

@@ -5,6 +5,9 @@ using Mirror;
 
 public class Offscreen : NetworkBehaviour
 {
+	[SerializeField]
+	float _offscreen_points;
+
 	private LayerMask player_layer, piece_layer;
 	
 	private void Start()
@@ -66,8 +69,8 @@ public class Offscreen : NetworkBehaviour
 	public void Cmd_ChangeScore(int team)
 	{
 		if(team == 1)
-			Manager.Instance.t2_score += 5;
+			Manager.Instance.t2_score += _offscreen_points;
 		else if(team == 2)
-			Manager.Instance.t1_score += 5;
+			Manager.Instance.t1_score += _offscreen_points;
 	}
 }

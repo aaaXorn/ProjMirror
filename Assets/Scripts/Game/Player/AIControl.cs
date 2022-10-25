@@ -73,7 +73,7 @@ public class AIControl : NetworkBehaviour
 	public GameObject GrabObj;
 	
 	#region follow
-	private GameObject FollowTarget;
+	private GameObject FollowTarget, LastTarget;
 
 	[SerializeField]
 	private float followDist_piece, followDist_player, throw_centerDist;
@@ -315,6 +315,19 @@ public class AIControl : NetworkBehaviour
 	private IEnumerator FollowState()
 	{
 		bool follow = true;
+		Collider col = FollowTarget.GetComponent<Collider>();
+
+		PieceCheck pc = targetIsPlayer ? null : FollowTarget.GetComponent<PieceCheck>();
+
+		if(FollowTarget == LastTarget)
+		{
+			yield return null;
+
+			StateMachine(States.Free);
+			
+			yield break;
+		}
+
 
 		while(follow)
 		{
@@ -323,7 +336,6 @@ public class AIControl : NetworkBehaviour
 			
 			if(!targetIsPlayer)
 			{
-				PieceCheck pc = FollowTarget.GetComponent<PieceCheck>();
 				if(pc == null || pc.Owner != null)
 				{
 					StartCoroutine("SearchPlayer");
@@ -337,7 +349,7 @@ public class AIControl : NetworkBehaviour
 				}
 			}
 			
-			if(Vector3.Distance(transform.position, FollowTarget.transform.position) < 1f)
+			if(Vector3.Distance(transform.position, FollowTarget.transform.position) < 1.5f)
 			{
 				if(targetIsPlayer)
 				{
@@ -356,7 +368,7 @@ public class AIControl : NetworkBehaviour
 				}
 			}
 
-			if(FollowTarget == null) follow = false;
+			if(FollowTarget == null || col.isTrigger) follow = false;
 
 			yield return null;
 		}
@@ -454,6 +466,7 @@ public class AIControl : NetworkBehaviour
 		anim.SetBool("hasBox", false);
 		net_anim.SetTrigger("throw");
 		Throw();
+		LastTarget = FollowTarget;
 		FollowTarget = null;
 
 		StateMachine(States.Free);

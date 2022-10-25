@@ -406,7 +406,7 @@ MonoBehaviour:
   h_spd: 7.5
   rot_spd: 2000
   can_move: 1
-  punch_range: 0.7
+  punch_range: 1
   PunchPoint: {fileID: 7156167385542896556}
   punch_force: 575
   team: 0
@@ -420,10 +420,10 @@ MonoBehaviour:
     m_Bits: 64
   GrabObj: {fileID: 0}
   followDist_piece: 99
-  followDist_player: 5
+  followDist_player: 10
   throw_centerDist: 12
   _changeBoard_dist: 0.5
-  BoardPos: {x: 0, y: 6.7, z: -11.3}
+  BoardPos: {x: 0, y: 6.7, z: 0}
   PieceSpawnPos: {x: 0, y: -1, z: -52}
   audioS_Walk: {fileID: 7110460236632589906}
 --- !u!195 &3263528104982675687
