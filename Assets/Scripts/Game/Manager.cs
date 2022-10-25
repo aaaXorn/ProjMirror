@@ -128,12 +128,36 @@ public class Manager : NetworkBehaviour
 	private void OnTeam1Score(float _Old, float _New)
 	{
 		t1_txt.text = "TEAM 1: " + _New;
-		img_scr1.fillAmount = _New / win_score;
+		if(_New >= win_score)
+		{
+			img_scr1.fillAmount = 1f;
+
+			if(isServer)
+			{
+				StopCoroutine("MatchTimer");
+			}
+
+			StartCoroutine("ResetGame");
+		}
+		else
+			img_scr1.fillAmount = _New / win_score;
 	}
 	private void OnTeam2Score(float _Old, float _New)
 	{
 		t2_txt.text = "TEAM 2: " + _New;
-		img_scr2.fillAmount = _New / win_score;
+		if(_New >= win_score)
+		{
+			img_scr2.fillAmount = 1f;
+
+			if(isServer)
+			{
+				StopCoroutine("MatchTimer");
+			}
+
+			StartCoroutine("ResetGame");
+		}
+		else
+			img_scr2.fillAmount = _New / win_score;
 	}
 	
     private void Awake()
