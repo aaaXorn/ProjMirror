@@ -195,6 +195,8 @@ public class Manager : NetworkBehaviour
 		t2_txt.text = "TEAM 2: " + t2_score;
 
 		txt_MatchTime.text = match_time.ToString();
+
+		if(ready) Chat.Instance.ChangeCanvasEnabled();
 	}
 
 	private void SetupHoles()
@@ -278,8 +280,8 @@ public class Manager : NetworkBehaviour
 		}
 		else
 		{
-			Debug.LogError("Local PlayerControl script is null.");
-			NetworkManager.singleton.StopClient();//temporary fix
+			//Debug.LogError("Local PlayerControl script is null.");
+			//NetworkManager.singleton.StopClient();//temporary fix
 		}
 
 		if(isServer)

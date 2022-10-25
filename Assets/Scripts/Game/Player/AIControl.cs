@@ -272,7 +272,7 @@ public class AIControl : NetworkBehaviour
 			yield return null;
 		}
 
-		print(movingToPieces);
+		//print(movingToPieces);
 		
 		if(movingToPieces)
 		{

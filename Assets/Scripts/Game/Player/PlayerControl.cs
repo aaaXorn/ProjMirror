@@ -117,6 +117,11 @@ public class PlayerControl : NetworkBehaviour
 			Manager.Instance.local_PC = this;
 			Manager.Instance.SetupUI();
 			Manager.Instance.SetListenerParent(transform);
+
+			if(Manager.Instance.ready == true)
+			{
+				can_move = true;
+			}
 		}
 		else Debug.LogError("Manager Instance is null.");
 
