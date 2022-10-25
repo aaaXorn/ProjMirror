@@ -66,6 +66,10 @@ public class Chat : NetworkBehaviour
 	public void ChangeCanvasEnabled()
 	{
 		canvas.enabled = !canvas.enabled;
+		if(Manager.QuitBtn != null)
+		{
+			Manager.QuitBtn.SetActive(!Manager.QuitBtn.activeSelf);
+		}
 	}
 
 	[Client]

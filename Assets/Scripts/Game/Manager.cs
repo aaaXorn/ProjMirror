@@ -166,6 +166,8 @@ public class Manager : NetworkBehaviour
         if (Instance == null) Instance = this;
         //if there's  already an instance, remove this
         else Destroy(gameObject);
+
+		QuitBtn = QuitBtn_Reference;
     }
 
 	private void Start()
@@ -217,6 +219,7 @@ public class Manager : NetworkBehaviour
 	#region connection
 	private void ReadyChanged(bool _Old, bool _New)
 	{
+		print("ready" + _New);
 		//deactivates the ready button
 		if(ready)
 		{
@@ -256,11 +259,18 @@ public class Manager : NetworkBehaviour
 		if(isServer) btn_ready.interactable = true;
 	}
 	
+	[SerializeField]
+	GameObject QuitBtn_Reference;
+	public static GameObject QuitBtn;
+
 	//starts the game
 	public void GameStart()
 	{
 		if(Chat.Instance != null && Chat.Instance.canvas.enabled)
+		{
 			Chat.Instance.canvas.enabled = false;
+			QuitBtn.SetActive(false);
+		}
 
 		if(local_PC != null)
 		{
@@ -356,7 +366,7 @@ public class Manager : NetworkBehaviour
 			audioS_WL.clip = local_PC.team == 1 ? aClip_win : aClip_lose;
 			audioS_WL.Play();
 
-			if(isServer) AIObject.GetComponent<AIControl>().EndEmote(false);
+			if(isServer && AIObject != null) AIObject.GetComponent<AIControl>().EndEmote(false);
 			
 			if(local_PC != null) local_PC.Cmd_EndEmote(1);
 		}
@@ -368,7 +378,7 @@ public class Manager : NetworkBehaviour
 			audioS_WL.clip = local_PC.team == 2 ? aClip_win : aClip_lose;
 			audioS_WL.Play();
 
-			if(isServer) AIObject.GetComponent<AIControl>().EndEmote(true);
+			if(isServer && AIObject != null) AIObject.GetComponent<AIControl>().EndEmote(true);
 
 			if(local_PC != null) local_PC.Cmd_EndEmote(2);
 		}
@@ -389,8 +399,6 @@ public class Manager : NetworkBehaviour
 		
 		end_txt.gameObject.SetActive(false);
 
-		ready = false;
-
 		if(Chat.Instance != null && !Chat.Instance.canvas.enabled)
 			Chat.Instance.canvas.enabled = true;
 
@@ -404,6 +412,8 @@ public class Manager : NetworkBehaviour
 
 		if(isServer)
 		{
+			ready = false;
+
 			curr_pieces = 0;
 			
 			t1_score = 0;

@@ -7960,13 +7960,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 267352694}
     - target: {fileID: 500377438007341155, guid: b6a3069c987ab8f4cbb1e94a31e06431, type: 3}
-      propertyPath: ReadyObjs.Array.data[0]
+      propertyPath: QuitBtn_Reference
       value: 
       objectReference: {fileID: 1548660450}
     - target: {fileID: 500377438007341155, guid: b6a3069c987ab8f4cbb1e94a31e06431, type: 3}
-      propertyPath: ReadyObjs.Array.data[1]
+      propertyPath: ReadyObjs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 500377438007341155, guid: b6a3069c987ab8f4cbb1e94a31e06431, type: 3}
+      propertyPath: ReadyObjs.Array.data[0]
       value: 
       objectReference: {fileID: 354142899}
+    - target: {fileID: 500377438007341155, guid: b6a3069c987ab8f4cbb1e94a31e06431, type: 3}
+      propertyPath: ReadyObjs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1548660450}
     - target: {fileID: 500377438007341155, guid: b6a3069c987ab8f4cbb1e94a31e06431, type: 3}
       propertyPath: clr_MatchTime.Array.size
       value: 3

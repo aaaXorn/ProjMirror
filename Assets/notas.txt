@@ -7,14 +7,10 @@ Objetivo pouco intuitivo.
 Gameplay: Divertida e engraçada em questão de PVP, entretanto meio incerta nos arremessos, creio que uma UI que indica o lugar onde elas serão arremessas ajudaria.
 Muito dificil de acertar as caixas no lugar certo 
 
-Ao chegar nos 500 pontos (final da barra de pontos), o jogo não acaba tendo que esperar o timer terminar para anunciar o vencedor,
-
 O mapa é muito grande para apenas 2 jogadores. (checar se funciona com 4 jogadores)
 Dificuldade em jogar com 4 players.
 
 Movementos muito “flutuante” (Pouca fricção).
-
-O jogador conectado não recebe uma tela de derrota.
 
 
 
@@ -39,3 +35,7 @@ Completo:
 	(modificado pra 180 sec)
 
 Bug IA fica andando no mesmo lugar algumas vezes, demora para executar ação de pegar os blocos, passa maior tempo perseguindo o player.
+
+Ao chegar nos 500 pontos (final da barra de pontos), o jogo não acaba tendo que esperar o timer terminar para anunciar o vencedor,
+
+O jogador conectado não recebe uma tela de derrota.

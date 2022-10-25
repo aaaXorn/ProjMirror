@@ -20,8 +20,6 @@ public class Offscreen : NetworkBehaviour
 	
     private void OnTriggerEnter(Collider other)
 	{
-		print("trigger");
-
 		if(other.gameObject.layer == player_layer)
 		{
 			PlayerControl PC = other.GetComponent<PlayerControl>();
