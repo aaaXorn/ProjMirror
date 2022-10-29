@@ -131,6 +131,12 @@ public class PlayerControl : NetworkBehaviour
 		}
 		else Debug.LogError("CameraOnline Instance is null.");
 
+		if(ThrowIndicator.Instance != null)
+		{
+			ThrowIndicator.Instance.target = throw_target;
+		}
+		else Debug.LogError("ThrowIndicator Instance is null.");
+
 		StateMachine(States.Free);
 
 		spawn_pos = transform.position;
@@ -314,6 +320,23 @@ public class PlayerControl : NetworkBehaviour
 		*/
 		
 		anim.SetFloat("velocity", rigid.velocity.magnitude);
+	}
+	[SerializeField]
+	float h_force;
+	private void AddForceMove(Vector3 dir, float time)
+	{
+		Vector3 vel = dir * h_spd;
+		vel += vel.normalized * 0.2f * rigid.drag;
+
+		float force = Mathf.Clamp(h_force, -rigid.mass / time, rigid.mass / time);
+
+		if(rigid.velocity.magnitude == 0)
+			rigid.AddForce(vel * force, ForceMode.Force);
+		else
+		{
+			var velProjectedToTarget = (vel.normalized * Vector3.Dot(vel, rigid.velocity) / vel.magnitude);
+			rigid.AddForce((vel - velProjectedToTarget) * force, ForceMode.Force);
+		}
 	}
 
 	private IEnumerator AttackState()
@@ -561,6 +584,8 @@ public class PlayerControl : NetworkBehaviour
 		}
 		else Debug.LogError("Piece PieceCheck is null.");
 
+		ThrowIndicator.Instance.gameObject.SetActive(true);
+
 		Rpc_Grab(obj);
 	}
 
@@ -596,6 +621,8 @@ public class PlayerControl : NetworkBehaviour
 		Rpc_ReleaseGrab(GrabObj);
 
 		GrabObj = null;
+
+		ThrowIndicator.Instance.gameObject.SetActive(false);
     }
 
 	[Command]
@@ -638,6 +665,10 @@ public class PlayerControl : NetworkBehaviour
 			Physics.IgnoreCollision(obj.GetComponent<Collider>(), char_col, false);
 		}
 	}
+
+	[SerializeField]
+	Transform throw_target;
+
 	#endregion
 
 	#endregion

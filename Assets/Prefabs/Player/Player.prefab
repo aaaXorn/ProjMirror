@@ -165,6 +165,7 @@ Transform:
   - {fileID: 8371959636900396489}
   - {fileID: 4857515866655086442}
   - {fileID: 7823219648314916639}
+  - {fileID: 4163845092400430072}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -209,6 +210,8 @@ MonoBehaviour:
   aClip_throw: {fileID: 8300000, guid: 0c50d53c951b2f446aabe26fb94a7217, type: 3}
   PN: {fileID: 3990139285412941006}
   VFX_Punch: {fileID: 3032269772339203281, guid: 6042f268e243c8948952f40dda161c01, type: 3}
+  h_force: 0
+  throw_target: {fileID: 4163845092400430072}
 --- !u!114 &3990139285412941006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -585,6 +588,36 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &4687856704861367240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4163845092400430072}
+  m_Layer: 0
+  m_Name: ThrowPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4163845092400430072
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4687856704861367240}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.2, z: 7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1649253812706557075}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7516168136141865666
 GameObject:
   m_ObjectHideFlags: 0
