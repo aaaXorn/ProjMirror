@@ -210,7 +210,9 @@ MonoBehaviour:
   aClip_throw: {fileID: 8300000, guid: 0c50d53c951b2f446aabe26fb94a7217, type: 3}
   PN: {fileID: 3990139285412941006}
   VFX_Punch: {fileID: 3032269772339203281, guid: 6042f268e243c8948952f40dda161c01, type: 3}
-  h_force: 0
+  h_force: 5
+  damping: 5
+  _moveWithAddForce: 0
   throw_target: {fileID: 4163845092400430072}
 --- !u!114 &3990139285412941006
 MonoBehaviour:

@@ -312,17 +312,20 @@ public class PlayerControl : NetworkBehaviour
 		else if(audioS_Walk.isPlaying) Cmd_Footsteps(false);
 		
         //movement
-		rigid.velocity = new Vector3(dir.x * h_spd, rigid.velocity.y, dir.z * h_spd);
-		
-		/*float max_spd
-		if(rigid.velocity.magnitude < max_spd)
-			rigid.AddForce(dir * h_spd);
-		*/
+		if(!_moveWithAddForce)
+			rigid.velocity = new Vector3(dir.x * h_spd, rigid.velocity.y, dir.z * h_spd);
+		else
+		{
+			if(dir.magnitude > 0)
+				AddForceMove(dir, Time.deltaTime);
+		}
 		
 		anim.SetFloat("velocity", rigid.velocity.magnitude);
 	}
 	[SerializeField]
-	float h_force;
+	float h_force, damping;
+	[SerializeField]
+	bool _moveWithAddForce;
 	private void AddForceMove(Vector3 dir, float time)
 	{
 		Vector3 vel = dir * h_spd;
@@ -336,6 +339,10 @@ public class PlayerControl : NetworkBehaviour
 		{
 			var velProjectedToTarget = (vel.normalized * Vector3.Dot(vel, rigid.velocity) / vel.magnitude);
 			rigid.AddForce((vel - velProjectedToTarget) * force, ForceMode.Force);
+
+			Vector3 curr_vel = rigid.velocity;
+			Vector3 target_vel = new Vector3(0f, rigid.velocity.y, 0f);
+			rigid.velocity = Vector3.Lerp(curr_vel, target_vel, 1 - Mathf.Exp(-damping * Time.deltaTime));
 		}
 	}
 
