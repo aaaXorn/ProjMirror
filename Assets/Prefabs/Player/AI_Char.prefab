@@ -28,7 +28,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8340273930283503788}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5974639373090096241
 PrefabInstance:
@@ -307,6 +307,10 @@ PrefabInstance:
       propertyPath: m_AssetId
       value: 1c1157bb93349494186c424c39ccfe73
       objectReference: {fileID: 0}
+    - target: {fileID: 4163845092400430072, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7382682017509253006, guid: 4e667eaefb254bd4ebfabdbd24368b69, type: 3}
       propertyPath: animator
       value: 
@@ -420,7 +424,7 @@ MonoBehaviour:
     m_Bits: 64
   GrabObj: {fileID: 0}
   followDist_piece: 99
-  followDist_player: 10
+  followDist_player: 99
   throw_centerDist: 12
   _changeBoard_dist: 0.5
   BoardPos: {x: 0, y: 6.7, z: 0}

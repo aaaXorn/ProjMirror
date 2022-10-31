@@ -827,6 +827,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   _offscreen_points: 30
+  AIC_Spawn: {fileID: 802008668}
 --- !u!114 &476932697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7309,7 +7310,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  local_PC: {fileID: 0}
 --- !u!4 &1815518120
 Transform:
   m_ObjectHideFlags: 0

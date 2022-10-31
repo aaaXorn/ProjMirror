@@ -18,6 +18,8 @@ public class Offscreen : NetworkBehaviour
 		piece_layer = LayerMask.NameToLayer("Piece");
 	}
 	
+	[SerializeField] Transform AIC_Spawn;
+	
     private void OnTriggerEnter(Collider other)
 	{
 		if(other.gameObject.layer == player_layer)
@@ -45,7 +47,7 @@ public class Offscreen : NetworkBehaviour
 				AIControl AIC = other.GetComponent<AIControl>();
 				if(AIC != null)
 				{
-					other.transform.position = new Vector3(57.6f, 18.349f, -10);
+					other.transform.position = AIC_Spawn.position;
 				}
 				//piece
 				else

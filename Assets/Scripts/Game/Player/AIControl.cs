@@ -173,7 +173,13 @@ public class AIControl : NetworkBehaviour
 			yield return null;
 		}
 		
-		StateMachine(States.Free);
+		nav.enabled = true;
+		rigid.isKinematic = true;
+
+		if(FollowTarget == null)
+			StateMachine(States.Free);
+		else
+			StateMachine(States.Follow);
 	}
 	
 	#region search
@@ -478,13 +484,14 @@ public class AIControl : NetworkBehaviour
 		
 		yield return new WaitForSeconds(1.25f);
 		
-		nav.enabled = true;
+		/*nav.enabled = true;
 		rigid.isKinematic = true;
 
 		if(FollowTarget == null)
 			StateMachine(States.Free);
 		else
-			StateMachine(States.Follow);
+			StateMachine(States.Follow);*/
+		StateMachine(States.Falling);
     }
 	
 	private IEnumerator EmoteState(int emote)
