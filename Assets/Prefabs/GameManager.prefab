@@ -55,7 +55,6 @@ MonoBehaviour:
   btn_ready: {fileID: 0}
   ReadyObjs:
   - {fileID: 0}
-  - {fileID: 0}
   t1_txt: {fileID: 0}
   t2_txt: {fileID: 0}
   t1_score: 0
@@ -67,16 +66,16 @@ MonoBehaviour:
   ActPieceList: []
   PieceList: []
   PlayerList: []
-  lines: 2
-  columns: 2
+  lines: 10
+  columns: 10
   pieces: 6
   mat:
   - {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 0}
   - {r: 0.49056602, g: 0, b: 0, a: 0}
   - {r: 0, g: 0.16208561, b: 0.5188679, a: 0}
-  SpawnCenter: {x: 0, y: 17, z: -55}
-  max_dist: 13
-  min_dist: 0
+  SpawnCenter: {x: 0, y: 7.5, z: 0}
+  max_dist: 17
+  min_dist: 14
   end_txt: {fileID: 0}
   SetupPrefab: {fileID: 9040680446257741825, guid: 8f787387a778f7e4da7fb9b5f94fe097, type: 3}
   win_score: 500
@@ -86,7 +85,11 @@ MonoBehaviour:
   aClip_lose: {fileID: 8300000, guid: cf452025bde100c40bd5a48ad7b3c74d, type: 3}
   match_time: 180
   txt_MatchTime: {fileID: 0}
-  clr_MatchTime: []
+  clr_MatchTime:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 1, g: 0.2784314, b: 0.32941177, a: 1}
+  - {r: 0.27058825, g: 0.54901963, b: 1, a: 1}
+  QuitBtn_Reference: {fileID: 0}
 --- !u!114 &500377438007341154
 MonoBehaviour:
   m_ObjectHideFlags: 0
