@@ -134,6 +134,8 @@ public class PlayerControl : NetworkBehaviour
 		if(ThrowIndicator.Instance != null)
 		{
 			ThrowIndicator.Instance.target = throw_target;
+			ThrowIndicator.Instance.SetPos(throw_target.position);
+			ThrowIndicator.Instance.gameObject.SetActive(false);
 		}
 		else Debug.LogError("ThrowIndicator Instance is null.");
 
