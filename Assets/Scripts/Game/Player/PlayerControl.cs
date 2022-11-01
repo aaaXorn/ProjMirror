@@ -135,6 +135,8 @@ public class PlayerControl : NetworkBehaviour
 		{
 			ThrowIndicator.Instance.target = throw_target;
 			ThrowIndicator.Instance.SetPos(throw_target.position);
+			bool red = team == 1 ? true : false;
+			ThrowIndicator.Instance.SetColor(red);
 			ThrowIndicator.Instance.gameObject.SetActive(false);
 		}
 		else Debug.LogError("ThrowIndicator Instance is null.");
@@ -218,6 +220,7 @@ public class PlayerControl : NetworkBehaviour
 				//releases grabbed object
 				else
 				{
+					ThrowIndicator.Instance.gameObject.SetActive(false);
 					anim.SetBool("hasBox", false);
 
 					Cmd_Drop();
@@ -230,6 +233,7 @@ public class PlayerControl : NetworkBehaviour
 				//throws grabbed object
 				if (GrabObj != null)
 				{
+					ThrowIndicator.Instance.gameObject.SetActive(false);
 					anim.SetBool("hasBox", false);
 					net_anim.SetTrigger("throw");
 
@@ -508,6 +512,7 @@ public class PlayerControl : NetworkBehaviour
 				
 				GameObject obj = hits[hit_no].transform.gameObject;
 
+				ThrowIndicator.Instance.gameObject.SetActive(true);
 				Cmd_Grab(obj);
 			}
 		}
@@ -586,8 +591,6 @@ public class PlayerControl : NetworkBehaviour
 		}
 		else Debug.LogError("Piece PieceCheck is null.");
 
-		ThrowIndicator.Instance.gameObject.SetActive(true);
-
 		Rpc_Grab(obj);
 	}
 
@@ -623,8 +626,6 @@ public class PlayerControl : NetworkBehaviour
 		Rpc_ReleaseGrab(GrabObj);
 
 		GrabObj = null;
-
-		ThrowIndicator.Instance.gameObject.SetActive(false);
     }
 
 	[Command]
