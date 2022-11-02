@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: adbbb2847f300084fb7b29e622efd2f7
+guid: 538f4e1bd4f2a544faec56bdaae3112d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6120157661299744041
-    second: Fogo_ sprite_1_0
+      213: -108192599394266390
+    second: "explos\xE3o_sprites_0"
   - first:
-      213: 2395792648889714340
-    second: Fogo_ sprite_1_1
+      213: -2639323311360603820
+    second: "explos\xE3o_sprites_1"
   - first:
-      213: 1642469535546396998
-    second: Fogo_ sprite_1_2
+      213: -2073651648694570357
+    second: "explos\xE3o_sprites_2"
   - first:
-      213: -6089116874069706147
-    second: Fogo_ sprite_1_3
+      213: -8684864731550181430
+    second: "explos\xE3o_sprites_3"
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -103,85 +103,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Fogo_ sprite_1_0
+      name: "explos\xE3o_sprites_0"
       rect:
         serializedVersion: 2
-        x: 19
-        y: 130
-        width: 95
-        height: 118
+        x: 128
+        y: 616
+        width: 455
+        height: 383
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 92d182b87fa2fe450800000000000000
-      internalID: 6120157661299744041
+      spriteID: ae257c1776f9f7ef0800000000000000
+      internalID: -108192599394266390
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fogo_ sprite_1_1
+      name: "explos\xE3o_sprites_1"
       rect:
         serializedVersion: 2
-        x: 146
-        y: 126
-        width: 93
-        height: 115
+        x: 687
+        y: 605
+        width: 392
+        height: 368
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a6409088b09f3120800000000000000
-      internalID: 2395792648889714340
+      spriteID: 45981fa9e6d3f5bd0800000000000000
+      internalID: -2639323311360603820
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fogo_ sprite_1_2
+      name: "explos\xE3o_sprites_2"
       rect:
         serializedVersion: 2
-        x: 11
-        y: 3
-        width: 105
-        height: 102
+        x: 204
+        y: 271
+        width: 397
+        height: 319
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 641d4a427593bc610800000000000000
-      internalID: 1642469535546396998
+      spriteID: b8238abefc8e833e0800000000000000
+      internalID: -2073651648694570357
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fogo_ sprite_1_3
+      name: "explos\xE3o_sprites_3"
       rect:
         serializedVersion: 2
-        x: 141
-        y: 16
-        width: 89
-        height: 107
+        x: 681
+        y: 228
+        width: 390
+        height: 327
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d5afc3de67c1f7ba0800000000000000
-      internalID: -6089116874069706147
+      spriteID: ac712a18a89297780800000000000000
+      internalID: -8684864731550181430
       vertices: []
       indices: 
       edges: []
@@ -189,7 +189,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 13e34c0e9c9899e4ba0c8bf286b8c117
+    spriteID: 5936a29a01428d344966465e991bb44f
     internalID: 0
     vertices: []
     indices: 
