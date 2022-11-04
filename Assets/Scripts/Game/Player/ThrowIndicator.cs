@@ -13,12 +13,15 @@ public class ThrowIndicator : MonoBehaviour
 
     [SerializeField] Image img;
     [SerializeField] Color[] colors;
+
+    [SerializeField] Sprite[] spr;
     
     void Awake()
     {
         Instance = this;
 
         pos_y = transform.position.y;
+        img.sprite = spr[StaticVars.avatar];
     }
 
     void Update()
