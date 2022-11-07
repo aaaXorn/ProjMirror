@@ -325,7 +325,9 @@ public class PlayerControl : NetworkBehaviour
 			rigid.AddForce(dir * h_spd);
 		*/
 		
-		anim.SetFloat("velocity", rigid.velocity.magnitude);
+		Vector3 velocityWOY = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
+		anim.SetFloat("velocity", velocityWOY.magnitude);
+		anim.SetFloat("y_vel", rigid.velocity.y);
 	}
 	[SerializeField]
 	float h_force;
@@ -557,6 +559,8 @@ public class PlayerControl : NetworkBehaviour
 
 		if(!isLocalPlayer) return;
 		
+		ThrowIndicator.Instance.gameObject.SetActive(false);
+
 		StopAllCoroutines();
 		StateMachine(States.Hurt);
 		

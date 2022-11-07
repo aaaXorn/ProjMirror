@@ -5,9 +5,13 @@ using Mirror;
 
 public class VFX_Behaviour : NetworkBehaviour
 {
-    void Start()
+    [SerializeField] float _destroyTime = 2f;
+
+    public override void OnStartServer()
     {
-        Invoke("VFX_Finish", 2f);
+        base.OnStartServer();
+
+        Invoke("VFX_Finish", _destroyTime);
     }
 
     void VFX_Finish()
