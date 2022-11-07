@@ -54,6 +54,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   skin_mesh: {fileID: 2342359907383963551}
+  _VFX_point: {fileID: 7025847525207947938, guid: 73814daecd2e7c249b096005c988d9d4, type: 3}
   team: 0
   Owner: {fileID: 0}
   spd: 1.5

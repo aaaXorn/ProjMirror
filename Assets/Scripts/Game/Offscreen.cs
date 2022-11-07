@@ -10,6 +10,8 @@ public class Offscreen : NetworkBehaviour
 
 	private LayerMask player_layer, piece_layer;
 	
+	bool _cd = false;
+
 	private void Start()
 	{
 		GetComponent<BoxCollider>().enabled = true;
@@ -28,15 +30,14 @@ public class Offscreen : NetworkBehaviour
 			if(PC != null)
 			{
 				if(!PC.isLocalPlayer) return;
-
-				if(isServer)
+				
+				if(!_cd)
 				{
-					if(PC.team == 1)
-						Manager.Instance.t2_score += 5;
-					else if(PC.team == 2)
-						Manager.Instance.t1_score += 5;
+					Cmd_ChangeScore(PC.team);
+
+					_cd = true;
+					Invoke("ResetCD", 1f);
 				}
-				else Cmd_ChangeScore(PC.team);
 
 				other.transform.position = PC.spawn_pos + Vector3.up * 10f;
 			}
@@ -63,6 +64,11 @@ public class Offscreen : NetworkBehaviour
 			
 			other.transform.position = pos;
 		}
+	}
+
+	private void ResetCD()
+	{
+		_cd = false;
 	}
 
 	[Command(requiresAuthority = false)]

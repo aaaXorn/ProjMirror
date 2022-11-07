@@ -12,6 +12,8 @@ public class PieceCheck : NetworkBehaviour
     private Material material;
     private Rigidbody rigid;
 
+	[SerializeField] GameObject _VFX_point;
+
     //which team scored
     public int team = 0;
 
@@ -128,9 +130,15 @@ public class PieceCheck : NetworkBehaviour
         }
     }
 
-    private void ScoreCheck()
+	[ClientRpc]
+	private void Rpc_Sfx()
 	{
 		audioS.Play();
+	}
+
+    private void ScoreCheck()
+	{
+		Rpc_Sfx();
 		
 		//changes the object's tags
 		switch(team)
@@ -178,14 +186,31 @@ public class PieceCheck : NetworkBehaviour
 		
 		no = no1 + no2;
 		
-		if(no == 1)
-			scr += 5;
-		else if(no == 2)
-			scr += 15;
-		else if(no >= 3)
+		if(no > 0)
 		{
-			scr += 30;
-			ConnectJonas.Instance.audioS.Play();
+			GameObject vfx = Instantiate(_VFX_point, transform.position + Vector3.up, Quaternion.identity);
+			ParticleSystem PS = vfx.GetComponent<ParticleSystem>();
+			ParticleSystem.MainModule module = PS.main;
+			ParticleSystem.EmissionModule emission = PS.emission;
+			module.startColor = new ParticleSystem.MinMaxGradient(Manager.Instance.mat[team]);
+
+			if(no == 1)
+			{
+				emission.rateOverTime = 5;
+				scr += 5;
+			}
+			else if(no == 2)
+			{
+				emission.rateOverTime = 10;
+				scr += 15;
+			}
+			else if(no >= 3)
+			{
+				scr += 30;
+				ConnectJonas.Instance.audioS.Play();
+			}
+
+			NetworkServer.Spawn(vfx);
 		}
 		
 		#endregion
