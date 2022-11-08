@@ -127,7 +127,7 @@ public class Manager : NetworkBehaviour
 	}
 	private void OnTeam1Score(float _Old, float _New)
 	{
-		t1_txt.text = "TEAM 1: " + _New;
+		t1_txt.text = "" + _New;//"TEAM 1: " + _New;
 		if(_New >= win_score)
 		{
 			img_scr1.fillAmount = 1f;
@@ -144,7 +144,7 @@ public class Manager : NetworkBehaviour
 	}
 	private void OnTeam2Score(float _Old, float _New)
 	{
-		t2_txt.text = "TEAM 2: " + _New;
+		t2_txt.text = "" + _New;//"TEAM 2: " + _New;
 		if(_New >= win_score)
 		{
 			img_scr2.fillAmount = 1f;
@@ -191,8 +191,8 @@ public class Manager : NetworkBehaviour
 
 		SetupUI();
 		
-		t1_txt.text = "TEAM 1: " + t1_score;
-		t2_txt.text = "TEAM 2: " + t2_score;
+		t1_txt.text = "" + t1_score;//"TEAM 1: " + t1_score;
+		t2_txt.text = "" + t2_score;//"TEAM 2: " + t2_score;
 
 		txt_MatchTime.text = match_time.ToString();
 
