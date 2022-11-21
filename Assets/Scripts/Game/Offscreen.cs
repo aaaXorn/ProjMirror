@@ -41,6 +41,9 @@ public class Offscreen : NetworkBehaviour
 					Invoke("ResetCD", 1f);
 
 					GameObject VFX = Instantiate(_vfx, other.transform.position, other.transform.rotation);
+					ExplosionColor EC = VFX.GetComponent<ExplosionColor>();
+					if(EC != null) EC.ChangeParticles(PC.team);
+					else Debug.LogError("ExplosionColor is null.");
 					NetworkServer.Spawn(VFX);
 				}
 
@@ -57,9 +60,11 @@ public class Offscreen : NetworkBehaviour
 					{
 						_cd = true;
 						Invoke("ResetCD", 1f);
-
-
+						
 						GameObject VFX = Instantiate(_vfx, other.transform.position, other.transform.rotation);
+						ExplosionColor EC = VFX.GetComponent<ExplosionColor>();
+						if(EC != null) EC.ChangeParticles(AIC.team);
+						else Debug.LogError("ExplosionColor is null.");
 						NetworkServer.Spawn(VFX);
 					}
 

@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class ExplosionColor : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] ParticleSystem[] _particles;
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] Color _color;
+
+    public void ChangeParticles(int team)
     {
-        
+        if(team == 2)
+        {
+            foreach(ParticleSystem ps in _particles)
+            {
+                ParticleSystem.MainModule settings = ps.main;
+                settings.startColor = new ParticleSystem.MinMaxGradient( _color );
+            }
+        }
     }
 }
