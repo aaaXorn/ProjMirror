@@ -920,6 +920,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   _offscreen_points: 30
+  _vfx: {fileID: 747509090991399357, guid: 4defeeaf9b3a56d458f8da184d8e8f79, type: 3}
   AIC_Spawn: {fileID: 802008668}
 --- !u!114 &476932697
 MonoBehaviour:

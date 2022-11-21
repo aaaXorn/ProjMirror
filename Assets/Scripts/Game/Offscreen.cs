@@ -12,6 +12,8 @@ public class Offscreen : NetworkBehaviour
 	
 	bool _cd = false;
 
+	[SerializeField] GameObject _vfx;
+
 	private void Start()
 	{
 		GetComponent<BoxCollider>().enabled = true;
@@ -37,6 +39,9 @@ public class Offscreen : NetworkBehaviour
 
 					_cd = true;
 					Invoke("ResetCD", 1f);
+
+					GameObject VFX = Instantiate(_vfx, other.transform.position, other.transform.rotation);
+					NetworkServer.Spawn(VFX);
 				}
 
 				other.transform.position = PC.spawn_pos + Vector3.up * 10f;
@@ -48,6 +53,16 @@ public class Offscreen : NetworkBehaviour
 				AIControl AIC = other.GetComponent<AIControl>();
 				if(AIC != null)
 				{
+					if(!_cd)
+					{
+						_cd = true;
+						Invoke("ResetCD", 1f);
+
+
+						GameObject VFX = Instantiate(_vfx, other.transform.position, other.transform.rotation);
+						NetworkServer.Spawn(VFX);
+					}
+
 					other.transform.position = AIC_Spawn.position;
 				}
 				//piece
